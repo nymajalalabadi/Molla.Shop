@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Shop.Infra.IoC\Shop.Infra.IoC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Image\" />
+  </ItemGroup>
+
 </Project>

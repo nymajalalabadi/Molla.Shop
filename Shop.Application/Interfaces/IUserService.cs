@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shop.Domain.ViewModels.Account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,10 @@ namespace Shop.Application.Interfaces
 {
     public interface IUserService
     {
+        #region account
+
+        Task<RegisterUserResult> RegisterUser(RegisterUserViewModel register);
+
+        #endregion
     }
 }

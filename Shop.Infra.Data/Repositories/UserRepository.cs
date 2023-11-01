@@ -1,4 +1,5 @@
-﻿using Shop.Domain.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Shop.Domain.Interfaces;
 using Shop.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,15 @@ namespace Shop.Infra.Data.Repositories
         public UserRepository(ShopDbContext context)
         {
                _context = context;
+        }
+
+        #endregion
+
+        #region account
+
+        public async Task<bool> IsUserExistPhoneNumber(string phoneNumber)
+        {
+            return await _context.Users.AsQueryable().AnyAsync(u => u.PhoneNumber == phoneNumber);
         }
 
         #endregion
