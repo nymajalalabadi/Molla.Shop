@@ -1,4 +1,5 @@
-﻿using Shop.Domain.ViewModels.Account;
+﻿using Shop.Domain.Models.Account;
+using Shop.Domain.ViewModels.Account;
 
 namespace Shop.Application.Interfaces
 {
@@ -7,6 +8,8 @@ namespace Shop.Application.Interfaces
         #region account
 
         Task<RegisterUserResult> RegisterUser(RegisterUserViewModel register);
+
+        Task<LoginUserResult> LoginUser(LoginUserViewModel login);
 
         #endregion
     }

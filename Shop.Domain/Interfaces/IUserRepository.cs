@@ -1,4 +1,6 @@
-﻿namespace Shop.Domain.Interfaces
+﻿using Shop.Domain.Models.Account;
+
+namespace Shop.Domain.Interfaces
 {
     public interface IUserRepository
     {
@@ -6,6 +8,11 @@
 
         Task<bool> IsUserExistPhoneNumber(string phoneNumber);
 
+        Task CreateUser(User user);
+
+        Task<User> GetUserByPhoneNumber(string phoneNumber);
+
+        Task SaveChanges();
         #endregion
     }
 }
