@@ -1,4 +1,5 @@
-﻿using Shop.Domain.Models.Account;
+﻿using Microsoft.EntityFrameworkCore;
+using Shop.Domain.Models.Account;
 using Shop.Domain.ViewModels.Account;
 
 namespace Shop.Application.Interfaces
@@ -11,6 +12,8 @@ namespace Shop.Application.Interfaces
 
         Task<LoginUserResult> LoginUser(LoginUserViewModel login);
 
+        Task<User> GetUserByPhoneNumber(string phoneNumber);
+       
         #endregion
     }
 }
