@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"]</title>
+    <partial name="_TagRefrences" />
+    <partial name="_HeaderRefrences" />
+    @RenderSection("styles", false)
+</head>
+
+<body>
+    <div class="page-wrapper">
+        @await Component.InvokeAsync("SiteHeader")
+
+        <main class="main">
+            @RenderBody()
+        </main>
+        <!-- End .main -->
+
+        @await Component.InvokeAsync("SiteFooter")
+
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <partial name="_Mobile" />
+
+    <partial name="_FooterRefrences" />
+    @RenderSection("scripts", false)
+</body>
+</html>

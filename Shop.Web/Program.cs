@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Shop.Application.Interfaces;
+using Shop.Application.Services;
+using Shop.Domain.Interfaces;
 using Shop.Infra.Data.Context;
+using Shop.Infra.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +36,10 @@ builder.Services.AddAuthentication(options =>
 });
 
 #endregion
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPasswordHelper, PasswordHelper>();
 
 var app = builder.Build();
 
