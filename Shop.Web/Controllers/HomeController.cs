@@ -10,6 +10,7 @@ namespace Shop.Web.Controllers
         #region index
         public IActionResult Index()
         {
+            TempData[ErrorMessage] = "123";
             return View();
         }
 

@@ -38,6 +38,7 @@ namespace Shop.Web.Controllers
                 switch (result)
                 {
                     case RegisterUserResult.MobileExists:
+                        TempData[ErrorMessage] = "";
                         break;
                     case RegisterUserResult.success:
                         break;
