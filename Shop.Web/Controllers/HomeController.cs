@@ -6,12 +6,14 @@ namespace Shop.Web.Controllers
 {
     public class HomeController : SiteBaseController
     {
-        
 
+        #region index
         public IActionResult Index()
         {
             return View();
         }
+
+        #endregion
 
         public IActionResult Privacy()
         {
