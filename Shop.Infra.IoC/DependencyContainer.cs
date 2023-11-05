@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Shop.Application.Interfaces;
+using Shop.Application.Services;
+using Shop.Domain.Interfaces;
+using Shop.Infra.Data.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,24 +13,27 @@ namespace Shop.Infra.IoC
 {
     public class DependencyContainer
     {
-        #region services
+        public static void RejosterService(IServiceCollection services)
+        {
+            #region services
+
+            services.AddScoped<IUserService, UserService>();
+
+            #endregion
 
 
+            #region repositories
 
-        #endregion
+            services.AddScoped<IUserRepository, UserRepository>();
 
-
-        #region repositories
-
-
-
-        #endregion
+            #endregion
 
 
-        #region tools
+            #region tools
 
+            services.AddScoped<IPasswordHelper, PasswordHelper>();
 
-
-        #endregion
+            #endregion
+        }
     }
 }

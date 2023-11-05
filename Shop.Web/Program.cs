@@ -5,6 +5,7 @@ using Shop.Application.Services;
 using Shop.Domain.Interfaces;
 using Shop.Infra.Data.Context;
 using Shop.Infra.Data.Repositories;
+using Shop.Infra.IoC;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
@@ -39,11 +40,12 @@ builder.Services.AddAuthentication(options =>
 
 #endregion
 
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IPasswordHelper, PasswordHelper>();
+#region IoC
+RegisterService(builder.Services);
+#endregion
 
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.BasicLatin, UnicodeRanges.Arabic }));
+
 
 var app = builder.Build();
 
@@ -67,3 +69,10 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+#region Ioc
+static void RegisterService(IServiceCollection services)
+{
+    DependencyContainer.RejosterService(services);
+}
+#endregion
