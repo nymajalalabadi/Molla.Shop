@@ -38,12 +38,12 @@ namespace Shop.Web.Controllers
                 switch (result)
                 {
                     case RegisterUserResult.MobileExists:
-                        TempData[ErrorMessage] = "";
+                        TempData[ErrorMessage] = " شماره موبایل وارد شده قبلا در سایت ثبت شده است";
                         break;
                     case RegisterUserResult.success:
-                        break;
-                    default:
-                        break;
+                        TempData[SuccessMessage] = "ثبت نام شما به موفقیت انجام شد";
+                        
+                        return Redirect("/");
                 }
             }
             return View(register);
@@ -69,15 +69,17 @@ namespace Shop.Web.Controllers
                 switch (result)
                 {
                     case LoginUserResult.NotFound:
+                        TempData[WarningMessage] = "کاربری یافت نشد";
                         break;
                     case LoginUserResult.NotActive:
+                        TempData[ErrorMessage] = "حساب کاربری شما فعال نمیباشد";
                         break;
                     case LoginUserResult.IsBlocked:
+                        TempData[WarningMessage] = "حساب شما توسط واحد پشتیبانی مسدود شده است";
+                        TempData[InfoMessage] = "جهت اطلاع بیشتر لطفا به قسمت تماس باما مراجعه کنید";
                         break;
                     case LoginUserResult.Success:
-
                         var user = await _userService.GetUserByPhoneNumber(login.PhoneNumber);
-
                         var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Name,user.PhoneNumber),
@@ -85,17 +87,28 @@ namespace Shop.Web.Controllers
                         };
                         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var principle = new ClaimsPrincipal(identity);
-
                         var properties = new AuthenticationProperties
                         {
                             IsPersistent = login.RememberMe
                         };
                         await HttpContext.SignInAsync(principle, properties);
-
+                        TempData[SuccessMessage] = "شما با موفقیت وارد شدید";
                         return Redirect("/");
                 }
             }
             return View(login);
+        }
+
+        #endregion
+
+        #region logout
+
+        [HttpGet("Log-Out")]
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync();
+            TempData[InfoMessage] = "شما با موفقیت از سایت خلرج شدید";
+            return Redirect("/");
         }
 
         #endregion

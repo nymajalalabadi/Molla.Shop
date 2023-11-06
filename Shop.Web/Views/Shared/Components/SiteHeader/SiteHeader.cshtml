@@ -2,39 +2,25 @@
     <div class="header-top">
         <div class="container">
             <div class="header-left">
-                <a href="tel_3A.html#"><i class="icon-phone"></i>تلفن تماس : 02155667788</a>
+                <a href="tel_3A.html#"><i class="icon-phone"></i>تلفن تماس : 09333447320</a>
             </div><!-- End .header-left -->
 
             <div class="header-right">
 
                 <ul class="top-menu">
                     <li>
-                        <a href="#">لینک ها</a>
                         <ul>
-                            <li>
-                                <div class="header-dropdown">
-                                    <a href="#">تومان</a>
-                                    <div class="header-menu">
-                                        <ul>
-                                            <li><a href="#">دلار</a></li>
-                                            <li><a href="#">تومان</a></li>
-                                        </ul>
-                                    </div><!-- End .header-menu -->
-                                </div>
-                            </li>
-                            <li>
-                                <div class="header-dropdown">
-                                    <a href="#">فارسی</a>
-                                    <div class="header-menu">
-                                        <ul>
-                                            <li><a href="#">انگلیسی</a></li>
-                                            <li><a href="#">فرانسوی</a></li>
-                                            <li><a href="#">ترکی استانبولی</a></li>
-                                        </ul>
-                                    </div><!-- End .header-menu -->
-                                </div><!-- End .header-dropdown -->
-                            </li>
-                            <li><a href="#signin-modal" data-toggle="modal">ورود / ثبت نام</a></li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li><a asp-controller="Account" asp-action="Login">@User.Identity.Name</a></li>
+                                <li><a asp-controller="Account" asp-action="LogOut">خروج</a></li>
+                            }
+                            else
+                            {
+                                <li><a asp-controller="Account" asp-action="Login">ورود</a></li>
+                                <li><a asp-controller="Account" asp-action="Register">ثبت نام</a></li>
+                            }
+
                         </ul>
                     </li>
                 </ul><!-- End .top-menu -->

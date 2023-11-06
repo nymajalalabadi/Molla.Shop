@@ -1,0 +1,65 @@
+﻿@model Shop.Domain.ViewModels.Account.RegisterUserViewModel
+@{
+    ViewData["Title"] = "ثبت نام";
+}
+
+@section scripts{
+    <partial name="_ValidationScripts"/>
+}
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">خانه</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+        </ol>
+    </div>
+</nav>
+
+<div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17">
+    <div class="container">
+        <div class="form-box">
+            <div class="form-tab">
+                <div class="tab-content">
+                        <form asp-action="Register" asp-controller="Account" method="post">
+                            <div class="form-group">
+                                <label for="singin-email-2">شماره موبایل</label>
+                                <input type="text" class="form-control" asp-for="PhoneNumber">
+                                <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="singin-email-2">نام</label>
+                                <input type="text" class="form-control" asp-for="FirstName">
+                                <span class="text-danger" asp-validation-for="FirstName"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="singin-email-2">نام خانوادگی</label>
+                                <input type="text" class="form-control" asp-for="LastName">
+                                <span class="text-danger" asp-validation-for="LastName"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="singin-email-2">رمز عبور</label>
+                                <input type="password" class="form-control" asp-for="Password">
+                                <span class="text-danger" asp-validation-for="Password"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="singin-email-2">تکرار رمز عبور</label>
+                                <input type="password" class="form-control" asp-for="RePassword">
+                                <span class="text-danger" asp-validation-for="RePassword"></span>
+                            </div>
+
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-outline-primary-2">
+                                    <span>ثبت نام</span>
+                                </button>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div><
+</div>
