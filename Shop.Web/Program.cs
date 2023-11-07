@@ -1,3 +1,5 @@
+using GoogleReCaptcha.V3.Interface;
+using GoogleReCaptcha.V3;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Shop.Application.Interfaces;
@@ -42,9 +44,14 @@ builder.Services.AddAuthentication(options =>
 
 #region IoC
 RegisterService(builder.Services);
-#endregion
 
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.BasicLatin, UnicodeRanges.Arabic }));
+
+builder.Services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
+
+#endregion
+
+
 
 
 var app = builder.Build();

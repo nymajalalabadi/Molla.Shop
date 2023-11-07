@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shop.Domain.ViewModels.Site;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Domain.ViewModels.Account
 {
-    public class LoginUserViewModel
+    public class LoginUserViewModel : Recaptcha
     {
         [Display(Name = "شماره تلفن همراه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]

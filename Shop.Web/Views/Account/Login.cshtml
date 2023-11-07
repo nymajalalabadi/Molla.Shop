@@ -6,6 +6,7 @@
 
 @section scripts{
     <partial name="_ValidationScripts" />
+    <partial name="_CaptchaScripts" />
 }
 
 <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
@@ -23,6 +24,8 @@
             <div class="form-tab">
                 <div class="tab-content">
                     <form asp-action="Login" asp-controller="Account" method="post">
+                        <partial name="_CaptchaInput" />
+
                         <div class="form-group">
                             <label for="singin-email-2">شماره موبایل</label>
                             <input type="text" class="form-control" asp-for="PhoneNumber">

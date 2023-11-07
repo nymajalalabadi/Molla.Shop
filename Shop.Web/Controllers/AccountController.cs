@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using GoogleReCaptcha.V3.Interface;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Win32;
 using Shop.Application.Interfaces;
 using Shop.Domain.ViewModels.Account;
 using System.Security.Claims;
@@ -12,10 +14,12 @@ namespace Shop.Web.Controllers
         #region constractor
 
         private readonly IUserService _userService;
+        private readonly ICaptchaValidator _captchaValidator;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService, ICaptchaValidator captchaValidator)
         {
             _userService = userService;
+            _captchaValidator = captchaValidator;
         }
 
         #endregion
@@ -31,6 +35,14 @@ namespace Shop.Web.Controllers
         [HttpPost("register"), ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUserViewModel register)
         {
+            #region captcha Validator
+            if (!await _captchaValidator.IsCaptchaPassedAsync(register.Token))
+            {
+                TempData[ErrorMessage] = "کد کپچای شما معتبر نمیباشد";
+                return View(register);
+            }
+            #endregion
+
             if (ModelState.IsValid)
             {
                 var result = await _userService.RegisterUser(register);
@@ -62,6 +74,14 @@ namespace Shop.Web.Controllers
         [HttpPost("login"), ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginUserViewModel login)
         {
+            #region captcha Validator
+            if (!await _captchaValidator.IsCaptchaPassedAsync(login.Token))
+            {
+                TempData[ErrorMessage] = "کد کپچای شما معتبر نمیباشد";
+                return View(login);
+            }
+            #endregion
+
             if (ModelState.IsValid)
             {
                 var result = await _userService.LoginUser(login);

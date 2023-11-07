@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Shop.Domain.ViewModels.Site;
+using System.ComponentModel.DataAnnotations;
 
 namespace Shop.Domain.ViewModels.Account
 {
-    public class RegisterUserViewModel
+    public class RegisterUserViewModel : Recaptcha
     {
         [Display(Name = "نام")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
