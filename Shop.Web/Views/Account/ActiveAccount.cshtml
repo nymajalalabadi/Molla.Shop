@@ -1,0 +1,48 @@
+﻿@model Shop.Domain.ViewModels.Account.ActiveAccountViewModel
+
+@{
+    ViewData["Title"] = "فعال سازی حساب کاربری";
+}
+
+@section scripts{
+    <partial name="_ValidationScripts" />
+    <partial name="_CaptchaScripts" />
+}
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">خانه</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+        </ol>
+    </div>
+</nav>
+
+
+<div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17">
+    <div class="container">
+        <div class="form-box">
+            <div class="form-tab">
+                <div class="tab-content">
+                    <form asp-controller="Account" asp-action="ActiveAccount" method="post">
+                        <partial name="_CaptchaInput" />
+                        <input type="hidden" asp-for="PhoneNumber" />
+
+                        <div class="form-group">
+                            <label for="singin-email-2">کد فعال سازی</label>
+                            <input asp-for="ActiveCode" class="form-control">
+                            <span asp-validation-for="ActiveCode" class="text-danger"></span>
+                        </div>
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-outline-primary-2">
+                                <span>فعال سازی حساب کاربری</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -19,6 +19,8 @@ namespace Shop.Infra.IoC
 
             services.AddScoped<IUserService, UserService>();
 
+            services.AddScoped<ISmsService, SmsService>();
+
             #endregion
 
 

@@ -54,8 +54,8 @@ namespace Shop.Web.Controllers
                         break;
                     case RegisterUserResult.success:
                         TempData[SuccessMessage] = "ثبت نام شما به موفقیت انجام شد";
-                        
-                        return Redirect("/");
+
+                        return RedirectToAction("ActiveAccount", "Account", new { mobile = register.PhoneNumber});
                 }
             }
             return View(register);
@@ -113,7 +113,7 @@ namespace Shop.Web.Controllers
                         };
                         await HttpContext.SignInAsync(principle, properties);
                         TempData[SuccessMessage] = "شما با موفقیت وارد شدید";
-                        return Redirect("/");
+                        return RedirectToAction("/");
                 }
             }
             return View(login);
@@ -129,6 +129,59 @@ namespace Shop.Web.Controllers
             await HttpContext.SignOutAsync();
             TempData[InfoMessage] = "شما با موفقیت از سایت خلرج شدید";
             return Redirect("/");
+        }
+
+        #endregion
+
+        #region active account
+
+        [HttpGet("Activate-Account/{mobile}")]
+        public async Task<IActionResult> ActiveAccount(string mobile)
+        {
+            if (User.Identity.IsAuthenticated) return Redirect("/");
+
+            var activeAccount = new ActiveAccountViewModel
+            {
+                PhoneNumber = mobile
+            };
+
+            return View(activeAccount);
+        }
+
+        [HttpPost("activate-account/{mobile}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> ActiveAccount(ActiveAccountViewModel activeAccount)
+        {
+
+            #region captcha Validator
+
+            if (!await _captchaValidator.IsCaptchaPassedAsync(activeAccount.Token))
+            {
+                TempData[ErrorMessage] = "کد کپچای شما معتبر نمیباشد";
+                return View(activeAccount);
+            }
+
+            #endregion
+
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.ActiveAccount(activeAccount);
+                switch (result)
+                {
+                    case ActiveAccountResult.Error:
+                        TempData[ErrorMessage] = "عملیات فعال کردن حساب کاربری با شکست مواجه شد";
+                        break;
+
+                    case ActiveAccountResult.NotFound:
+                        TempData[WarningMessage] = "کاربری با مشخصات وارد شده یافت نشد";
+                        break;
+
+                    case ActiveAccountResult.Success:
+                        TempData[SuccessMessage] = "حساب کاربری شما با موفقیت فعال شد";
+                        TempData[InfoMessage] = "لظفا جهت ادامه فراید وارد حساب کاربری خود شود";
+                        return RedirectToAction("Login");
+                }
+            }
+            return View(activeAccount);
         }
 
         #endregion

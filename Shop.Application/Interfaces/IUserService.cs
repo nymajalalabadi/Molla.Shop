@@ -13,6 +13,8 @@ namespace Shop.Application.Interfaces
         Task<LoginUserResult> LoginUser(LoginUserViewModel login);
 
         Task<User> GetUserByPhoneNumber(string phoneNumber);
+
+        Task<ActiveAccountResult> ActiveAccount(ActiveAccountViewModel activeAccount);
        
         #endregion
     }

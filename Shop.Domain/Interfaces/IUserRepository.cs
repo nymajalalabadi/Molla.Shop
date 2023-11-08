@@ -13,6 +13,9 @@ namespace Shop.Domain.Interfaces
         Task<User> GetUserByPhoneNumber(string phoneNumber);
 
         Task SaveChanges();
+
+        void UpdateUser(User user);
+
         #endregion
     }
 }

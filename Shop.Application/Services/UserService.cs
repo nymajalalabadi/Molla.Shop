@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Shop.Application.Interfaces;
+﻿using Shop.Application.Interfaces;
 using Shop.Domain.Interfaces;
 using Shop.Domain.Models.Account;
 using Shop.Domain.ViewModels.Account;
@@ -12,11 +11,14 @@ namespace Shop.Application.Services
 
         private readonly IUserRepository _userRepository;
 
+        private readonly ISmsService _smsService;
+
         private readonly IPasswordHelper _passwordHelper;
 
-        public UserService(IUserRepository userRepository, IPasswordHelper passwordHelper)
+        public UserService(IUserRepository userRepository, ISmsService smsService, IPasswordHelper passwordHelper)
         {
             _userRepository = userRepository;
+            _smsService = smsService;
             _passwordHelper = passwordHelper;
         }
 
@@ -46,6 +48,8 @@ namespace Shop.Application.Services
                 await _userRepository.CreateUser(user);
                 await _userRepository.SaveChanges();
 
+                await _smsService.SendVerificationCode(user.PhoneNumber, user.MobileActiveCode);
+
                 return RegisterUserResult.success;
             }
             return RegisterUserResult.MobileExists;
@@ -69,6 +73,25 @@ namespace Shop.Application.Services
         public async Task<User> GetUserByPhoneNumber(string phoneNumber)
         {
             return await _userRepository.GetUserByPhoneNumber(phoneNumber);
+        }
+
+        public async Task<ActiveAccountResult> ActiveAccount(ActiveAccountViewModel activeAccount)
+        {
+            var user = await GetUserByPhoneNumber(activeAccount.PhoneNumber);
+
+            if (user == null) return ActiveAccountResult.NotFound;
+
+            if (user.MobileActiveCode == activeAccount.ActiveCode)
+            {
+                user.MobileActiveCode = new Random().Next(10000, 999999).ToString();
+                user.IsMobileActive = true;
+
+                _userRepository.UpdateUser(user);
+                await _userRepository.SaveChanges();
+
+                return ActiveAccountResult.Success;
+            }
+            return ActiveAccountResult.Error;
         }
 
         #endregion

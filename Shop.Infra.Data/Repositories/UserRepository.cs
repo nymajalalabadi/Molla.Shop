@@ -49,6 +49,11 @@ namespace Shop.Infra.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public void UpdateUser(User user)
+        {
+            _context.Users.Update(user);
+        }
+
         #endregion
     }
 }
