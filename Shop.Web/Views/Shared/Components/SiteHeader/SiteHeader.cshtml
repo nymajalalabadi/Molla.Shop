@@ -1,4 +1,11 @@
-﻿<header class="header header-intro-clearance header-4">
+﻿@using Shop.Domain.Models.Account
+@using Shop.Application.Extentions
+
+@{
+    var user =(User)ViewBag.User;
+}
+
+<header class="header header-intro-clearance header-4">
     <div class="header-top">
         <div class="container">
             <div class="header-left">
@@ -12,7 +19,7 @@
                         <ul>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <li><a asp-controller="Account" asp-action="Login">@User.Identity.Name</a></li>
+                                <li><a asp-controller="Account" asp-action="Login">@user.GetUserName()</a></li>
                                 <li><a asp-controller="Account" asp-action="LogOut">خروج</a></li>
                             }
                             else
