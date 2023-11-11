@@ -1,0 +1,30 @@
+﻿@using Shop.Domain.Models.Account;
+@using Shop.Application.Extentions;
+@model User
+
+<form>
+    <div class="box-shadow info-image-user mb-3">
+        <div class="p-3">
+            <img class="img-thumbnail  box-shadow img-account" src="https://toplearn.com/img/user/394_daf3b779-73a1-49ff-aaa5-8a6b95d7cdfa_m.momeni_1010.jpg">
+        </div>
+        <div class="text-center p-1">
+            <p class="text-center">@Model.GetUserName()</p>
+        </div>
+
+    </div>
+</form>
+
+<section class="box-shadow">
+    <header>
+        <h3> میز کار </h3>
+    </header>
+    <div class="inner">
+        <ul>
+            <li><a href=""> مشاهده حساب کابری </a></li>
+            <li><a href=""> ویرایش حساب کابری </a></li>
+            <li><a href=""> تغییر رمز عبور </a></li>
+            <li><a href=""> تنظیمات حساب کاربری </a></li>
+            <li><a href=""> خروج از حساب کاربری </a></li>
+        </ul>
+    </div>
+</section>

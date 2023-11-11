@@ -1,0 +1,497 @@
+body {
+	direction: rtl;
+}
+#search-area .btn {
+    left: 0;
+    right: auto;
+}
+#search-area input[type="search"] {
+    outline: 0;
+}
+.light .classynav ul li .dropdown, .light.classy-nav-container {
+    text-align: right;
+}
+.breakpoint-off .classynav ul li .dropdown {
+    right: 0;
+    left: auto;
+}
+.breakpoint-off .classynav ul li .dropdown li .dropdown {
+    right: auto;
+    right: -230px;
+}
+.classy-navbar .nav-brand {
+    margin-right: 0;
+}
+.classynav > ul > li.cn-dropdown-item.has-down > .dd-arrow, 
+.classynav > ul > li.megamenu-item > .dd-arrow {
+    left: 8px;
+    right: auto;
+}
+.has-down .dd-arrow, .megamenu-item .dd-arrow {
+    left: 20px;
+    right: auto;
+}
+.main-header-area .classynav ul li a.search-btn {
+    margin-right: 10px;
+    margin-left: 0;
+}
+.main-home-area {
+    overflow: hidden;
+}
+.home-content form .btn {
+    left: 0;
+    right: auto;
+}
+.why-choose {
+    padding-right: 20px;
+    padding-left: 0;
+    text-align: right;
+}
+.single-choose {
+    padding-right: 100px;
+    padding-left: 0;
+}
+.single-choose .icon {
+    right: 0;
+    left: auto;
+}
+.why-choose-us .image {
+    right: 0;
+    left: auto;
+}
+.teacher-box .view-profile {
+    text-align: left;
+    left: 0;
+    right: auto;
+    padding: 15px 15px 15px 15px;
+}
+.teacher-box .pic::after {
+    left: -100px;
+    right: auto;
+}
+.single-event .event-content {
+    text-align: right;
+}
+.single-event .event-content .pull-left {
+    float: left;
+    margin-left: 95px;
+    margin-right: 0;
+}
+.single-event figure .date {
+    right: 20px;
+    left: auto;
+}
+.newsletter form .btn {
+    left: 0;
+    right: auto;
+}
+.single-blog .blog-content {
+    text-align: right;
+}
+.single-blog .blog-content h4 .date {
+    float: left;
+}
+.single-footer {
+    text-align: right;
+}
+.copyright-area ul {
+    text-align: left;
+}
+.copyright-area ul li:last-child {
+    padding-left: 0;
+    border-left: none;
+}
+.copyright-area p {
+    text-align: right;
+}
+.copyright-area ul li:last-child {
+    padding-left: 0;
+    border-right: 2px solid #3a3a3a;
+    border-left: none;
+}
+.copyright-area ul li:first-child {
+    padding-left: 8px;
+    border-left: none;
+}
+.copyright-area ul li {
+    padding-right: 8px;
+}
+.apply-form {
+    margin-right: 45px;
+    padding-left:  0;
+}
+.single-teacher .teacher-content {
+    text-align: right;
+}
+.single-teacher .teacher-content ul {
+    float: left;
+}
+.single-blog-post {
+    text-align: right;
+}
+.read-more .left {
+    right: 0;
+    left: auto;
+}
+.single-blog-post .date {
+    right: 20px;
+    left: auto;
+}
+.hero-slides-content {
+    text-align: right;
+}
+.home-slides-two.owl-theme .owl-nav .owl-prev {
+    right: 40px !important;
+    left: auto !important;
+}
+.home-slides-two.owl-theme .owl-nav .owl-next {
+    right: 10px !important;
+    left: auto !important;
+}
+.main-banner-three::after {
+    left: 0;
+    right: auto;
+    border-radius: 0 0 200px 0;
+}
+.main-banner-three-content {
+    text-align: right;
+}
+.main-banner-three-content button {
+    left: 0;
+    right: auto;
+}
+.single-card-post .blog-card-content {
+    text-align: right;
+}
+.single-card-post .date {
+    right: 20px;
+    left: auto;
+}
+.page-title {
+    text-align: right;
+}
+.page-title h3::before {
+    right: 0;
+    left: auto;
+}
+.about-text {
+    text-align: right;
+}
+.about-text h3::before {
+    right: 0;
+    left: auto;
+}
+.about-content {
+    text-align: right;
+}
+.about-content h3::before {
+    right: 0;
+    left: auto;
+}
+.teacher-details {
+    text-align: right;
+}
+.progress .progress-value {
+    left: 0;
+    right: auto;
+}
+.teacher-involved-coures h2 {
+    text-align: right;
+}
+.teacher-contact-info .teacher-social li {
+    margin-left: 6px;
+    margin-right: 0;
+}
+.courses-item .courses-content {
+    text-align: right;
+}
+.courses-item .courses-content-bottom .price {
+    float: left;
+}
+.courses-details-meta ul li {
+    margin-right: 25px;
+    margin-left: 0;
+}
+.courses-details-meta ul li .teacher-img {
+    margin-left: 15px;
+    margin-right: 0 ;
+}
+.courses-details-meta {
+    text-align: right;
+}
+.courses-details-meta .apply-btn {
+    float: left;
+}
+.side-bar .single-widget {
+    text-align: right;
+}
+.side-bar .features-box ul li span {
+    float: left;
+}
+.side-bar .latest-courses .single-latest-courses .content {
+    padding-right: 15px;
+    padding-left: 0;
+}
+.similar-courses h2 {
+    text-align: right;
+}
+.course-details-tabs .show {
+    text-align: right;
+}
+.course-details-area {
+    text-align: right;
+}
+.single-courses-item .courses-content-bottom .price {
+    float: left;
+}
+.course-details-tabs .card-body ul li .preview {
+    float: left;
+}
+.course-details-tabs .card-header span {
+    float: left;
+}
+.course-author {
+    padding-right: 170px;
+    padding-left: 0;
+}
+.course-author .img {
+    right: 0;
+}
+.courses-review .single-review {
+    padding-right: 170px;
+    padding-left: 0;
+}
+.courses-review .single-review .img {
+    right: 0;
+}
+.side-bar .single-latest-events .event-content {
+    padding-right: 15px;
+    padding-left: 0;
+    text-align: right;
+}
+.side-bar .instagram-post ul li {
+    float: right;
+}
+.events-details {
+    text-align: right;
+}
+.side-bar .search-box form .btn {
+    left: 0;
+    border-radius: 5px 0 0 5px;
+}
+.side-bar .recent-post .single-recent-post .content {
+    padding-right: 15px;
+    padding-left: 0;
+}
+.side-bar .categories-box li a:hover {
+    padding-right: 8px;
+    padding-left: 0;
+}
+.side-bar .archives-box li a:hover {
+    padding-right: 8px;
+    padding-left: 0;
+}
+.blog-details {
+    text-align: right;
+}
+.blog-details .author-share .social-share {
+    text-align: left;
+}
+.blog-details .article-author .author-img {
+    float: right;
+}
+.blog-details .article-author .author-title {
+    padding-right: 25px;
+    padding-left: 0;
+}
+.post-comments {
+    text-align: right;
+}
+.single-comment .comment-img {
+    float: right;
+}
+.single-comment .comment-content {
+    padding-right: 25px;
+    padding-left: 0;
+}
+.single-comment .comment-content a {
+    left: 25px;
+    right: auto;
+}
+.leave-a-reply {
+    text-align: right;
+}
+.blog-details .blockquote {
+    border-right: 4px solid #e60c3d;
+    border-left: none;
+}
+.woocommerce-shop-top p {
+    text-align: right;
+}
+.woocommerce-shop-top .form-control {
+    height: 60px;
+}
+.single-product .product-img .quick-view {
+    left: 15px;
+    right: auto;
+}
+.single-product-item .product-img .quick-view {
+    left: 15px;
+    right: auto;
+}
+.content-footer {
+    text-align: right;
+}
+.single-product-item .content-footer .price {
+    float: left;
+}
+.product-desc {
+    text-align: right;
+}
+.shop-details {
+    text-align: right;
+}
+.related-shop h2 {
+    text-align: right;
+}
+.cart-area {
+    text-align: right;
+}
+.cuppon-form .btn {
+    left: 0;
+    right: auto;
+}
+.checkout-area {
+    text-align: right;
+}
+.contact-box {
+    padding: 20px 90px 20px 20px;
+    text-align: right;
+}
+.contact-box .icon {
+    right: 20px;
+    left: auto;
+}
+#contactForm {
+    text-align: right;
+}
+.leave-your-message {
+    text-align: right;
+}
+.leave-your-message .stay-connected li a i {
+    margin-left: 10px;
+    margin-right: 0;
+}
+.courses-content-bottom {
+    text-align: right;
+}
+.faq {
+    text-align: right;
+}
+.faq .card-header i {
+    float: left;
+}
+#login-form .left {
+    float: right;
+    text-align: right;
+}
+#login-form::before {
+    right: 0;
+    left: 0;
+}
+#login-form .right .connect {
+    text-align: right;
+}
+.scrolltop {
+    left: 30px;
+    right: auto;
+}
+.courses-details-meta ul li:first-child {
+    margin-right: 0;
+}
+.feedback-content {
+    text-align: right;
+    padding: 20px 140px 20px 50px;
+}
+.feedback-content i {
+    right: 30px;
+    left: auto;
+}
+.feedback-content h3 {
+    padding-right: 60px !important;
+    padding-left: 0;
+}
+.feedback-content h3::before {
+    right: 0;
+    left: auto;
+}
+.apply-area::before {
+    left: 0;
+    right: auto;
+}
+.apply-area::after {
+    left: 0;
+    right: auto;
+}
+.shop-details-tabs .shop-reviews ul li::before {
+    right: -12px;
+    left: auto;
+}
+.classynav > ul > li.has-down.active > .dd-arrow::after, .has-down .dd-arrow::after, .has-down.active > .dd-arrow::after, .megamenu-item .dd-arrow::after, .megamenu-item.active > .dd-arrow::after {
+    left: auto;
+    right: -5px;
+}
+
+/* RTL responsive css*/
+@media only screen and (max-width: 767px) {
+    .copyright-area p {
+        text-align: center !important;
+    }
+    .copyright-area ul {
+        text-align: center !important;
+    }
+    .apply-form {
+        margin-right: 0px !important;
+        padding-left: 0 !important;
+    }
+    .feedback-content {
+        padding: 20px 20px 20px 20px !important;
+    }
+    .home-content {
+        text-align: right !important;
+    }
+    .courses-details-meta .apply-btn {
+        float: unset !important;
+    }
+    .courses-details-meta ul li {
+        margin-right: 0 !important;
+    }
+    .course-author {
+        padding-right: 0;
+    }
+    .courses-review .single-review {
+        padding-right: 0;
+    }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .single-event .event-content .pull-left {
+        margin-right: 95px !important;
+        margin-left: 0;
+    }
+    .feedback-content {
+        padding: 20px 20px 20px 20px !important;
+    }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .feedback-content i {
+        top: 55px !important;
+    }
+    .feedback-content {
+        bottom: 0 !important;
+    }
+}
+@media only screen and (min-width: 1400px) {
+ 
+    
+}
+/*# sourceMappingURL=responsive.css.map */

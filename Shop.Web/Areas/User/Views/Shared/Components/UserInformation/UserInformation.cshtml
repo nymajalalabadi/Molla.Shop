@@ -1,0 +1,19 @@
+﻿@using Shop.Domain.Models.Account;
+@using Shop.Application.Extentions;
+@model User
+
+<section class="user-account-content box-shadow">
+    <header>
+        <h1> داشبورد </h1>
+    </header>
+    <div class="inner">
+        <div class="account-information">
+            <h3> اطلاعات کاربری </h3>
+            <ul>
+                <li> <i class="zmdi zmdi-account"></i> نام و نام خانوادگی : @Model.GetUserName() </li>
+                <li> <i class="zmdi zmdi-calendar-check"></i> تاریخ عضویت : @Model.CreateDate </li>
+                <li> <i class="zmdi zmdi-smartphone-android"></i> شماره تماس : @Model.PhoneNumber </li>
+            </ul>
+        </div>
+    </div>
+</section>
