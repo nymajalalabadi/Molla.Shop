@@ -1,4 +1,5 @@
-﻿using Shop.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Shop.Application.Interfaces;
 using Shop.Domain.Interfaces;
 using Shop.Domain.Models.Account;
 using Shop.Domain.ViewModels.Account;
@@ -94,6 +95,10 @@ namespace Shop.Application.Services
             return ActiveAccountResult.Error;
         }
 
+        public async Task<User> GetUserById(long UserId)
+        {
+            return await _userRepository.GetUserById(UserId);
+        }
         #endregion
 
 

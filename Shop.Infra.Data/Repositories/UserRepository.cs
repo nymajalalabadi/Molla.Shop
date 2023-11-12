@@ -54,6 +54,12 @@ namespace Shop.Infra.Data.Repositories
             _context.Users.Update(user);
         }
 
+        public async Task<User> GetUserById(long UserId)
+        {
+            return await _context.Users.AsQueryable().SingleOrDefaultAsync(u => u.Id == UserId);
+        }
+
+
         #endregion
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Interfaces;
+using Shop.Web.Extentions;
 
 namespace Shop.Web.Areas.User.ViewComponents
 {
@@ -20,7 +21,13 @@ namespace Shop.Web.Areas.User.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userService.GetUserById(User.GetUserId());
+
+                return View("UserSideBar", user);
+            }
+            return View("UserSideBar");
         }
     }
 
@@ -43,7 +50,15 @@ namespace Shop.Web.Areas.User.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userService.GetUserById(User.GetUserId());
+
+                return View("UserInformation", user);
+            }
+
+            return View("UserInformation");
+
         }
     }
 

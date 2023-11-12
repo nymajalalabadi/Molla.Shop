@@ -113,7 +113,7 @@ namespace Shop.Web.Controllers
                         };
                         await HttpContext.SignInAsync(principle, properties);
                         TempData[SuccessMessage] = "شما با موفقیت وارد شدید";
-                        return RedirectToAction("/");
+                        return Redirect("/");
                 }
             }
             return View(login);

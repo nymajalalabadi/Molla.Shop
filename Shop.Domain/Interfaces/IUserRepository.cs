@@ -16,6 +16,8 @@ namespace Shop.Domain.Interfaces
 
         void UpdateUser(User user);
 
+        Task<User> GetUserById(long UserId);
+
         #endregion
     }
 }
