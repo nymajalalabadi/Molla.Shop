@@ -28,4 +28,9 @@
     <ProjectReference Include="..\Shop.Infra.IoC\Shop.Infra.IoC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\userAvatar\thumb\" />
+    <Folder Include="wwwroot\img\userAvatar\orgin\" />
+  </ItemGroup>
+
 </Project>

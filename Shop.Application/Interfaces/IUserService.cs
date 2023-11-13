@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Models.Account;
 using Shop.Domain.ViewModels.Account;
 
@@ -17,7 +18,14 @@ namespace Shop.Application.Interfaces
         Task<ActiveAccountResult> ActiveAccount(ActiveAccountViewModel activeAccount);
 
         Task<User> GetUserById(long UserId);
-        
+
+        #endregion
+
+        #region profile
+
+        Task<EditUserProfileViewModel> GetEditUserProfile(long userId);
+
+        Task<EditUserProfileResult> EditProfile(long userId, IFormFile userAvatar, EditUserProfileViewModel editUserProfile);
 
         #endregion
     }

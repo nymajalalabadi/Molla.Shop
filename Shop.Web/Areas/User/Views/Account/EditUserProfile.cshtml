@@ -1,0 +1,68 @@
+﻿@model Shop.Domain.ViewModels.Account.EditUserProfileViewModel
+
+@{
+    ViewData["Title"] = "ویرایش حساب کاربری";
+}
+
+<div class="container text-right mt-5 mb-5">
+    <div class="user-account">
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <aside>
+                    @await Component.InvokeAsync("UserSideBar")
+                </aside>
+            </div>
+            <div class="col-md-9 col-sm-8 col-xs-12 ">
+                <section class="user-account-content box-shadow">
+                    <header>
+                        <h1>@ViewData["Title"]</h1>
+                    </header>
+                    <div class="inner">
+                        <div class="account-information">
+                            <form asp-area="User" asp-controller="Account" asp-action="EditUserProfile" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label>نام:</label>
+                                            <input class="form-control" asp-for="FirstName" />
+                                            <span class="text-danger" asp-validation-for="FirstName"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label>نام خانوادگی:</label>
+                                            <input class="form-control" asp-for="LastName" />
+                                            <span class="text-danger" asp-validation-for="LastName"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label>آواتار:</label>
+                                            <input class="form-control" type="file" name="userAvatar" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label>جنسیت:</label>
+                                            <select class="form-ctrl" asp-for="UserGender" asp-items="@Html.GetEnumSelectList<UserGender>()"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label>شماره همراه:</label>
+                                            <p>@Model.PhoneNumber</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-warning">ویرایش حساب کاربری</button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
