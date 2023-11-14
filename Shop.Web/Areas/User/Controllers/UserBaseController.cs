@@ -6,7 +6,7 @@ namespace Shop.Web.Areas.User.Controllers
     [Authorize]
     [Area("User")]
     [Route("user")]
-    public class BaseController : Controller
+    public class UserBaseController : Controller
     {
         protected string ErrorMessage = "ErrorMessage";
         protected string SuccessMessage = "SuccessMessage";

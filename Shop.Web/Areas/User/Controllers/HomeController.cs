@@ -2,7 +2,7 @@
 
 namespace Shop.Web.Areas.User.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : UserBaseController
     {
         public IActionResult Index()
         {

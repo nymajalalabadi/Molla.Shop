@@ -8,7 +8,7 @@ using Shop.Web.Extentions;
 
 namespace Shop.Web.Areas.User.Controllers
 {
-    public class AccountController : BaseController
+    public class AccountController : UserBaseController
     {
         #region constractor
 
@@ -32,26 +32,26 @@ namespace Shop.Web.Areas.User.Controllers
             return View(user);
         }
 
-        [HttpPost("edit-user-profile"), ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditUserProfile(EditUserProfileViewModel editUserProfile, IFormFile userAvatar)
+        [HttpPost("edit-user-profile")]
+        public async Task<IActionResult> EditUserProfile(EditUserProfileViewModel editUserProfile, IFormFile? userAvatar)
         {
             if (ModelState.IsValid)
             {
                 var result = await _userService.EditProfile(User.GetUserId(), userAvatar, editUserProfile);
-
                 switch (result)
                 {
                     case EditUserProfileResult.NotFound:
                         TempData[WarningMessage] = "کاربری با مشخصات وارد شده یافت نشد";
                         break;
-
                     case EditUserProfileResult.Success:
                         TempData[SuccessMessage] = "عملیات ویرایش حساب کاربری با موفقیت انجام شد";
-                        return RedirectToAction("EditUserProfile");
+
+                        return RedirectToAction("Index" ,"Home");
                 }
             }
             return View(editUserProfile);
         }
+
 
         #endregion
     }

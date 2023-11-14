@@ -1,9 +1,9 @@
 ﻿@model User
-
+@using Shop.Application.Utils
 <form>
     <div class="box-shadow info-image-user mb-3">
         <div class="p-3">
-            <img class="img-thumbnail  box-shadow img-account" src="https://toplearn.com/img/user/394_daf3b779-73a1-49ff-aaa5-8a6b95d7cdfa_m.momeni_1010.jpg">
+            <img class="img-thumbnail  box-shadow img-account" src="@(PathExtensions.UserAvatarOrgin + Model.Avatar)">
         </div>
         <div class="text-center p-1">
             <p class="text-center">@Model.GetUserName()</p>
@@ -18,7 +18,7 @@
     </header>
     <div class="inner">
         <ul>
-            <li><a href=""> مشاهده حساب کابری </a></li>
+            <li><a asp-action="Index" asp-controller="Home" asp-area="User"> مشاهده حساب کابری </a></li>
             <li><a asp-action="EditUserProfile" asp-controller="Account" asp-area="User"> ویرایش حساب کابری </a></li>
             <li><a href=""> تغییر رمز عبور </a></li>
             <li><a href=""> تنظیمات حساب کاربری </a></li>

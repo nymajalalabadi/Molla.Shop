@@ -10,6 +10,7 @@
             <div class="col-md-3 col-sm-4 col-xs-12">
                 <aside>
                     @await Component.InvokeAsync("UserSideBar")
+
                 </aside>
             </div>
             <div class="col-md-9 col-sm-8 col-xs-12 ">
@@ -18,6 +19,12 @@
                         <h1>@ViewData["Title"]</h1>
                     </header>
                     <div class="inner">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label class="text-monospace text-primary"> شماره همراه : </label>
+                                <p class="text-monospace text-secondary "> @Model.PhoneNumber </p>
+                            </div>
+                        </div>
                         <div class="account-information">
                             <form asp-area="User" asp-controller="Account" asp-action="EditUserProfile" enctype="multipart/form-data">
                                 <div class="row">
@@ -48,12 +55,6 @@
                                             <select class="form-ctrl" asp-for="UserGender" asp-items="@Html.GetEnumSelectList<UserGender>()"></select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-12">
-                                        <div class="form-group">
-                                            <label>شماره همراه:</label>
-                                            <p>@Model.PhoneNumber</p>
-                                        </div>
-                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-warning">ویرایش حساب کاربری</button>
                             </form>
@@ -64,5 +65,4 @@
         </div>
     </div>
 </div>
-
 

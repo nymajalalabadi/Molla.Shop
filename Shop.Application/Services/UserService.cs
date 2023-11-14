@@ -124,7 +124,6 @@ namespace Shop.Application.Services
         public async Task<EditUserProfileResult> EditProfile(long userId, IFormFile userAvatar, EditUserProfileViewModel editUserProfile)
         {
             var user = await _userRepository.GetUserById(userId);
-
             if (user == null) return EditUserProfileResult.NotFound;
 
             user.FirstName = editUserProfile.FirstName;
@@ -144,6 +143,7 @@ namespace Shop.Application.Services
             await _userRepository.SaveChanges();
 
             return EditUserProfileResult.Success;
+
         }
 
         #endregion
