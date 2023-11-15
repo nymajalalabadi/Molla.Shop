@@ -5,7 +5,9 @@ using Shop.Application.Interfaces;
 using Shop.Application.Utils;
 using Shop.Domain.Models.Account;
 using Shop.Domain.ViewModels.Account;
+using Shop.Domain.ViewModels.Wallet;
 using Shop.Web.Extentions;
+using ZarinpalSandbox;
 
 namespace Shop.Web.Areas.User.Controllers
 {
@@ -14,9 +16,14 @@ namespace Shop.Web.Areas.User.Controllers
         #region constractor
 
         private readonly IUserService _userService;
-        public AccountController(IUserService userService)
+        private readonly IWalletService _walletService;
+        private readonly IConfiguration _configuration;
+
+        public AccountController(IUserService userService, IWalletService walletService, IConfiguration configuration)
         {
             _userService = userService;
+            _walletService = walletService;
+            _configuration = configuration;
         }
 
         #endregion
@@ -95,6 +102,55 @@ namespace Shop.Web.Areas.User.Controllers
                 }
             }
             return View(changePassword);
+        }
+
+        #endregion
+
+        #region charge wallet
+
+        [HttpGet("charge-wallet")]
+        public async Task<IActionResult> ChargeWallet()
+        {
+            return View();
+        }
+
+        [HttpPost("charge-wallet"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChargeWallet(ChargeWalletViewModel chargeWallet)
+        {
+            if (ModelState.IsValid)
+            {
+                var walletId = await _walletService.ChargeWallet(User.GetUserId(), chargeWallet, $"شارژ به مبلغ {chargeWallet.Amount}");
+
+                #region payment
+
+                var payment = new Payment(chargeWallet.Amount);
+
+                var url = _configuration.GetSection("DefaultUrl")["Host"] + "/user/online-payment/" + walletId;
+
+                var result = payment.PaymentRequest("شارژ کیف پول", url);
+
+                if (result.Result.Status == 100)
+                {
+                    return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + result.Result.Authority);
+                }
+                else
+                {
+                    TempData[ErrorMessage] = "مشکلی در پرداخت به وجود آماده است،لطفا مجددا امتحان کنید";
+                }
+
+                #endregion
+            }
+            return View(chargeWallet);
+        }
+
+        #endregion
+
+        #region online payment
+
+        [HttpGet("online-payment/{id}")]
+        public async Task<IActionResult> OnlinePayment(long id)
+        {
+            return View();
         }
 
         #endregion

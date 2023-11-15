@@ -21,12 +21,16 @@ namespace Shop.Infra.IoC
 
             services.AddScoped<ISmsService, SmsService>();
 
+            services.AddScoped<IWalletService, WalletService>();
+
             #endregion
 
 
             #region repositories
 
             services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IWalletRepository, WalletRepository>();
 
             #endregion
 
