@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Models.Account;
+using Shop.Domain.Models.Wallet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,12 @@ namespace Shop.Infra.Data.Context
 
         #endregion
 
+
         #region user
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<UserWallet> UserWallets { get; set; }
 
         #endregion
     }

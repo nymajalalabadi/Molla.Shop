@@ -53,7 +53,6 @@ namespace Shop.Web.Areas.User.Controllers
             return View(editUserProfile);
         }
 
-
         #endregion
 
         #region Change Password
@@ -78,7 +77,7 @@ namespace Shop.Web.Areas.User.Controllers
                         break;
 
                     case ChangePasswordResult.Failed:
-                        TempData[WarningMessage] = "لطفا رمز عبور قبلی خود را درست وارد بفرمایید";
+                        TempData[ErrorMessage] = "لطفا رمز عبور قبلی خود را درست وارد بفرمایید";
                         break;
 
                     case ChangePasswordResult.PasswordEqual:
