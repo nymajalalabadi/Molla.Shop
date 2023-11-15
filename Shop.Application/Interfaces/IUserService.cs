@@ -27,6 +27,9 @@ namespace Shop.Application.Interfaces
 
         Task<EditUserProfileResult> EditProfile(long userId, IFormFile userAvatar, EditUserProfileViewModel editUserProfile);
 
+        Task<ChangePasswordResult> ChangePassword(long userId, ChangePasswordViewModel changePassword);
+
+
         #endregion
     }
 }

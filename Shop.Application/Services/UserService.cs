@@ -146,6 +146,35 @@ namespace Shop.Application.Services
 
         }
 
+        public async Task<ChangePasswordResult> ChangePassword(long userId, ChangePasswordViewModel changePassword)
+        {
+            var user = await _userRepository.GetUserById(userId);
+
+            if(user != null)
+            {
+                var currentPassword = _passwordHelper.EncodePasswordMd5(changePassword.CurrentPassword);
+
+                if (user.Password == currentPassword)
+                {
+                    var newPassword = _passwordHelper.EncodePasswordMd5(changePassword.NewPassword);
+
+                    if (user.Password != newPassword)
+                    {
+                        user.Password = newPassword;
+                        _userRepository.UpdateUser(user);
+                        await _userRepository.SaveChanges();
+
+                        return ChangePasswordResult.Success;
+                    }
+
+                    return ChangePasswordResult.PasswordEqual;
+                }
+                return ChangePasswordResult.Failed;
+            }
+
+            return ChangePasswordResult.NotFound;
+        }
+
         #endregion
     }
 }
