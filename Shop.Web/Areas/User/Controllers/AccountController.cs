@@ -150,9 +150,34 @@ namespace Shop.Web.Areas.User.Controllers
         [HttpGet("online-payment/{id}")]
         public async Task<IActionResult> OnlinePayment(long id)
         {
+            if (HttpContext.Request.Query["Status"] != "" && HttpContext.Request.Query["Status"].ToString().ToLower() == "ok" && HttpContext.Request.Query["Authority"] != "")
+            {
+                string authority = HttpContext.Request.Query["Authority"];
+
+                var wallet = await _walletService.GetUserWalletById(id);
+
+                if (wallet != null)
+                {
+                    var payment = new Payment(wallet.Amount);
+                    var result = payment.Verification(authority).Result;
+
+                    if (result.Status == 100)
+                    {
+                        ViewBag.RefId = result.RefId;
+                        ViewBag.Success = true;
+
+                        await _walletService.UpdateWalletForCharge(wallet);
+                    }
+
+                    return View();
+                }
+
+                return NotFound();
+            }
+
             return View();
         }
-
-        #endregion
     }
+    #endregion
+
 }
