@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Shop.Application.Extentions;
 using Shop.Application.Interfaces;
 using Shop.Application.Utils;
@@ -177,7 +178,21 @@ namespace Shop.Web.Areas.User.Controllers
 
             return View();
         }
+        #endregion
+
+        #region User wallet
+
+        [HttpGet("user-wallet")]
+        public async Task<IActionResult> UserWallet()
+        {
+            return View();
+        }
+
+        #endregion
     }
-    #endregion
+
+
+
+
 
 }
