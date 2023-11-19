@@ -11,7 +11,7 @@ namespace Shop.Domain.ViewModels.Pigging
         public BasePaging()
         {
             PageId = 1;
-            TakeEntity = 15;
+            TakeEntity = 5;
             CountForShowAfterAndBefore = 5;
         }
 

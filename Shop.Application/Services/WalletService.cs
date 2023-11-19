@@ -64,5 +64,11 @@ namespace Shop.Application.Services
             }
             return false;
         }
+
+        public async Task<FilterWalletViewModel> FilterWallets(FilterWalletViewModel filter)
+        {
+            return await _walletRepository.FilterWallets(filter);
+        }
+
     }
 }

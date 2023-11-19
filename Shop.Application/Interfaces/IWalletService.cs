@@ -15,5 +15,7 @@ namespace Shop.Application.Interfaces
         Task<UserWallet> GetUserWalletById(long walletId);
 
         Task<bool> UpdateWalletForCharge(UserWallet wallet);
+
+        Task<FilterWalletViewModel> FilterWallets(FilterWalletViewModel filter);
     }
 }

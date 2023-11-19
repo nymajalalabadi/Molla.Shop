@@ -1,7 +1,55 @@
-﻿
+﻿@model Shop.Domain.ViewModels.Wallet.FilterWalletViewModel
+
 @{
-    ViewData["Title"] = "UserWallet";
+    ViewData["Title"] = "تراکنش ها";
 }
 
-<h1>UserWallet</h1>
+<div class="container text-right mt-5 mb-5">
+    <div class="user-account">
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <aside>
+                    @await Component.InvokeAsync("UserSideBar")
+
+                </aside>
+            </div>
+            <div class="col-md-9 col-sm-8 col-xs-12 ">
+                <section class="user-account-content box-shadow">
+                    <header>
+                        <h1>@ViewData["Title"]</h1>
+                    </header>
+                    <div class="inner">
+                        <div class="account-information">
+                            <form asp-area="User" asp-controller="Account" asp-action="UserWallet" id="filter-Form">
+                                <input type="hidden" asp-for="PageId" />
+                            </form>
+                            <div class="table-responsive">
+                                @if(Model.UserWallets != null && Model.UserWallets.Any())
+                                {
+                                     <table class="table table-bordered table-hover dataTable table-striped text-center">
+                                        <tr class="active">
+                                            <td>عنوان تراکنش</td>
+                                            <td>مبلغ(تومان)</td>
+                                            <td>تاریخ</td>
+                                            <td>توضیحات</td>
+                                        </tr>
+                                        @foreach (var wallet in Model.UserWallets)
+                                        {
+                                            <tr>
+                                                <td>@wallet.WalletType</td>
+                                                <td>@wallet.Amount.ToString("#,0")</td>
+                                                <td>@wallet.CreateDate.ToStringShamsiDate()</td>
+                                                <td>@wallet.Description</td>
+                                            </tr>
+                                        }
+                                    </table>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
 

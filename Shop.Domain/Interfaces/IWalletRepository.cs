@@ -1,4 +1,5 @@
 ﻿using Shop.Domain.Models.Wallet;
+using Shop.Domain.ViewModels.Wallet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace Shop.Domain.Interfaces
         Task SaveChange();
 
         void UpdateWallet(UserWallet userWallet);
+
+        Task<FilterWalletViewModel> FilterWallets(FilterWalletViewModel filter);
 
         #endregion
     }
