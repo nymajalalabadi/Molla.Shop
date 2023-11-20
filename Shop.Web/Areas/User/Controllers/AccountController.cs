@@ -180,14 +180,13 @@ namespace Shop.Web.Areas.User.Controllers
         }
         #endregion
 
-        #region User wallet
+        #region user wallet
 
         [HttpGet("user-wallet")]
-        public async Task<IActionResult> UserWallet(FilterWalletViewModel filterWallet)
+        public async Task<IActionResult> UserWallet(FilterWalletViewModel filter)
         {
-            filterWallet.UserId = User.GetUserId();
-
-            return View(await _walletService.FilterWallets(filterWallet));
+            filter.UserId = User.GetUserId();
+            return View(await _walletService.FilterWallets(filter));
         }
 
         #endregion

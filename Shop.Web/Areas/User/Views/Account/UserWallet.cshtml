@@ -4,6 +4,10 @@
     ViewData["Title"] = "تراکنش ها";
 }
 
+@section scripts{
+    <partial name="_PagingScript" />
+}
+
 <div class="container text-right mt-5 mb-5">
     <div class="user-account">
         <div class="row">
@@ -20,23 +24,24 @@
                     </header>
                     <div class="inner">
                         <div class="account-information">
-                            <form asp-area="User" asp-controller="Account" asp-action="UserWallet" id="filter-Form">
+                            <form asp-area="User" asp-controller="Account" asp-action="UserWallet" id="filter-Form" method="get">
                                 <input type="hidden" asp-for="PageId" />
                             </form>
+
                             <div class="table-responsive">
-                                @if(Model.UserWallets != null && Model.UserWallets.Any())
+                                @if (Model.UserWallets != null && Model.UserWallets.Any())
                                 {
-                                     <table class="table table-bordered table-hover dataTable table-striped text-center">
+                                    <table class="table table-bordered table-hover dataTable table-striped text-center">
                                         <tr class="active">
                                             <td>عنوان تراکنش</td>
-                                            <td>مبلغ(تومان)</td>
+                                            <td>مبلغ(نومان)</td>
                                             <td>تاریخ</td>
                                             <td>توضیحات</td>
                                         </tr>
                                         @foreach (var wallet in Model.UserWallets)
                                         {
                                             <tr>
-                                                <td>@wallet.WalletType</td>
+                                                <td>@wallet.WalletType.GetEnumName()</td>
                                                 <td>@wallet.Amount.ToString("#,0")</td>
                                                 <td>@wallet.CreateDate.ToStringShamsiDate()</td>
                                                 <td>@wallet.Description</td>
@@ -45,6 +50,7 @@
                                     </table>
                                 }
                             </div>
+                            <partial name="_Paging" model="Model.GetCurrentPaging()" />
                         </div>
                     </div>
                 </section>
@@ -52,4 +58,3 @@
         </div>
     </div>
 </div>
-
