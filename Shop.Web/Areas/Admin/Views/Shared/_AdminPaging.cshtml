@@ -1,0 +1,32 @@
+﻿@model Shop.Domain.ViewModels.Pigging.BasePaging
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @if (Model.StartPage < Model.PageId)
+        {
+            <li class="page-item">
+                <a class="page-link" onclick="FillPageId(@(Model.PageId -1))" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+        }
+
+        @for (int i = Model.StartPage; i <= Model.EndPage; i++)
+        {
+
+            <li class="page-item @(Model.PageId == i ? "active" : "")"><a class="page-link" onclick="FillPageId(@i)">@i</a></li>
+        }
+
+        @if (Model.EndPage > Model.PageId)
+        {
+
+            <li class="page-item">
+                <a class="page-link" onclick="FillPageId(@(Model.PageId +1))" aria-label="Previous">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>

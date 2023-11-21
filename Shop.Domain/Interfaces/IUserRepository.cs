@@ -1,4 +1,5 @@
 ﻿using Shop.Domain.Models.Account;
+using Shop.Domain.ViewModels.Admin.Account;
 
 namespace Shop.Domain.Interfaces
 {
@@ -17,6 +18,12 @@ namespace Shop.Domain.Interfaces
         void UpdateUser(User user);
 
         Task<User> GetUserById(long UserId);
+
+        #endregion
+
+        #region admin
+
+        Task<FilterUserViewModel> filterUsers(FilterUserViewModel filterUser);
 
         #endregion
     }

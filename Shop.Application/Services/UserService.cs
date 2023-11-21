@@ -6,6 +6,7 @@ using Shop.Application.Utils;
 using Shop.Domain.Interfaces;
 using Shop.Domain.Models.Account;
 using Shop.Domain.ViewModels.Account;
+using Shop.Domain.ViewModels.Admin.Account;
 
 namespace Shop.Application.Services
 {
@@ -173,6 +174,15 @@ namespace Shop.Application.Services
             }
 
             return ChangePasswordResult.NotFound;
+        }
+
+        #endregion
+
+        #region admin
+
+        public async Task<FilterUserViewModel> filterUsers(FilterUserViewModel filterUser)
+        {
+            return await _userRepository.filterUsers(filterUser);
         }
 
         #endregion

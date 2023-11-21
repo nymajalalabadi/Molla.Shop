@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Interfaces;
 using Shop.Domain.Models.Account;
+using Shop.Domain.ViewModels.Admin.Account;
+using Shop.Domain.ViewModels.Pigging;
 using Shop.Infra.Data.Context;
 
 namespace Shop.Infra.Data.Repositories
@@ -57,6 +59,34 @@ namespace Shop.Infra.Data.Repositories
         public async Task<User> GetUserById(long UserId)
         {
             return await _context.Users.AsQueryable().SingleOrDefaultAsync(u => u.Id == UserId);
+        }
+
+        #endregion
+
+        #region admin
+
+        public async Task<FilterUserViewModel> filterUsers(FilterUserViewModel filterUser)
+        {
+            var query = _context.Users.AsQueryable();
+
+            #region filter
+
+            if (!string.IsNullOrEmpty(filterUser.PhoneNumber))
+            {
+                query = query.Where(u => u.PhoneNumber == filterUser.PhoneNumber);
+            }
+
+            #endregion
+
+            #region paging
+
+            var pager = Pager.Build(filterUser.PageId, await _context.Users.CountAsync(), filterUser.TakeEntity, filterUser.CountForShowAfterAndBefore);
+
+            var AllData = await query.Paging(pager).ToListAsync();
+
+            #endregion
+
+            return filterUser.SetPaging(pager).SetUsers(AllData);
         }
 
 

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Models.Account;
 using Shop.Domain.ViewModels.Account;
+using Shop.Domain.ViewModels.Admin.Account;
 
 namespace Shop.Application.Interfaces
 {
@@ -29,6 +30,11 @@ namespace Shop.Application.Interfaces
 
         Task<ChangePasswordResult> ChangePassword(long userId, ChangePasswordViewModel changePassword);
 
+        #endregion
+
+        #region admin
+
+        Task<FilterUserViewModel> filterUsers(FilterUserViewModel filterUser);
 
         #endregion
     }

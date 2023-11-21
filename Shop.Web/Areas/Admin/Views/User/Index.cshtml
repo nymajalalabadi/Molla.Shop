@@ -1,0 +1,71 @@
+﻿@model Shop.Domain.ViewModels.Admin.Account.FilterUserViewModel
+
+@{
+    ViewData["Title"] = "لیست کاربران";
+    var index = 1;
+}
+
+<div class="row mt-5">
+    <div class="col-md-3">
+        <form asp-area="admin" asp-controller="User" asp-action="FilterUser" id="filter-Form" method="get">
+            <input asp-for="PageId" type="hidden" />
+
+            <div class="form-group">
+                <label id="PhoneNumber">فیلتر براساس شماره همراه:</label>
+                <input type="text" asp-for="PhoneNumber" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn btn-info mt-3 mb-3 btn-block">فیلتر</button>
+        </form>
+    </div>
+    <div class="col-md-9">
+        @if (Model.Users != null && Model.Users.Any())
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">نام</th>
+                        <th scope="col">نام خانوادگی</th>
+                        <th scope="col">تلفن همراه</th>
+                        <th scope="col">فعال /غیر فعال</th>
+                        <th scope="col">دستورات</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr>
+                            <th scope="row">@index</th>
+                            <td>@user.FirstName</td>
+                            <td>@user.LastName</td>
+                            <td>@user.PhoneNumber</td>
+                            <td>
+                                @if (user.IsMobileActive)
+                                {
+                                    <span>فعال</span>
+
+                                }
+                                else
+                                {
+                                    <span>غیر فعال</span>
+                                }
+                            </td>
+                            <td></td>
+                        </tr>
+                        index++;
+                    }
+                </tbody>
+
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                <b>ایتمی وجود ندارد</b>
+            </div>
+        }
+    </div>
+    <partial name="_AdminPaging" model="Model.GetCurrentPaging()" />
+</div>
