@@ -12,6 +12,7 @@
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com/docs/5.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet" integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous">
     <!-- Custom styles for this template -->
+    <link href="/admin/css/notifications.css" rel="stylesheet" />
     <link href="/admin/css/custom.css" rel="stylesheet">
 </head>
 <body>
@@ -32,11 +33,13 @@
     <div class="container-fluid">
         <div class="row">
             <partial name="_AdminSideMenu" />
-
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 @RenderBody()
             </main>
         </div>
     </div>
+    <partial name="_FooterAdminRefrences" />
+    @RenderSection("scripts", false)
+    <partial name="_Message" /> 
 </body>
 </html>

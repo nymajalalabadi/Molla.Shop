@@ -21,6 +21,7 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index(FilterUserViewModel filterUser)
         {
+            filterUser.TakeEntity = 1;
             return View(await _userService.filterUsers(filterUser));
         }
 
