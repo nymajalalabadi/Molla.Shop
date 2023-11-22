@@ -67,6 +67,8 @@ namespace Shop.Domain.Models.Account
 
         public ICollection<UserWallet> UserWallets { get; set; }
 
+        public ICollection<UserRole> UserRoles { get; set; }
+
         #endregion
     }
 
