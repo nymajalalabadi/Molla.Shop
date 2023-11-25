@@ -1,8 +1,4 @@
-﻿function FillPageId(pageId) {
-    $("#PageId").val(pageId);
-    $("#filter-Form").submit();
-}
-
+﻿
 function ShowMessage(title, text, theme) {
     window.createNotification({
         closeOnClick: true,
@@ -14,4 +10,9 @@ function ShowMessage(title, text, theme) {
         title: title !== '' ? title : 'اعلان',
         message: decodeURI(text)
     });
+}
+
+function FillPageId(pageId) {
+    $("#PageId").val(pageId);
+    $("#filter-Form").submit();
 }

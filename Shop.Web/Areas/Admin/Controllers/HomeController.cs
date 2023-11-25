@@ -6,6 +6,7 @@ namespace Shop.Web.Areas.Admin.Controllers
     {
         #region dashboard
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
