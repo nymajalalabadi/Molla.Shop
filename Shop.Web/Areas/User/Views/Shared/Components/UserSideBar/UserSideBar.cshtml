@@ -23,7 +23,7 @@
             <li><a asp-action="ChangePassword" asp-controller="Account" asp-area="User">تغییر رمز عبور </a></li>
             <li><a asp-action="ChargeWallet" asp-controller="Account" asp-area="User"> کیف پول </a></li>
             <li><a asp-action="UserWallet" asp-controller="Account" asp-area="User"> تراکنش ها </a></li>
-            <li><a href=""> خروج از حساب کاربری </a></li>
+            <li><a asp-area="" asp-controller="Account" asp-action="LogOut">خروج از حساب کاربری</a></li>
         </ul>
     </div>
 </section>

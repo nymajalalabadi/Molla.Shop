@@ -3,5 +3,59 @@
     ViewData["Title"] = "ویرایش کاربر";
 }
 
-<h1>EditUser</h1>
+<div class="row mt-4">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="card-text">ویرایش اطلاعات</p>
+                <form asp-area="Admin" asp-controller="User" asp-action="EditUser" method="post">
 
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="form-group">
+                        <label class="form-lable">نام</label>
+                        <input class="form-control" asp-for="FirstName">
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-lable">نام خانوادگی</label>
+                        <input class="form-control" asp-for="LastName">
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-lable">شماره همراه</label>
+                        <input class="form-control" asp-for="PhoneNumber" disabled>
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-lable">گذرواژه</label>
+                        <input class="form-control" type="text" asp-for="Password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-lable">جنسیت</label>
+                        <select class="form-control" asp-for="UserGender" asp-items="@Html.GetEnumSelectList<UserGender>()"></select>
+                        <span asp-validation-for="UserGender" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-warning btn-block ">ویرایش اطلاعات</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="card-text">نقش ها</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <partial name="_ValidationScripts" />
+}

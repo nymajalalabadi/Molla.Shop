@@ -43,7 +43,7 @@ namespace Shop.Web.Areas.Admin.Controllers
             return View(data);
         }
 
-        [HttpPost("edituser/{userId}")]
+        [HttpPost("edituser/{userId}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUser(EditUserFromAdmin editUser)
         {
             if (ModelState.IsValid)
