@@ -25,6 +25,8 @@ namespace Shop.Domain.Interfaces
 
         Task<FilterUserViewModel> filterUsers(FilterUserViewModel filterUser);
 
+        Task<EditUserFromAdmin> GetEditUserFromAdmin(long userId);
+
         #endregion
     }
 }

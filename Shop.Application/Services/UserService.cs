@@ -185,6 +185,35 @@ namespace Shop.Application.Services
             return await _userRepository.filterUsers(filterUser);
         }
 
+        public async Task<EditUserFromAdmin> GetEditUserFromAdmin(long userId)
+        {
+            return await _userRepository.GetEditUserFromAdmin(userId);
+        }
+
+        public async Task<EditUserFromAdminResult> EditUserFromAdmin(EditUserFromAdmin editUser)
+        {
+            var user = await _userRepository.GetUserById(editUser.Id);
+
+            if (user == null)
+            {
+                return EditUserFromAdminResult.NotFound;
+            }
+
+            user.FirstName = editUser.FirstName;
+            user.LastName = editUser.LastName;
+            user.UserGender = editUser.UserGender;
+
+            if (!string.IsNullOrEmpty(editUser.Password))
+            {
+                user.Password = _passwordHelper.EncodePasswordMd5(editUser.Password);
+            }
+
+            _userRepository.UpdateUser(user);
+            await _userRepository.SaveChanges();
+
+            return EditUserFromAdminResult.Success;
+        }
+
         #endregion
     }
 }

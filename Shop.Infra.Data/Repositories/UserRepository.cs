@@ -90,6 +90,21 @@ namespace Shop.Infra.Data.Repositories
         }
 
 
+        public async Task<EditUserFromAdmin> GetEditUserFromAdmin(long userId)
+        {
+            return await _context.Users.AsQueryable()
+                .Where(u => u.Id == userId)
+                .Select(x => new EditUserFromAdmin
+                {
+                    Id = x.Id,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    PhoneNumber = x.PhoneNumber,
+                    UserGender = x.UserGender,
+                    Password = x.Password
+                }).SingleOrDefaultAsync();
+        }
+
         #endregion
     }
 }
