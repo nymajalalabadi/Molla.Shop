@@ -38,14 +38,14 @@ namespace Shop.Application.Services
             {
                 var user = new User()
                 {
-                    FirstName =register.FirstName,
-                    LastName =register.LastName,
+                    FirstName = register.FirstName,
+                    LastName = register.LastName,
                     UserGender = UserGender.Unknown,
                     PhoneNumber = register.PhoneNumber,
                     Password = _passwordHelper.EncodePasswordMd5(register.Password),
                     Avatar = "default.png",
                     IsMobileActive = false,
-                    MobileActiveCode = new Random().Next(10000,999999).ToString(),
+                    MobileActiveCode = new Random().Next(10000, 999999).ToString(),
                     IsBlocked = false,
                     IsDelete = false,
                 };
@@ -70,7 +70,7 @@ namespace Shop.Application.Services
 
             if (!user.IsMobileActive) return LoginUserResult.NotActive;
 
-            if(user.Password != _passwordHelper.EncodePasswordMd5(login.Password)) return LoginUserResult.NotFound;
+            if (user.Password != _passwordHelper.EncodePasswordMd5(login.Password)) return LoginUserResult.NotFound;
 
             return LoginUserResult.Success;
         }
@@ -151,7 +151,7 @@ namespace Shop.Application.Services
         {
             var user = await _userRepository.GetUserById(userId);
 
-            if(user != null)
+            if (user != null)
             {
                 var currentPassword = _passwordHelper.EncodePasswordMd5(changePassword.CurrentPassword);
 
@@ -212,6 +212,43 @@ namespace Shop.Application.Services
             await _userRepository.SaveChanges();
 
             return EditUserFromAdminResult.Success;
+        }
+
+        public async Task<CreateOrEditRoleViewModel> GetEditRoleById(long roleId)
+        {
+            return await _userRepository.GetEditRoleById(roleId);
+        }
+
+        public async Task<CreateOrEditRoleResult> CreateOrEditRole(CreateOrEditRoleViewModel createOrEdit)
+        {
+            if (createOrEdit.Id != 0)
+            {
+                var role = await _userRepository.GetRoleById(createOrEdit.Id);
+
+                if (role == null)
+                    return CreateOrEditRoleResult.NotFound;
+
+                role.RoleTitle = createOrEdit.RoleTitle;
+
+                _userRepository.UpdateRole(role);
+                await _userRepository.SaveChanges();
+
+                return CreateOrEditRoleResult.Success;
+            }
+            else
+            {
+                //create
+
+                var NewRole = new Role()
+                {
+                    RoleTitle = createOrEdit.RoleTitle,
+                };
+
+                await _userRepository.CreateRole(NewRole);
+                await _userRepository.SaveChanges();
+
+                return CreateOrEditRoleResult.Success;
+            }
         }
 
         #endregion

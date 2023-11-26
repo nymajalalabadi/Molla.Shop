@@ -40,6 +40,10 @@ namespace Shop.Application.Interfaces
 
         Task<EditUserFromAdminResult> EditUserFromAdmin(EditUserFromAdmin editUser);
 
+        Task<CreateOrEditRoleViewModel> GetEditRoleById(long roleId);
+
+        Task<CreateOrEditRoleResult> CreateOrEditRole(CreateOrEditRoleViewModel createOrEdit);
+
         #endregion
     }
 }
