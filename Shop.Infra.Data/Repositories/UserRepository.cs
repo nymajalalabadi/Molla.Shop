@@ -105,6 +105,58 @@ namespace Shop.Infra.Data.Repositories
                 }).SingleOrDefaultAsync();
         }
 
+
+        public async Task<CreateOrEditRoleViewModel> GetEditRoleById(long roleId)
+        {
+            return await _context.Roles.AsQueryable()
+                .Where(r => r.Id == roleId)
+                .Select(x => new CreateOrEditRoleViewModel
+                {
+                    Id = x.Id,
+                    RoleTitle = x.RoleTitle,
+                }).SingleOrDefaultAsync();
+        }
+
+        public async Task CreateRole(Role role)
+        {
+            await _context.Roles.AddAsync(role);
+        }
+
+
+        public void UpdateRole(Role role)
+        {
+            _context.Roles.Update(role);
+        }
+
+        public async Task<Role> GetRoleById(long roleId)
+        {
+            return await _context.Roles.SingleOrDefaultAsync(r => r.Id == roleId);
+        }
+
+        public async Task<FilterRolesViewModel> filterRoles(FilterRolesViewModel filterRoles)
+        {
+            var query = _context.Roles.AsQueryable();
+
+            #region filter
+
+            if (!string.IsNullOrEmpty(filterRoles.RoleName))
+            {
+                query = query.Where(c => EF.Functions.Like(c.RoleTitle, $"%{filterRoles.RoleName}%"));
+            }
+
+            #endregion
+
+            #region paging
+
+            var pager = Pager.Build(filterRoles.PageId, await _context.Roles.CountAsync(), filterRoles.TakeEntity, filterRoles.CountForShowAfterAndBefore);
+
+            var allData = await query.Paging(pager).ToListAsync();
+
+            #endregion
+
+            return filterRoles.SetPaging(pager).SetRoles(allData);
+        }
+
         #endregion
     }
 }

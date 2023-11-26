@@ -27,6 +27,16 @@ namespace Shop.Domain.Interfaces
 
         Task<EditUserFromAdmin> GetEditUserFromAdmin(long userId);
 
+        Task<CreateOrEditRoleViewModel> GetEditRoleById(long roleId);
+
+        Task CreateRole(Role role);
+
+        void UpdateRole(Role role);
+
+        Task<Role> GetRoleById(long roleId);
+
+        Task<FilterRolesViewModel> filterRoles(FilterRolesViewModel filterRoles);
+
         #endregion
     }
 }
