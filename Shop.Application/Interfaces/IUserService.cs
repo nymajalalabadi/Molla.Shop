@@ -44,6 +44,8 @@ namespace Shop.Application.Interfaces
 
         Task<CreateOrEditRoleResult> CreateOrEditRole(CreateOrEditRoleViewModel createOrEdit);
 
+        Task<FilterRolesViewModel> filterRoles(FilterRolesViewModel filterRoles);
+
         #endregion
     }
 }

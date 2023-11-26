@@ -223,6 +223,8 @@ namespace Shop.Application.Services
         {
             if (createOrEdit.Id != 0)
             {
+                //Edit
+
                 var role = await _userRepository.GetRoleById(createOrEdit.Id);
 
                 if (role == null)
@@ -237,7 +239,7 @@ namespace Shop.Application.Services
             }
             else
             {
-                //create
+                //Create
 
                 var NewRole = new Role()
                 {
@@ -249,6 +251,11 @@ namespace Shop.Application.Services
 
                 return CreateOrEditRoleResult.Success;
             }
+        }
+
+        public async Task<FilterRolesViewModel> filterRoles(FilterRolesViewModel filterRoles)
+        {
+            return await _userRepository.filterRoles(filterRoles);
         }
 
         #endregion
