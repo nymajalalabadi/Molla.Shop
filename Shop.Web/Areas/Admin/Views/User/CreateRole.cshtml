@@ -1,0 +1,38 @@
+﻿@model Shop.Domain.ViewModels.Admin.Account.CreateOrEditRoleViewModel
+@{
+    ViewData["Title"] = "افزودن نقش";
+}
+
+<div class="row mt-4">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="card-text">ثبت اطلاعات</p>
+                <form asp-area="Admin" asp-controller="User" asp-action="CreateRole" method="post">
+                    <div class="form-group">
+                        <label class="form-lable">نام نقش</label>
+                        <input class="form-control" asp-for="RoleTitle">
+                        <span asp-validation-for="RoleTitle" class="text-danger"></span>
+                    </div>
+
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-success btn-block ">ثبت اطلاعات</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="card-text">سطح دسترسی ها</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <partial name="_ValidationScripts" />
+}
+

@@ -1,0 +1,71 @@
+﻿@model Shop.Domain.ViewModels.Admin.Account.FilterRolesViewModel
+@{
+    ViewData["Title"] = "مدریت نقش ها";
+    int index = 1;
+}
+
+
+<div class="row mt-5">
+
+    <div class="col-md-3">
+        <a class="btn btn-info" asp-area="Admin" asp-controller="User" asp-action="CreateRole">افزودن نقش</a>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="card-text">@ViewData["Title"]</p>
+                <form asp-area="admin" asp-controller="User" asp-action="FilterRoles" id="filter-Form" method="get">
+                    <input asp-for="PageId" type="hidden" />
+                    <div class="form-group">
+                        <label class="form-label">فیلتر براساس نام نقش:</label>
+                        <input type="text" asp-for="RoleName" class="form-control" placeholder="نام نقش" />
+                    </div>
+                    <button type="submit" class="btn btn-info mt-3 mb-3 btn-block">فیلتر</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-9">
+        @if (Model.Roles != null && Model.Roles.Any())
+        {
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">نام نقش</th>
+                                <th scope="col">دستورات</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var role in Model.Roles)
+                            {
+                                <tr>
+                                    <th scope="row">@index</th>
+                                    <td>@role.RoleTitle</td>
+                                    <td>
+                                        <a class="btn btn-warning btn-sm" asp-area="Admin" asp-controller="User" asp-action="EditRole" asp-route-roleId="@role.Id">ویرایش</a>
+                                    </td>
+                                </tr>
+                                index++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                <b>ایتمی وجود ندارد</b>
+            </div>
+        }
+
+        <partial name="_AdminPaging" model="Model.GetCurrentPaging()" />
+    </div>
+</div>
+
+
+

@@ -67,5 +67,88 @@ namespace Shop.Web.Areas.Admin.Controllers
         }
 
         #endregion
+
+        #region filter roles
+
+        [HttpGet]
+        public async Task<IActionResult> FilterRoles(FilterRolesViewModel filterRoles)
+        {
+            return View(await _userService.filterRoles(filterRoles));
+        }
+
+        #endregion
+
+        #region CreateRole
+
+        [HttpGet("createrole")]
+        public async Task<IActionResult> CreateRole()
+        {
+            return View();
+        }
+
+        [HttpPost("createrole"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateRole(CreateOrEditRoleViewModel createRole)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.CreateOrEditRole(createRole);
+
+                switch (result)
+                {
+                    case CreateOrEditRoleResult.NotFound:
+                        break;
+
+                    case CreateOrEditRoleResult.Success:
+                        TempData[SuccessMessage] = "عملیات افزودن نقش با موفقیت انجام شد";
+
+                        return RedirectToAction("FilterRoles");
+                }
+
+            }
+
+            return View(createRole);
+        }
+
+        #endregion
+
+        #region edit role
+
+        [HttpGet("editrole/{roleId}")]
+        public async Task<IActionResult> EditRole(long roleId)
+        {
+            var role = await _userService.GetEditRoleById(roleId);
+
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            return View(role);
+        }
+
+        [HttpPost("editrole/{roleId}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditRole(CreateOrEditRoleViewModel editRole)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.CreateOrEditRole(editRole);
+
+                switch (result)
+                {
+                    case CreateOrEditRoleResult.NotFound:
+                        TempData[WarningMessage] = "نقشی با مشخصات وارد شده یافت نشد";
+                        break;
+
+                    case CreateOrEditRoleResult.Success:
+                        TempData[SuccessMessage] = "عملیات ویرایش نقش با موفقیت انجام شد";
+
+                        return RedirectToAction("FilterRoles");
+                }
+            }
+
+            return View(editRole);
+        }
+
+        #endregion
     }
 }
