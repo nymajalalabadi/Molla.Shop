@@ -100,7 +100,7 @@ namespace Shop.Infra.Data.Repositories
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     PhoneNumber = x.PhoneNumber,
-                    UserGender = x.UserGender,
+                    UserGender = x.UserGender, 
                     Password = x.Password
                 }).SingleOrDefaultAsync();
         }
@@ -109,11 +109,14 @@ namespace Shop.Infra.Data.Repositories
         public async Task<CreateOrEditRoleViewModel> GetEditRoleById(long roleId)
         {
             return await _context.Roles.AsQueryable()
+                .Include(r => r.RolePermissions)
                 .Where(r => r.Id == roleId)
                 .Select(x => new CreateOrEditRoleViewModel
                 {
                     Id = x.Id,
                     RoleTitle = x.RoleTitle,
+                    SelectedPermission = x.RolePermissions.Select(p => p.PermissionId).ToList()
+
                 }).SingleOrDefaultAsync();
         }
 
@@ -155,6 +158,40 @@ namespace Shop.Infra.Data.Repositories
             #endregion
 
             return filterRoles.SetPaging(pager).SetRoles(allData);
+        }
+
+        public async Task<List<Permission>> GetAllActivePermission()
+        {
+            return await _context.Permissions.Where(p => !p.IsDelete).ToListAsync();
+        }
+
+        public async Task RomveAllPermissionSelectedRole(long roleId)
+        {
+            var AllRolePermission = await _context.RolePermissions.Where(r => r.RoleId == roleId).ToListAsync();
+
+            if (AllRolePermission.Any())
+            {
+                _context.RemoveRange(AllRolePermission);
+            }
+        }
+
+        public async Task AddPermissionToRole(List<long> selectedPermission, long roleId)
+        {
+            if (selectedPermission != null && selectedPermission.Any())
+            {
+                var rolePermission = new List<RolePermission>();
+
+                foreach (var permissionId in selectedPermission)
+                {
+                    rolePermission.Add(new RolePermission
+                    {
+                        PermissionId = permissionId,
+                        RoleId = roleId
+                    });
+                }
+
+                await _context.RolePermissions.AddRangeAsync(rolePermission);
+            }
         }
 
         #endregion

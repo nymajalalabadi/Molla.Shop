@@ -46,6 +46,8 @@ namespace Shop.Application.Interfaces
 
         Task<FilterRolesViewModel> filterRoles(FilterRolesViewModel filterRoles);
 
+        Task<List<Permission>> GetAllActivePermission();
+
         #endregion
     }
 }

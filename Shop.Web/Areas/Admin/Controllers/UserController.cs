@@ -98,6 +98,10 @@ namespace Shop.Web.Areas.Admin.Controllers
                     case CreateOrEditRoleResult.NotFound:
                         break;
 
+                    case CreateOrEditRoleResult.NotExistPermission:
+                        TempData[WarningMessage] = "لطفا نقشی را انتخاب کنید";
+                        break;
+
                     case CreateOrEditRoleResult.Success:
                         TempData[SuccessMessage] = "عملیات افزودن نقش با موفقیت انجام شد";
 
@@ -116,6 +120,8 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpGet("editrole/{roleId}")]
         public async Task<IActionResult> EditRole(long roleId)
         {
+            ViewData["Permissions"] = await _userService.GetAllActivePermission();
+
             var role = await _userService.GetEditRoleById(roleId);
 
             if (role == null)
@@ -129,6 +135,8 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpPost("editrole/{roleId}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> EditRole(CreateOrEditRoleViewModel editRole)
         {
+            ViewData["Permissions"] = await _userService.GetAllActivePermission();
+
             if (ModelState.IsValid)
             {
                 var result = await _userService.CreateOrEditRole(editRole);
@@ -137,6 +145,10 @@ namespace Shop.Web.Areas.Admin.Controllers
                 {
                     case CreateOrEditRoleResult.NotFound:
                         TempData[WarningMessage] = "نقشی با مشخصات وارد شده یافت نشد";
+                        break;
+
+                    case CreateOrEditRoleResult.NotExistPermission:
+                        TempData[WarningMessage] = "لطفا نقشی را انتخاب کنید";
                         break;
 
                     case CreateOrEditRoleResult.Success:

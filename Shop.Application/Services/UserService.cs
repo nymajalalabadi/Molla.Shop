@@ -233,6 +233,14 @@ namespace Shop.Application.Services
                 role.RoleTitle = createOrEdit.RoleTitle;
 
                 _userRepository.UpdateRole(role);
+
+                await _userRepository.RomveAllPermissionSelectedRole(createOrEdit.Id);
+
+                if (createOrEdit.SelectedPermission == null)
+                    return CreateOrEditRoleResult.NotExistPermission;
+
+                await _userRepository.AddPermissionToRole(createOrEdit.SelectedPermission, createOrEdit.Id);
+
                 await _userRepository.SaveChanges();
 
                 return CreateOrEditRoleResult.Success;
@@ -241,12 +249,19 @@ namespace Shop.Application.Services
             {
                 //Create
 
-                var NewRole = new Role()
+                var newRole = new Role()
                 {
                     RoleTitle = createOrEdit.RoleTitle,
                 };
 
-                await _userRepository.CreateRole(NewRole);
+                await _userRepository.CreateRole(newRole);
+
+                if (createOrEdit.SelectedPermission != null)
+                    return CreateOrEditRoleResult.NotExistPermission;
+
+                await _userRepository.AddPermissionToRole(createOrEdit.SelectedPermission, newRole.Id);
+
+
                 await _userRepository.SaveChanges();
 
                 return CreateOrEditRoleResult.Success;
@@ -256,6 +271,11 @@ namespace Shop.Application.Services
         public async Task<FilterRolesViewModel> filterRoles(FilterRolesViewModel filterRoles)
         {
             return await _userRepository.filterRoles(filterRoles);
+        }
+
+        public async Task<List<Permission>> GetAllActivePermission()
+        {
+            return await _userRepository.GetAllActivePermission();
         }
 
         #endregion

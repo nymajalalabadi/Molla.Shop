@@ -37,6 +37,12 @@ namespace Shop.Domain.Interfaces
 
         Task<FilterRolesViewModel> filterRoles(FilterRolesViewModel filterRoles);
 
+        Task<List<Permission>> GetAllActivePermission();
+
+        Task RomveAllPermissionSelectedRole(long roleId);
+
+        Task AddPermissionToRole(List<long> selectedPermission, long roleId);
+
         #endregion
     }
 }
