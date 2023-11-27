@@ -4,6 +4,7 @@ using Shop.Domain.Models.Account;
 using Shop.Domain.ViewModels.Admin.Account;
 using Shop.Domain.ViewModels.Pigging;
 using Shop.Infra.Data.Context;
+using System.Security;
 
 namespace Shop.Infra.Data.Repositories
 {
@@ -191,6 +192,7 @@ namespace Shop.Infra.Data.Repositories
                 }
 
                 await _context.RolePermissions.AddRangeAsync(rolePermission);
+
             }
         }
 

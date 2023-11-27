@@ -256,7 +256,9 @@ namespace Shop.Application.Services
 
                 await _userRepository.CreateRole(newRole);
 
-                if (createOrEdit.SelectedPermission != null)
+                await _userRepository.SaveChanges();
+
+                if (createOrEdit.SelectedPermission == null)
                     return CreateOrEditRoleResult.NotExistPermission;
 
                 await _userRepository.AddPermissionToRole(createOrEdit.SelectedPermission, newRole.Id);

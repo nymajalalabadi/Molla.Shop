@@ -36,5 +36,20 @@ namespace Shop.Infra.Data.Context
         public DbSet<RolePermission> RolePermissions { get; set; }
 
         #endregion
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<RolePermission>()
+                .HasOne(b => b.Role)
+                .WithMany(b => b.RolePermissions)
+                .HasForeignKey(b => b.RoleId);
+
+            modelBuilder.Entity<RolePermission>()
+                .HasOne(b => b.Permission)
+                .WithMany(b => b.RolePermissions)
+                .HasForeignKey(b => b.PermissionId);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

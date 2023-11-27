@@ -83,12 +83,15 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpGet("createrole")]
         public async Task<IActionResult> CreateRole()
         {
+            ViewData["Permissions"] = await _userService.GetAllActivePermission();
             return View();
         }
 
         [HttpPost("createrole"), ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateRole(CreateOrEditRoleViewModel createRole)
         {
+            ViewData["Permissions"] = await _userService.GetAllActivePermission();
+
             if (ModelState.IsValid)
             {
                 var result = await _userService.CreateOrEditRole(createRole);
