@@ -25,6 +25,8 @@ namespace Shop.Domain.Interfaces
 
         Task<FilterUserViewModel> filterUsers(FilterUserViewModel filterUser);
 
+        Task AddRoleToUser(List<long> selectedRole, long userId);
+
         Task<EditUserFromAdmin> GetEditUserFromAdmin(long userId);
 
         Task<CreateOrEditRoleViewModel> GetEditRoleById(long roleId);

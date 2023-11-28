@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Win32;
 using Shop.Application.Interfaces;
+using Shop.Domain.ViewModels.Account;
 using Shop.Domain.ViewModels.Admin.Account;
 
 namespace Shop.Web.Areas.Admin.Controllers
@@ -28,12 +30,47 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region create user
+
+        [HttpGet("createuser")]
+        public async Task<IActionResult> CreateUser()
+        {
+            ViewData["Roles"] = await _userService.GetAllActiveRoles();
+            return View();
+        }
+
+        [HttpPost("createuser")]
+        public async Task<IActionResult> CreateUser(CreateUserFromAdmin createUser)
+        {
+            ViewData["Roles"] = await _userService.GetAllActiveRoles();
+
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.CreateUserForAdmin(createUser);
+
+                switch (result)
+                {
+                    case CreateUserFromAdminResult.MobileExists:
+                        TempData[ErrorMessage] = " شماره موبایل وارد شده قبلا در سایت ثبت شده است";
+                        break;
+
+                    case CreateUserFromAdminResult.Success:
+                        TempData[SuccessMessage] = "ثبت نام شما به موفقیت انجام شد";
+
+                        return RedirectToAction("Index");
+                }
+            }
+            return View(createUser);
+        }
+
+        #endregion
+
         #region edit user 
 
         [HttpGet("edituser/{userId}")]
         public async Task<IActionResult> EditUser(long userId)
         {
-            ViewData["Roles"] = await _userService.GetAllActivePermission();
+            ViewData["Roles"] = await _userService.GetAllActiveRoles();
 
             var data = await _userService.GetEditUserFromAdmin(userId);
 
@@ -82,7 +119,7 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         #endregion
 
-        #region CreateRole
+        #region Create Role
 
         [HttpGet("createrole")]
         public async Task<IActionResult> CreateRole()

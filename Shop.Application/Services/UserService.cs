@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using Shop.Application.Extentions;
 using Shop.Application.Interfaces;
 using Shop.Application.Utils;
@@ -185,6 +186,36 @@ namespace Shop.Application.Services
             return await _userRepository.filterUsers(filterUser);
         }
 
+        public async Task<CreateUserFromAdminResult> CreateUserForAdmin(CreateUserFromAdmin createUser)
+        {
+            if (!await _userRepository.IsUserExistPhoneNumber(createUser.PhoneNumber))
+            {
+                var user = new User()
+                {
+                    FirstName = createUser.FirstName,
+                    LastName = createUser.LastName,
+                    UserGender = createUser.UserGender,
+                    PhoneNumber = createUser.PhoneNumber,
+                    Password = _passwordHelper.EncodePasswordMd5(createUser.Password),
+                    Avatar = "default.png",
+                    IsMobileActive = true,
+                    MobileActiveCode = new Random().Next(10000, 999999).ToString(),
+                    IsBlocked = false,
+                    IsDelete = false,
+                };
+
+                await _userRepository.CreateUser(user);
+                await _userRepository.SaveChanges();
+
+                await _userRepository.AddRoleToUser(createUser.RoleIds, user.Id);
+                await _userRepository.SaveChanges();
+
+                return CreateUserFromAdminResult.Success;
+            }
+            return CreateUserFromAdminResult.MobileExists;
+        }
+
+
         public async Task<EditUserFromAdmin> GetEditUserFromAdmin(long userId)
         {
             return await _userRepository.GetEditUserFromAdmin(userId);
@@ -281,6 +312,10 @@ namespace Shop.Application.Services
         public async Task<List<Permission>> GetAllActivePermission()
         {
             return await _userRepository.GetAllActivePermission();
+        }
+        public async Task<List<Role>> GetAllActiveRoles()
+        {
+            return await _userRepository.GetAllActiveRoles();
         }
 
         #endregion

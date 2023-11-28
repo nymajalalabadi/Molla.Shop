@@ -90,6 +90,25 @@ namespace Shop.Infra.Data.Repositories
             return filterUser.SetPaging(pager).SetUsers(AllData);
         }
 
+        public async Task AddRoleToUser(List<long> selectedRole, long userId)
+        {
+            if (selectedRole != null && selectedRole.Any())
+            {
+                var roleUser = new List<UserRole>();
+
+                foreach (var roleId in selectedRole)
+                {
+                    roleUser.Add(new UserRole
+                    {
+                        RoleId = roleId,
+                        UserId = userId
+                    });
+                }
+
+                await _context.UserRoles.AddRangeAsync(roleUser);
+            }
+        }
+
 
         public async Task<EditUserFromAdmin> GetEditUserFromAdmin(long userId)
         {

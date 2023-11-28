@@ -36,6 +36,8 @@ namespace Shop.Application.Interfaces
 
         Task<FilterUserViewModel> filterUsers(FilterUserViewModel filterUser);
 
+        Task<CreateUserFromAdminResult> CreateUserForAdmin(CreateUserFromAdmin createUser);
+
         Task<EditUserFromAdmin> GetEditUserFromAdmin(long userId);
 
         Task<EditUserFromAdminResult> EditUserFromAdmin(EditUserFromAdmin editUser);
@@ -47,6 +49,8 @@ namespace Shop.Application.Interfaces
         Task<FilterRolesViewModel> filterRoles(FilterRolesViewModel filterRoles);
 
         Task<List<Permission>> GetAllActivePermission();
+
+        Task<List<Role>> GetAllActiveRoles();
 
         #endregion
     }
