@@ -43,6 +43,12 @@ namespace Shop.Domain.Interfaces
 
         Task AddPermissionToRole(List<long> selectedPermission, long roleId);
 
+        Task<List<Role>> GetAllActiveRoles();
+
+        Task RemoveAllUserSelectedRole(long userId);
+
+        Task AddUserToRole(List<long> selectedRole, long userId);
+
         #endregion
     }
 }

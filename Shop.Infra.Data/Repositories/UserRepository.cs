@@ -16,7 +16,7 @@ namespace Shop.Infra.Data.Repositories
 
         public UserRepository(ShopDbContext context)
         {
-               _context = context;
+            _context = context;
         }
 
         #endregion
@@ -35,7 +35,7 @@ namespace Shop.Infra.Data.Repositories
 
         public async Task<User> GetUserByPhoneNumber(string phoneNumber)
         {
-            var user =  await _context.Users.AsQueryable()
+            var user = await _context.Users.AsQueryable()
                 .FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
 
             if (user == null)
@@ -101,7 +101,7 @@ namespace Shop.Infra.Data.Repositories
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     PhoneNumber = x.PhoneNumber,
-                    UserGender = x.UserGender, 
+                    UserGender = x.UserGender,
                     Password = x.Password
                 }).SingleOrDefaultAsync();
         }
@@ -193,6 +193,42 @@ namespace Shop.Infra.Data.Repositories
 
                 await _context.RolePermissions.AddRangeAsync(rolePermission);
 
+            }
+        }
+
+        public async Task<List<Role>> GetAllActiveRoles()
+        {
+            return await _context.Roles.ToListAsync();
+        }
+
+        public async Task RemoveAllUserSelectedRole(long userId)
+        {
+            var AllRole = await _context.UserRoles.AsQueryable().Where(u => u.UserId == userId).ToListAsync();
+
+            if (AllRole.Any())
+            {
+                _context.RemoveRange(AllRole);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task AddUserToRole(List<long> selectedRole, long userId)
+        {
+            if (selectedRole != null && selectedRole.Any())
+            {
+                var userRole = new List<UserRole>();
+
+                foreach (var roleId in selectedRole)
+                {
+                    userRole.Add(new UserRole
+                    {
+                        RoleId = roleId,
+                        UserId = userId
+                    });
+                }
+
+                await _context.UserRoles.AddRangeAsync(userRole);
+                await _context.SaveChangesAsync();
             }
         }
 
