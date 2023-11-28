@@ -27,6 +27,8 @@ namespace Shop.Domain.ViewModels.Admin.Account
         [Display(Name = "گذرواژه")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string Password { get; set; }
+
+        public List<long> RoleIds { get; set; }
     }
 
     public enum EditUserFromAdminResult

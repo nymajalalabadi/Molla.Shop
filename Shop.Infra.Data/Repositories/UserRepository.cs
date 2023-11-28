@@ -94,6 +94,7 @@ namespace Shop.Infra.Data.Repositories
         public async Task<EditUserFromAdmin> GetEditUserFromAdmin(long userId)
         {
             return await _context.Users.AsQueryable()
+                .Include(r => r.UserRoles)
                 .Where(u => u.Id == userId)
                 .Select(x => new EditUserFromAdmin
                 {
@@ -102,7 +103,8 @@ namespace Shop.Infra.Data.Repositories
                     LastName = x.LastName,
                     PhoneNumber = x.PhoneNumber,
                     UserGender = x.UserGender,
-                    Password = x.Password
+                    Password = x.Password,
+                    RoleIds = x.UserRoles.Where(r => r.UserId == userId).Select(r => r.RoleId).ToList()
                 }).SingleOrDefaultAsync();
         }
 

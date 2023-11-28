@@ -33,6 +33,8 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpGet("edituser/{userId}")]
         public async Task<IActionResult> EditUser(long userId)
         {
+            ViewData["Roles"] = await _userService.GetAllActivePermission();
+
             var data = await _userService.GetEditUserFromAdmin(userId);
 
             if (data == null)
@@ -46,6 +48,8 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpPost("edituser/{userId}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUser(EditUserFromAdmin editUser)
         {
+            ViewData["Roles"] = await _userService.GetAllActivePermission();
+
             if (ModelState.IsValid)
             {
                 var result = await _userService.EditUserFromAdmin(editUser);

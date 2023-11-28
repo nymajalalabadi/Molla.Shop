@@ -211,6 +211,9 @@ namespace Shop.Application.Services
             _userRepository.UpdateUser(user);
             await _userRepository.SaveChanges();
 
+            await _userRepository.RemoveAllUserSelectedRole(editUser.Id);
+            await _userRepository.AddUserToRole(editUser.RoleIds, editUser.Id);
+
             return EditUserFromAdminResult.Success;
         }
 
