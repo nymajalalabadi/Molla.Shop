@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Models.Account;
+using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.Models.Wallet;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,16 @@ namespace Shop.Infra.Data.Context
         public DbSet<Permission> Permissions { get; set; }
 
         public DbSet<RolePermission> RolePermissions { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+
+        public DbSet<ProductFeature> ProductFeatures { get; set; }
+
+        public DbSet<ProductGalleries> ProductGalleries { get; set; }
+
+        public DbSet<ProductSelectedCategories> ProductSelectedCategories { get; set; }
 
         #endregion
 
