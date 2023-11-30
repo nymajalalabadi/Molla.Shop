@@ -21,10 +21,7 @@ namespace Shop.Domain.ViewModels.Admin.Products
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string UrlName { get; set; }
 
-        [Display(Name = "تصویر")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [MaxLength(500, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
-        public string ImageName { get; set; }
+        public string? ImageName { get; set; }
     }
     public enum EditProductCategoryResult
     {

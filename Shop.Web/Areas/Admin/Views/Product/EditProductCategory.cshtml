@@ -1,0 +1,53 @@
+﻿@using Shop.Application.Utils
+@model Shop.Domain.ViewModels.Admin.Products.EditProductCategoryViewModel
+@{
+    ViewData["Title"] = "ویرایش دسته بندی محصول";
+}
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="card-text">ویرایش اطلاعات</p>
+                <form asp-area="Admin" asp-controller="Product" asp-action="EditProductCategory" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="ProductCategoryId" />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">عنوان</label>
+                                <input class="form-control" asp-for="Title">
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">url عنوان</label>
+                                <input class="form-control" asp-for="UrlName">
+                                <span asp-validation-for="UrlName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label class="form-lable">عکس</label>
+                                <input class="form-control" type="file" name="image">
+                            </div>
+                            <img src="@(PathExtensions.CategoryThumb +Model.ImageName)" class="img-thumbnail" />
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-success btn-block ">ویرایش اطلاعات</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <partial name="_ValidationScripts" />
+}
+
+
+
+

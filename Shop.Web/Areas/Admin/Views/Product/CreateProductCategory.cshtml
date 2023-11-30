@@ -1,0 +1,50 @@
+﻿@model Shop.Domain.ViewModels.Admin.Products.CreateProductCategoryViewModel
+@{
+    ViewData["Title"] = "افزودن دسته بندی";
+}
+
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="card-text">ثبت اطلاعات</p>
+                <form asp-area="Admin" asp-controller="Product" asp-action="CreateProductCategory" method="post" enctype="multipart/form-data">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">عنوان</label>
+                                <input class="form-control" asp-for="Title">
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">url عنوان</label>
+                                <input class="form-control" asp-for="UrlName">
+                                <span asp-validation-for="UrlName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">عکس</label>
+                                <input class="form-control" type="file" name="image">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-success btn-block ">ثبت اطلاعات</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <partial name="_ValidationScripts" />
+}
+
+
