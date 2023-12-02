@@ -107,6 +107,10 @@ namespace Shop.Application.Services
             return await _productRepository.FilterProductCategories(filterProductCategoriesViewModel);
         }
 
+        public async Task<List<ProductCategory>> GetAllProductCategories()
+        {
+            return await _productRepository.GetAllProductCategories();
+        }
         #endregion
 
         #region product
@@ -116,6 +120,37 @@ namespace Shop.Application.Services
             return await _productRepository.FilterProducts(filter);
         }
 
+        public async Task<CreateProductResult> CreateProduct(CreateProductViewModel createProduct, IFormFile imageProduct)
+        {
+            var newProduct = new Product()
+            {
+                Name = createProduct.Name,
+                Price = createProduct.Price,
+                Description = createProduct.Description,
+                ShortDescription = createProduct.ShortDescription,
+                IsActive = createProduct.IsActive
+            };
+
+            if (imageProduct != null && imageProduct.IsImage())
+            {
+                var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(imageProduct.FileName);
+
+                imageProduct.AddImageToServer(imageName, PathExtensions.ProductOrginServer, 255, 273, PathExtensions.ProductThumbServer);
+
+                newProduct.ProductImageName = imageName;
+            }
+            else
+            {
+                return CreateProductResult.NotImage;
+            }
+
+           await _productRepository.AddProduct(newProduct);
+           await _productRepository.SaveChanges();
+
+           await _productRepository.AddProductSelectedCategories(createProduct.ProductSelectedCategory, newProduct.Id);
+
+            return CreateProductResult.Success;
+        }
 
         #endregion
     }

@@ -26,13 +26,19 @@ namespace Shop.Domain.Interfaces
 
         Task<FilterProductCategoriesViewModel> FilterProductCategories(FilterProductCategoriesViewModel filter);
 
+        Task<List<ProductCategory>> GetAllProductCategories();
+
         #endregion
 
 
         #region product
-
+        
         Task<FilterProductsViewModel> FilterProducts(FilterProductsViewModel filter);
 
+        Task AddProduct(Product product);
+        Task RemoveProductSelectedCategories(long productId);
+
+        Task AddProductSelectedCategories(List<long> productSelectedCategories, long productId);
 
         #endregion
     }

@@ -18,13 +18,23 @@ namespace Shop.Application.Utils
 
         #endregion
 
-        #region product categories
+        #region  categories
 
         public static string CategoryOrgin = "/img/category/orgin/";
         public static string CategoryOrginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/category/orgin/");
 
         public static string CategoryThumb = "/img/category/thumb/";
         public static string CategoryThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/category/thumb/");
+
+        #endregion
+
+        #region product
+
+        public static string ProductOrgin = "/img/product/orgin/";
+        public static string ProductOrginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/product/orgin/");
+
+        public static string ProductThumb = "/img/product/thumb/";
+        public static string ProductThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/product/thumb/");
 
         #endregion
     }

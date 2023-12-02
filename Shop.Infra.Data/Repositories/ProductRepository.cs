@@ -83,6 +83,13 @@ namespace Shop.Infra.Data.Repositories
             return filter.SetPaging(pager).SetProductCategories(allData);
         }
 
+        public async Task<List<ProductCategory>> GetAllProductCategories()
+        {
+            return await _context.ProductCategories.AsQueryable()
+                 .Where(c => !c.IsDelete)
+                 .ToListAsync();
+        }
+
         #endregion
 
         #region product
@@ -157,6 +164,42 @@ namespace Shop.Infra.Data.Repositories
             #endregion
 
             return filter.SetPaging(pager).SetProducts(allData);
+        }
+
+        public async Task AddProduct(Product product)
+        {
+            _context.Products.Add(product);
+        }
+
+        public async Task RemoveProductSelectedCategories(long productId)
+        {
+            var allProductSelectedCategories = await _context.ProductSelectedCategories.AsQueryable()
+                .Where(s => s.ProductId ==  productId).ToListAsync();
+
+            if (allProductSelectedCategories.Any())
+            {
+                _context.ProductSelectedCategories.RemoveRange(allProductSelectedCategories);
+            }
+        }
+
+        public async Task AddProductSelectedCategories(List<long> productSelectedCategories, long productId)
+        {
+            if (productSelectedCategories != null && productSelectedCategories.Any())
+            {
+                var newProductSelectedCategories = new List<ProductSelectedCategories>();
+
+                foreach (var categoryId in productSelectedCategories)
+                {
+                    newProductSelectedCategories.Add(new ProductSelectedCategories
+                    {
+                        ProductId = productId,
+                        ProductCategoryId = categoryId,
+                    });
+                }
+
+                await _context.ProductSelectedCategories.AddRangeAsync(newProductSelectedCategories);
+                await _context.SaveChangesAsync();
+            }
         }
 
         #endregion

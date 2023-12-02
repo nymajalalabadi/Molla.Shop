@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Interfaces;
+using Shop.Application.Services;
 using Shop.Domain.ViewModels.Admin.Products;
 
 namespace Shop.Web.Areas.Admin.Controllers
@@ -28,6 +29,39 @@ namespace Shop.Web.Areas.Admin.Controllers
             return View(await _productService.FilterProducts(filter));
         }
 
+
+        [HttpGet("createproduct")]
+        public async Task<IActionResult> CreateProduct()
+        {
+            ViewData["Categories"] = await _productService.GetAllProductCategories();
+            return View();
+        }
+
+        [HttpPost("createproduct"),ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateProduct(CreateProductViewModel createProduct, IFormFile productImage)
+        {
+            ViewData["Categories"] = await _productService.GetAllProductCategories();
+
+            if (ModelState.IsValid)
+            {
+                var result = await _productService.CreateProduct(createProduct, productImage);
+
+                switch (result)
+                {
+                    case CreateProductResult.NotImage:
+                        TempData[WarningMessage] = "لطفا برای محصول یک تصویر انتخاب کنید";
+                        break;
+
+                    case CreateProductResult.Success:
+                        TempData[SuccessMessage] = "عملیات ثبت محصول با موفقیت انجام شد";
+
+                        return RedirectToAction("Index");
+                }
+            }
+
+            return View(createProduct);
+        }
+
         #endregion
 
         #region Filter Categories
@@ -49,7 +83,7 @@ namespace Shop.Web.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpPost("createcategoty")]
+        [HttpPost("createcategoty"),ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateProductCategory(CreateProductCategoryViewModel createCategory, IFormFile image)
         {
             if (ModelState.IsValid)
