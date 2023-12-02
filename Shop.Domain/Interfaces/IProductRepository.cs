@@ -10,7 +10,7 @@ namespace Shop.Domain.Interfaces
 {
     public interface IProductRepository
     {
-        #region product - admin
+        #region category - admin
 
         Task SaveChanges();
 
@@ -25,6 +25,14 @@ namespace Shop.Domain.Interfaces
         void UpdateProductCtaegory(ProductCategory category);
 
         Task<FilterProductCategoriesViewModel> FilterProductCategories(FilterProductCategoriesViewModel filter);
+
+        #endregion
+
+
+        #region product
+
+        Task<FilterProductsViewModel> FilterProducts(FilterProductsViewModel filter);
+
 
         #endregion
     }

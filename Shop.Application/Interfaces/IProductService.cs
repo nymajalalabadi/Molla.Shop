@@ -10,7 +10,7 @@ namespace Shop.Application.Interfaces
 {
     public interface IProductService
     {
-        #region product - admin
+        #region category - admin
 
         Task<CreateProductCategoryResult> CreatePrdouctCategory(CreateProductCategoryViewModel createProductCategory, IFormFile image);
 
@@ -19,6 +19,12 @@ namespace Shop.Application.Interfaces
         Task<EditProductCategoryResult> EditPrdouctCategory(EditProductCategoryViewModel editProductCategoryViewModel, IFormFile image);
 
         Task<FilterProductCategoriesViewModel> FilterProductCategories(FilterProductCategoriesViewModel filterProductCategoriesViewModel);
+
+        #endregion
+
+        #region product
+
+        Task<FilterProductsViewModel> FilterProducts(FilterProductsViewModel filter);
 
         #endregion
     }

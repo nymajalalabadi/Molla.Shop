@@ -26,11 +26,11 @@ namespace Shop.Application.Services
 
         #endregion
 
-        #region product - admin
+        #region category - admin
 
         public async Task<CreateProductCategoryResult> CreatePrdouctCategory(CreateProductCategoryViewModel createProductCategory, IFormFile image)
         {
-            if(await _productRepository.CheckUrlNameCategories(createProductCategory.UrlName)) 
+            if (await _productRepository.CheckUrlNameCategories(createProductCategory.UrlName))
                 return CreateProductCategoryResult.IsExistUrlName;
 
             var newProductCategory = new ProductCategory()
@@ -81,7 +81,7 @@ namespace Shop.Application.Services
             if (productCategory == null)
                 return EditProductCategoryResult.NotFound;
 
-            if(await _productRepository.CheckUrlNameCategories(editProductCategoryViewModel.UrlName, editProductCategoryViewModel.ProductCategoryId))
+            if (await _productRepository.CheckUrlNameCategories(editProductCategoryViewModel.UrlName, editProductCategoryViewModel.ProductCategoryId))
                 return EditProductCategoryResult.IsExistUrlName;
 
             productCategory.Title = editProductCategoryViewModel.Title;
@@ -106,6 +106,16 @@ namespace Shop.Application.Services
         {
             return await _productRepository.FilterProductCategories(filterProductCategoriesViewModel);
         }
+
+        #endregion
+
+        #region product
+
+        public async Task<FilterProductsViewModel> FilterProducts(FilterProductsViewModel filter)
+        {
+            return await _productRepository.FilterProducts(filter);
+        }
+
 
         #endregion
     }

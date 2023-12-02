@@ -25,7 +25,7 @@ namespace Shop.Infra.Data.Repositories
 
         #endregion
 
-        #region product - admin
+        #region category - admin
 
         public async Task SaveChanges()
         {
@@ -56,7 +56,7 @@ namespace Shop.Infra.Data.Repositories
         public async Task<bool> CheckUrlNameCategories(string urlName, long CategoryId)
         {
             return await _context.ProductCategories.AsQueryable()
-                .AnyAsync(p => p.UrlName == urlName && p.Id !=  CategoryId);
+                .AnyAsync(p => p.UrlName == urlName && p.Id != CategoryId);
         }
 
         public async Task<FilterProductCategoriesViewModel> FilterProductCategories(FilterProductCategoriesViewModel filter)
@@ -81,6 +81,82 @@ namespace Shop.Infra.Data.Repositories
             #endregion
 
             return filter.SetPaging(pager).SetProductCategories(allData);
+        }
+
+        #endregion
+
+        #region product
+
+        public async Task<FilterProductsViewModel> FilterProducts(FilterProductsViewModel filter)
+        {
+            var query = _context.Products
+                .Include(c => c.ProductSelectedCategories)
+                .ThenInclude(c => c.ProductCategory)
+                .AsQueryable();
+
+            #region filter
+
+            if (!string.IsNullOrEmpty(filter.ProductName))
+            {
+                query = query.Where(p => EF.Functions.Like(p.Name, $"%{filter.ProductName}%"));
+            }
+
+            if (!string.IsNullOrEmpty(filter.FilterByCategory))
+            {
+                query = query.Where(p => p.ProductSelectedCategories.Any(c => c.ProductCategory.UrlName == filter.FilterByCategory));
+            }
+
+            #endregion
+
+            #region state
+
+            switch (filter.ProductState)
+            {
+                case ProductState.All:
+                    break;
+
+                case ProductState.IsActice:
+                    query = query.Where(p => p.IsActive);
+                    break;
+
+                case ProductState.Delete:
+                    query = query.Where(p => p.IsDelete);
+                    break;
+            }
+
+            #endregion
+
+            #region order
+
+            switch (filter.ProductOrder)
+            {
+                case ProductOrder.All:
+                    break;
+
+                case ProductOrder.ProductNewss:
+                    query = query.Where(p => p.IsActive).OrderByDescending(p => p.CreateDate);
+                    break;
+
+                case ProductOrder.ProductExp:
+                    query = query.Where(p => p.IsActive).OrderByDescending(p => p.Price);
+                    break;
+
+                case ProductOrder.ProductInExprnsive:
+                    query = query.Where(p => p.IsActive).OrderBy(p => p.Price);
+                    break;
+            }
+
+            #endregion
+
+            #region paging
+
+            var pager = Pager.Build(filter.PageId, await _context.ProductCategories.CountAsync(), filter.TakeEntity, filter.CountForShowAfterAndBefore);
+
+            var allData = await query.Paging(pager).ToListAsync();
+
+            #endregion
+
+            return filter.SetPaging(pager).SetProducts(allData);
         }
 
         #endregion

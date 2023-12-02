@@ -18,17 +18,19 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         #endregion
 
-        #region filter product
+        #region filter products
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FilterProductsViewModel filter)
         {
-            return View();
+            filter.ProductState = ProductState.All;
+
+            return View(await _productService.FilterProducts(filter));
         }
 
         #endregion
 
-        #region Filter Product Categories
+        #region Filter Categories
 
         [HttpGet]
         public async Task<IActionResult> FilterProductCategories(FilterProductCategoriesViewModel filterProduct)

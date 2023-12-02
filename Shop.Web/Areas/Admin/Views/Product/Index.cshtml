@@ -1,3 +1,95 @@
-﻿
+﻿@using Shop.Domain.ViewModels.Admin.Products
+@using Shop.Application.Utils
+@model FilterProductsViewModel
+@{
+    ViewData["Title"] = "مدریت محصولات";
+    var index = 1;
+}
+
+<div class="row mt-5">
+
+    <div class="col-md-3">
+        <a class="btn btn-info" asp-area="Admin" asp-controller="Product" asp-action="CreateProduct">افزودن محصول</a>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="card-text">@ViewData["Title"]</p>
+                <form asp-area="admin" asp-controller="Product" asp-action="FilterProducts" id="filter-Form" method="get">
+                    <input asp-for="PageId" type="hidden" />
+                    <div class="form-group">
+                        <label  class="form-label">فیلتر براساس نام محصول:</label>
+                        <input type="text" asp-for="ProductName" class="form-control" placeholder="نام محصول" />
+                    </div>
+                    <div class="form-group">
+                        <label  class="form-label">فیلتر براساس نام محصول:</label>
+                        <select asp-for="ProductState" asp-items="@Html.GetEnumSelectList<ProductState>()" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">فیلتر براساس محصول:</label>
+                        <select asp-for="ProductState" asp-items="@Html.GetEnumSelectList<ProductOrder>()" class="form-control"></select>
+                    </div>
+                    <button type="submit" class="btn btn-info mt-3 mb-3 btn-block">فیلتر</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-9">
+        @if (Model.Products != null && Model.Products.Any())
+        {
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">تصویر محصول</th>
+                                <th scope="col">نام محصول</th>
+                                <th scope="col">قیمت محصول</th>
+                                <th scope="col">فعال / غیر فعال</th>
+                                <th scope="col">دستورات</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var product in Model.Products)
+                            {
+                                <tr>
+                                    <th scope="row">@index</th>
+                                    <td></td>
+                                    <td>@product.Name</td>
+                                    <td>@product.Price.ToString("#,0")</td>
+                                    <td>
+                                        @if (product.IsActive)
+                                        {
+                                            <p>فعال</p>
+                                        }
+                                        else
+                                        {
+                                            <p>غیر فعال</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-warning btn-sm" asp-area="Admin" asp-controller="Product" asp-action="EditProduct" asp-route-roleId="@product.Id">ویرایش</a>
+                                        <a class="btn btn-warning btn-sm" asp-area="Admin" asp-controller="Product" asp-action="GalleryProduct" asp-route-roleId="@product.Id">گالری تصاویر</a>
+                                    </td>
+                                </tr>
+                                index++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                <b>ایتمی وجود ندارد</b>
+            </div>
+        }
+
+        <partial name="_AdminPaging" model="Model.GetCurrentPaging()" />
+    </div>
+</div>
 
 
