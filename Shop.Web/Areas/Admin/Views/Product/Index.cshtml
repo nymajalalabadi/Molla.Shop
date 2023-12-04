@@ -55,7 +55,9 @@
                             {
                                 <tr>
                                     <th scope="row">@index</th>
-                                    <td></td>
+                                    <td>
+                                        <img src="@(PathExtensions.ProductThumb + product.ProductImageName)" class="img-thumbnail" style="width:40px;" />
+                                    </td>
                                     <td>@product.Name</td>
                                     <td>@product.Price.ToString("#,0")</td>
                                     <td>
