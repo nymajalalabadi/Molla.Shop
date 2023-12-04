@@ -5,6 +5,7 @@ using Shop.Application.Utils;
 using Shop.Domain.Interfaces;
 using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.ViewModels.Admin.Products;
+using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -150,6 +151,63 @@ namespace Shop.Application.Services
            await _productRepository.AddProductSelectedCategories(createProduct.ProductSelectedCategory, newProduct.Id);
 
             return CreateProductResult.Success;
+        }
+
+        public async Task<EditProductViewModel> GetEditProduct(long productId)
+        {
+            var product = await _productRepository.GetProductById(productId);
+
+            if(product != null)
+            {
+                return new EditProductViewModel
+                {
+                    Description = product.Description,
+                    IsActive = product.IsActive,
+                    Name = product.Name,
+                    Price = product.Price,
+                    ShortDescription = product.ShortDescription,
+                    ProductImageName = product.ProductImageName,
+                    ProductSelectedCategory = await _productRepository.GetAllProductCategoriesId(productId)
+                };
+            }
+
+            return null;
+        }
+
+        public async Task<EditProductResult> EditProduct(EditProductViewModel editProduct, IFormFile ProductImage)
+        {
+            var product = await _productRepository.GetProductById(editProduct.ProductId);
+
+            if (product == null) return EditProductResult.NotFound;
+
+            if (editProduct.ProductSelectedCategory == null) return EditProductResult.NotProductSelectedCategoryHasNull;
+
+            #region edit product
+
+            product.ShortDescription = editProduct.ShortDescription;
+            product.Description = editProduct.Description;
+            product.IsActive = editProduct.IsActive;
+            product.Price = editProduct.Price;
+            product.Name = editProduct.Name;
+
+            if (ProductImage != null && ProductImage.IsImage())
+            {
+                var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(ProductImage.FileName);
+
+                ProductImage.AddImageToServer(imageName, PathExtensions.ProductOrginServer, 255, 273, PathExtensions.ProductThumbServer, product.ProductImageName);
+
+                product.ProductImageName = imageName;
+            }
+
+            _productRepository.UpdateProduct(product);
+            await _productRepository.SaveChanges();
+
+            #endregion
+
+            await _productRepository.RemoveProductSelectedCategories(editProduct.ProductId);
+            await _productRepository.AddProductSelectedCategories(editProduct.ProductSelectedCategory, editProduct.ProductId);
+
+            return EditProductResult.Success;
         }
 
         #endregion

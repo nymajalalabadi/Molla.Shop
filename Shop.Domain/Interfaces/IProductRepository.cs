@@ -35,10 +35,17 @@ namespace Shop.Domain.Interfaces
         
         Task<FilterProductsViewModel> FilterProducts(FilterProductsViewModel filter);
 
+        Task<Product> GetProductById(long productId);
+
         Task AddProduct(Product product);
+
         Task RemoveProductSelectedCategories(long productId);
 
         Task AddProductSelectedCategories(List<long> productSelectedCategories, long productId);
+
+        Task<List<long>> GetAllProductCategoriesId(long productId);
+
+        void UpdateProduct(Product product);
 
         #endregion
     }

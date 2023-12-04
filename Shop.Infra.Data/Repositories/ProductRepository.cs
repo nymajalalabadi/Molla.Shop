@@ -166,6 +166,12 @@ namespace Shop.Infra.Data.Repositories
             return filter.SetPaging(pager).SetProducts(allData);
         }
 
+        public async Task<Product> GetProductById(long productId)
+        {
+            return await _context.Products.AsQueryable().SingleOrDefaultAsync(p => p.Id == productId);
+        }
+
+
         public async Task AddProduct(Product product)
         {
             _context.Products.Add(product);
@@ -179,6 +185,7 @@ namespace Shop.Infra.Data.Repositories
             if (allProductSelectedCategories.Any())
             {
                 _context.ProductSelectedCategories.RemoveRange(allProductSelectedCategories);
+                await _context.SaveChangesAsync();
             }
         }
 
@@ -200,6 +207,18 @@ namespace Shop.Infra.Data.Repositories
                 await _context.ProductSelectedCategories.AddRangeAsync(newProductSelectedCategories);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<long>> GetAllProductCategoriesId(long productId)
+        {
+            return await _context.ProductSelectedCategories.AsQueryable()
+                .Where(s => s.ProductId == productId)
+                .Select(s => s.ProductCategoryId).ToListAsync();
+        }
+
+        public async void UpdateProduct(Product product)
+        {
+            _context.Products.Update(product);
         }
 
         #endregion

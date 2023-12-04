@@ -1,0 +1,114 @@
+﻿@using Shop.Domain.Models.ProductEntities
+@model Shop.Domain.ViewModels.Admin.Products.EditProductViewModel
+
+@{
+    ViewData["Title"] = "ویرایش محصول";
+    var categories = ViewData["Categories"] as List<ProductCategory>;
+}
+
+<form asp-area="Admin" asp-controller="Product" asp-action="EditProduct" method="post" enctype="multipart/form-data">
+
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <p class="card-text">ویرایش اطلاعات</p>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">
+                                    نام محصول
+                                </label>
+                                <input class="form-control" asp-for="Name">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">
+                                    قیمت محصول
+                                </label>
+                                <input class="form-control" type="number" min="1" asp-for="Price">
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label class="form-lable">
+                                    عکس
+                                </label>
+                                <input class="form-control" type="file" name="productImage">
+                                <div>
+                                    <img src="@(PathExtensions.ProductThumb + Model.ProductImageName)" class="img-thumbnail" style="width:40px;" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">
+                                    توضیحات کوتاه
+                                </label>
+                                <input class="form-control" asp-for="ShortDescription">
+                                <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="form-lable">
+                                    توضیحات اصلی
+                                </label>
+                                <textarea rows="10" asp-for="Description" style="width: 100%;
+    margin-top: 10px;"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">
+                                    فعال / غیر فعال
+                                </label>
+                                <input type="checkbox" asp-for="IsActive">
+                                <span asp-validation-for="IsActive" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-success btn-block ">ویرایش اطلاعات</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    @if (categories != null && categories.Any())
+                    {
+                        @foreach (var category in categories)
+                        {
+                            var selectedCategory = Model.ProductSelectedCategory.Any(p => p == category.Id);
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" @(selectedCategory ? "checked" : "") name="@nameof(Model.ProductSelectedCategory)" value="@category.Id" />
+                                    <span class="text">@category.Title</span>
+                                </label>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+@section scripts{
+    <partial name="_ValidationScripts" />
+}
+
+

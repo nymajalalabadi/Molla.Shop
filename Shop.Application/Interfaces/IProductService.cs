@@ -31,6 +31,10 @@ namespace Shop.Application.Interfaces
 
         Task<CreateProductResult> CreateProduct(CreateProductViewModel createProduct, IFormFile imageProduct);
 
+        Task<EditProductViewModel> GetEditProduct(long productId);
+
+        Task<EditProductResult> EditProduct(EditProductViewModel editProduct , IFormFile ProductImage);
+
         #endregion
     }
 }

@@ -29,6 +29,9 @@ namespace Shop.Web.Areas.Admin.Controllers
             return View(await _productService.FilterProducts(filter));
         }
 
+        #endregion
+
+        #region create product
 
         [HttpGet("createproduct")]
         public async Task<IActionResult> CreateProduct()
@@ -37,7 +40,7 @@ namespace Shop.Web.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpPost("createproduct"),ValidateAntiForgeryToken]
+        [HttpPost("createproduct"), ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateProduct(CreateProductViewModel createProduct, IFormFile productImage)
         {
             ViewData["Categories"] = await _productService.GetAllProductCategories();
@@ -64,6 +67,52 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region edit product
+
+        [HttpGet("editproduct/{productId}")]
+        public async Task<IActionResult> EditProduct(long productId)
+        {
+            ViewData["Categories"] = await _productService.GetAllProductCategories();
+
+            var product = await _productService.GetEditProduct(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+        [HttpPost("editproduct/{productId}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProduct(EditProductViewModel editProduct, IFormFile productImage)
+        {
+            ViewData["Categories"] = await _productService.GetAllProductCategories();
+
+            if (ModelState.IsValid)
+            {
+                var result = await _productService.EditProduct(editProduct, productImage);
+
+                switch (result)
+                {
+                    case EditProductResult.NotFound:
+                        TempData[WarningMessage] = "محصولی با مشخصات وارد شده یافت نشد";
+                        break;
+
+                    case EditProductResult.NotProductSelectedCategoryHasNull:
+                        TempData[WarningMessage] = "لطفا دسته بندی محصول را وارد کنید";
+                        break;
+
+                    case EditProductResult.Success:
+                        TempData[SuccessMessage] = ".ویرایش محصول با موفقیت انجام شد";
+
+                        return RedirectToAction("Index");
+                }
+            }
+            return View(editProduct);
+        }
+
+        #endregion
+
         #region Filter Categories
 
         [HttpGet]
@@ -83,7 +132,7 @@ namespace Shop.Web.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpPost("createcategoty"),ValidateAntiForgeryToken]
+        [HttpPost("createcategoty"), ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateProductCategory(CreateProductCategoryViewModel createCategory, IFormFile image)
         {
             if (ModelState.IsValid)
@@ -108,7 +157,7 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         #region edit category
 
-        [HttpGet("editecategory")]
+        [HttpGet("editecategory/{categoryId}")]
         public async Task<IActionResult> EditProductCategory(long categoryId)
         {
             var data = await _productService.GetEditPrdouctCategory(categoryId);
@@ -118,7 +167,7 @@ namespace Shop.Web.Areas.Admin.Controllers
             return View(data);
         }
 
-        [HttpPost("editecategory"), ValidateAntiForgeryToken]
+        [HttpPost("editecategory/{categoryId}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProductCategory(EditProductCategoryViewModel editProductCategory, IFormFile image)
         {
             if (ModelState.IsValid)
