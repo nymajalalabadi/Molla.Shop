@@ -64,7 +64,7 @@ namespace Shop.Infra.Data.Repositories
 
         public bool CheckPermission(long permissionId, string phoneNumber)
         {
-            long userId = _context.Users.AsQueryable().Single(c => c.PhoneNumber == phoneNumber).Id;
+            var userId = _context.Users.AsQueryable().Single(c => c.PhoneNumber == phoneNumber).Id;
 
             var userRole = _context.UserRoles.AsQueryable()
                 .Where(c => c.UserId == userId).Select(r => r.RoleId).ToList();
@@ -79,7 +79,6 @@ namespace Shop.Infra.Data.Repositories
 
 
             return permissions.Any(c => userRole.Contains(c));
-
         }
 
         #endregion
