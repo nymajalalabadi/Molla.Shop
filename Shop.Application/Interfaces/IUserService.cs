@@ -30,6 +30,9 @@ namespace Shop.Application.Interfaces
 
         Task<ChangePasswordResult> ChangePassword(long userId, ChangePasswordViewModel changePassword);
 
+        bool CheckPermission(long permissionId, string phoneNumber);
+        
+
         #endregion
 
         #region admin

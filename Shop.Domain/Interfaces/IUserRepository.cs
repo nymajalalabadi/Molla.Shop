@@ -19,6 +19,8 @@ namespace Shop.Domain.Interfaces
 
         Task<User> GetUserById(long UserId);
 
+        bool CheckPermission(long permissionId, string phoneNumber);
+
         #endregion
 
         #region admin

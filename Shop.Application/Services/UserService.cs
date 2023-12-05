@@ -177,6 +177,11 @@ namespace Shop.Application.Services
             return ChangePasswordResult.NotFound;
         }
 
+        public bool CheckPermission(long permissionId, string phoneNumber)
+        {
+            return _userRepository.CheckPermission(permissionId, phoneNumber);
+        }
+
         #endregion
 
         #region admin

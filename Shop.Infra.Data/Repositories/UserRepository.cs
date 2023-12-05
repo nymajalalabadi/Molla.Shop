@@ -62,6 +62,26 @@ namespace Shop.Infra.Data.Repositories
             return await _context.Users.AsQueryable().SingleOrDefaultAsync(u => u.Id == UserId);
         }
 
+        public bool CheckPermission(long permissionId, string phoneNumber)
+        {
+            long userId = _context.Users.AsQueryable().Single(c => c.PhoneNumber == phoneNumber).Id;
+
+            var userRole = _context.UserRoles.AsQueryable()
+                .Where(c => c.UserId == userId).Select(r => r.RoleId).ToList();
+
+
+            if (!userRole.Any())
+                return false;
+
+
+            var permissions = _context.RolePermissions.AsQueryable()
+                .Where(c => c.PermissionId == permissionId).Select(c => c.RoleId).ToList();
+
+
+            return permissions.Any(c => userRole.Contains(c));
+
+        }
+
         #endregion
 
         #region admin
