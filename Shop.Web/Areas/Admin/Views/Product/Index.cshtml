@@ -13,19 +13,19 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="card-text">@ViewData["Title"]</p>
-                <form asp-area="admin" asp-controller="Product" asp-action="FilterProducts" id="filter-Form" method="get">
+                <form asp-area="admin" asp-controller="Product" asp-action="Index" id="filter-Form" method="get">
                     <input asp-for="PageId" type="hidden" />
                     <div class="form-group">
-                        <label  class="form-label">فیلتر براساس نام محصول:</label>
+                        <label id="PhoneNumber" class="form-label">فیلتر براساس نام محصول:</label>
                         <input type="text" asp-for="ProductName" class="form-control" placeholder="نام محصول" />
                     </div>
                     <div class="form-group">
-                        <label  class="form-label">فیلتر براساس نام محصول:</label>
-                        <select asp-for="ProductState" asp-items="@Html.GetEnumSelectList<ProductState>()" class="form-control"></select>
+                        <label id="PhoneNumber" class="form-label">فیلتر براساس وضعیت محصول:</label>
+                        <select asp-for="ProductState" asp-items="Html.GetEnumSelectList<ProductState>()" class="form-control"></select>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">فیلتر براساس محصول:</label>
-                        <select asp-for="ProductState" asp-items="@Html.GetEnumSelectList<ProductOrder>()" class="form-control"></select>
+                        <label id="PhoneNumber" class="form-label">فیلتر براساس قیمت محصول:</label>
+                        <select asp-for="ProductOrder" asp-items="Html.GetEnumSelectList<ProductOrder>()" class="form-control"></select>
                     </div>
                     <button type="submit" class="btn btn-info mt-3 mb-3 btn-block">فیلتر</button>
                 </form>
@@ -71,8 +71,17 @@
                                         }
                                     </td>
                                     <td>
-                                        <a class="btn btn-warning btn-sm" asp-area="Admin" asp-controller="Product" asp-action="EditProduct" asp-route-productId="@product.Id">ویرایش</a>
-                                        <a class="btn btn-warning btn-sm" asp-area="Admin" asp-controller="Product" asp-action="GalleryProduct" asp-route-roleId="@product.Id">گالری تصاویر</a>
+                                        <a class="btn btn-info btn-sm" asp-area="Admin" asp-controller="Product" asp-action="EditProduct" asp-route-productId="@product.Id">ویرایش محصول</a>
+                                        <a class="btn btn-success btn-sm" asp-area="Admin" asp-controller="Product" asp-action="GalleryProduct" asp-route-roleId="@product.Id">گالری تصاویر</a>
+                                        @if (product.IsDelete)
+                                        {
+                                            <a class="btn btn-warning btn-sm" asp-area="Admin" asp-controller="Product" asp-action="RecoverProduct" asp-route-productId="@product.Id">بازگرداندن محصول</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-danger btn-sm" asp-area="Admin" asp-controller="Product" asp-action="DeleteProduct" asp-route-productId="@product.Id">حذف محصول</a>
+                                        }
+
                                     </td>
                                 </tr>
                                 index++;

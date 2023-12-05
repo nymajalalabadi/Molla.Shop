@@ -210,6 +210,17 @@ namespace Shop.Application.Services
             return EditProductResult.Success;
         }
 
+        public async Task<bool> DeleteProduct(long productId)
+        {
+            return await _productRepository.DeleteProduct(productId);
+        }
+
+        public async Task<bool> RecoverProduct(long productId)
+        {
+            return await _productRepository.RecoverProduct(productId);
+
+        }
+
         #endregion
     }
 }

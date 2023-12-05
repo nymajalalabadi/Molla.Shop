@@ -47,6 +47,9 @@ namespace Shop.Domain.Interfaces
 
         void UpdateProduct(Product product);
 
+        Task<bool> DeleteProduct(long productId);
+        Task<bool> RecoverProduct(long productId);
+
         #endregion
     }
 }

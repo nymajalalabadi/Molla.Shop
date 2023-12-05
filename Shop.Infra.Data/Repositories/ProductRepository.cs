@@ -119,15 +119,16 @@ namespace Shop.Infra.Data.Repositories
 
             switch (filter.ProductState)
             {
-                case ProductState.All:
+                case ProductState.AllOfThem:
+                    query = query.Where(p => !p.IsDelete);
                     break;
-
                 case ProductState.IsActice:
                     query = query.Where(p => p.IsActive);
                     break;
-
                 case ProductState.Delete:
                     query = query.Where(p => p.IsDelete);
+                    break;
+                default:
                     break;
             }
 
@@ -219,6 +220,38 @@ namespace Shop.Infra.Data.Repositories
         public async void UpdateProduct(Product product)
         {
             _context.Products.Update(product);
+        }
+
+        public async Task<bool> DeleteProduct(long productId)
+        {
+            var product = await GetProductById(productId);
+
+            if (product != null)
+            {
+                product.IsDelete = true;
+
+                UpdateProduct(product);
+                await SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> RecoverProduct(long productId)
+        {
+            var product = await GetProductById(productId);
+
+            if (product != null)
+            {
+                product.IsDelete = false;
+
+                UpdateProduct(product);
+                await SaveChanges();
+
+                return true;
+            }
+            return false;
         }
 
         #endregion

@@ -35,6 +35,9 @@ namespace Shop.Application.Interfaces
 
         Task<EditProductResult> EditProduct(EditProductViewModel editProduct , IFormFile ProductImage);
 
+        Task<bool> DeleteProduct(long productId);
+        Task<bool> RecoverProduct(long productId);
+
         #endregion
     }
 }

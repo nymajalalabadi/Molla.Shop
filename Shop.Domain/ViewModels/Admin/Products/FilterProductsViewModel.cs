@@ -13,11 +13,11 @@ namespace Shop.Domain.ViewModels.Admin.Products
     {
         #region property
 
-        public string ProductName { get; set; }
+        public string? ProductName { get; set; }
 
-        public string FilterByCategory { get; set; }
+        public string? FilterByCategory { get; set; }
 
-        public List<Product> Products { get; set; }
+        public List<Product>? Products { get; set; }
 
         public ProductState ProductState { get; set; }
 
@@ -53,7 +53,7 @@ namespace Shop.Domain.ViewModels.Admin.Products
     public enum ProductState
     {
         [Display(Name = "همه")]
-        All,
+        AllOfThem,
 
         [Display(Name = "فعال")]
         IsActice,
@@ -61,6 +61,7 @@ namespace Shop.Domain.ViewModels.Admin.Products
         [Display(Name = "حذف شده")]
         Delete
     }
+
     public enum ProductOrder
     {
         [Display(Name = "همه")]

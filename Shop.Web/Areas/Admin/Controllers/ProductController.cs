@@ -24,8 +24,6 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(FilterProductsViewModel filter)
         {
-            filter.ProductState = ProductState.All;
-
             return View(await _productService.FilterProducts(filter));
         }
 
@@ -112,6 +110,45 @@ namespace Shop.Web.Areas.Admin.Controllers
         }
 
         #endregion
+
+        #region delete product
+
+        [HttpGet("deleteproduct/{productId}")]
+        public async Task<IActionResult> DeleteProduct(long productId)
+        {
+            var result = await _productService.DeleteProduct(productId);
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "محصول شما با موفقیت حذف شد.";
+                return RedirectToAction("Index");
+            }
+
+            TempData[WarningMessage] = "محصول شما با موفقیت حذف نشد لطفا دوباره اقدام بفرمایید.";
+            return RedirectToAction("Index");
+        }
+
+        #endregion
+
+        #region recover product
+
+        [HttpGet("recoverproduct/{productId}")]
+        public async Task<IActionResult> RecoverProduct(long productId)
+        {
+            var result = await _productService.RecoverProduct(productId);
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "محصول شما با موفقیت بازگردانی شد.";
+                return RedirectToAction("Index");
+            }
+
+            TempData[WarningMessage] = "محصول شما با موفقیت بازگردانی نشد لطفا دوباره اقدام بفرمایید.";
+            return RedirectToAction("Index");
+        }
+
+        #endregion
+
 
         #region Filter Categories
 
