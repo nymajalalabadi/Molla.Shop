@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Interfaces;
 using Shop.Application.Services;
 using Shop.Domain.ViewModels.Admin.Products;
+using Shop.Web.Extentions;
 
 namespace Shop.Web.Areas.Admin.Controllers
 {
@@ -233,15 +234,24 @@ namespace Shop.Web.Areas.Admin.Controllers
         #region product galleries
 
         [HttpGet("galleryproduct/{productId}")]
-        public async Task<IActionResult> GalleryProduct(long productId)
+        public IActionResult GalleryProduct(long productId)
         {
+            ViewBag.productId = productId;
+
             return View();
         }
 
-        [HttpPost("galleryproduct/{productId}")]
-        public async Task<IActionResult> GalleryProduct(List<IFormFile> images, long productId)
+        
+        public async Task<IActionResult> AddImageToProduct(List<IFormFile> images, long productId)
         {
-            return RedirectToAction("Index");
+            var result = await _productService.AddProductGallery(productId, images);
+
+            if (result)
+            {
+                return JsonResponseStatus.Success();
+            }
+
+            return JsonResponseStatus.Error();
         }
 
         #endregion
