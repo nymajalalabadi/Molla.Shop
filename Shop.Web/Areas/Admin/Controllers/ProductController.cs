@@ -229,5 +229,21 @@ namespace Shop.Web.Areas.Admin.Controllers
         }
 
         #endregion
+
+        #region product galleries
+
+        [HttpGet("galleryproduct/{productId}")]
+        public async Task<IActionResult> GalleryProduct(long productId)
+        {
+            return View();
+        }
+
+        [HttpPost("galleryproduct/{productId}")]
+        public async Task<IActionResult> GalleryProduct(List<IFormFile> images, long productId)
+        {
+            return RedirectToAction("Index");
+        }
+
+        #endregion
     }
 }

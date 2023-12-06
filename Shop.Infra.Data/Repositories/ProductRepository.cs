@@ -254,6 +254,18 @@ namespace Shop.Infra.Data.Repositories
             return false;
         }
 
+        public async Task AddProductGalleries(List<ProductGalleries> productGalleries)
+        {
+            await _context.ProductGalleries.AddRangeAsync(productGalleries);
+            await SaveChanges();
+        }
+
+        public async Task<bool> CheckProduct(long productId)
+        {
+            return await _context.Products.AsQueryable()
+                .AnyAsync(p =>  p.Id == productId);
+        }
+
         #endregion
     }
 }

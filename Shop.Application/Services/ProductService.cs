@@ -5,12 +5,6 @@ using Shop.Application.Utils;
 using Shop.Domain.Interfaces;
 using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.ViewModels.Admin.Products;
-using SixLabors.ImageSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shop.Application.Services
 {
@@ -219,6 +213,37 @@ namespace Shop.Application.Services
         {
             return await _productRepository.RecoverProduct(productId);
 
+        }
+
+        public async Task<bool> AddProductGallery(long productId, List<IFormFile> images)
+        {
+            if (!await _productRepository.CheckProduct(productId))
+            {
+                return false;
+            }
+
+            if (images != null && images.Any())
+            {
+                var productGallery = new List<ProductGalleries>();
+                foreach (var image in images)
+                {
+                    if (image.IsImage())
+                    {
+                        var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(image.FileName);
+
+                        image.AddImageToServer(imageName, PathExtensions.ProductOrginServer, 255, 273, PathExtensions.ProductThumbServer);
+
+                        productGallery.Add(new ProductGalleries()
+                        {
+                            ImageName = imageName,
+                            ProductId = productId
+                        });
+                    }
+                }
+                await _productRepository.AddProductGalleries(productGallery);
+            }
+
+            return true;
         }
 
         #endregion
