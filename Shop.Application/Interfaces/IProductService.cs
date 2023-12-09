@@ -41,6 +41,12 @@ namespace Shop.Application.Interfaces
 
         Task<bool> AddProductGallery(long productId, List<IFormFile> images);
 
+        Task<List<ProductGalleriesViewModel>> ShowAllProductGalleries(long productId);
+
+        Task<List<ProductGalleries>> GetAllProductGalleries(long productId);
+
+        Task DeleteImage(long galleryId);
+
         #endregion
     }
 }

@@ -181,7 +181,7 @@ namespace Shop.Infra.Data.Repositories
         public async Task RemoveProductSelectedCategories(long productId)
         {
             var allProductSelectedCategories = await _context.ProductSelectedCategories.AsQueryable()
-                .Where(s => s.ProductId ==  productId).ToListAsync();
+                .Where(s => s.ProductId == productId).ToListAsync();
 
             if (allProductSelectedCategories.Any())
             {
@@ -263,8 +263,54 @@ namespace Shop.Infra.Data.Repositories
         public async Task<bool> CheckProduct(long productId)
         {
             return await _context.Products.AsQueryable()
-                .AnyAsync(p =>  p.Id == productId);
+                .AnyAsync(p => p.Id == productId);
         }
+
+        public async Task<List<ProductGalleriesViewModel>> ShowAllProductGalleries(long productId)
+        {
+            List<ProductGalleriesViewModel> Galleries = await _context.ProductGalleries
+                .Where(e => e.ProductId == productId && !e.IsDelete)
+                 .Select(e => new ProductGalleriesViewModel()
+                 {
+                     Id = e.Id,
+                     ProductId = e.ProductId,
+                     ImageName = e.ImageName,
+                 }).ToListAsync();
+
+            return Galleries;
+        }
+
+
+        public async Task<List<ProductGalleries>> GetAllProductGalleries(long productId)
+        {
+            return await _context.ProductGalleries.AsQueryable().Where(g => g.ProductId == productId && !g.IsDelete).ToListAsync();
+        }
+
+        public async Task<ProductGalleries> GetProductGallery(long id)
+        {
+            return await _context.ProductGalleries.AsQueryable()
+                .FirstOrDefaultAsync(g => g.Id == id);
+        }
+
+        public void UpdateProductGallery(ProductGalleries productGalleries)
+        {
+            _context.ProductGalleries.Update(productGalleries);
+        }
+
+        public async Task DeleteProductGallery(long id)
+        {
+            var currentGallery = await GetProductGallery(id);
+
+            if (currentGallery != null)
+            {
+                currentGallery.IsDelete = true;
+
+                UpdateProductGallery(currentGallery);
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
 
         #endregion
     }

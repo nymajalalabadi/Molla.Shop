@@ -139,10 +139,10 @@ namespace Shop.Application.Services
                 return CreateProductResult.NotImage;
             }
 
-           await _productRepository.AddProduct(newProduct);
-           await _productRepository.SaveChanges();
+            await _productRepository.AddProduct(newProduct);
+            await _productRepository.SaveChanges();
 
-           await _productRepository.AddProductSelectedCategories(createProduct.ProductSelectedCategory, newProduct.Id);
+            await _productRepository.AddProductSelectedCategories(createProduct.ProductSelectedCategory, newProduct.Id);
 
             return CreateProductResult.Success;
         }
@@ -151,7 +151,7 @@ namespace Shop.Application.Services
         {
             var product = await _productRepository.GetProductById(productId);
 
-            if(product != null)
+            if (product != null)
             {
                 return new EditProductViewModel
                 {
@@ -245,6 +245,30 @@ namespace Shop.Application.Services
 
             return true;
         }
+
+        public async Task<List<ProductGalleriesViewModel>> ShowAllProductGalleries(long productId)
+        {
+            return await _productRepository.ShowAllProductGalleries(productId);
+        }
+
+
+        public async Task<List<ProductGalleries>> GetAllProductGalleries(long productId)
+        {
+            return await _productRepository.GetAllProductGalleries(productId);
+        }
+
+        public async Task DeleteImage(long galleryId)
+        {
+            var productGallery = await _productRepository.GetProductGallery(galleryId);
+
+            if (productGallery != null)
+            {
+                UploadImageExtension.DeleteImage(productGallery.ImageName, PathExtensions.ProductOrginServer, PathExtensions.ProductThumbServer);
+
+               await _productRepository.DeleteProductGallery(galleryId);
+            }
+        }
+
 
         #endregion
     }

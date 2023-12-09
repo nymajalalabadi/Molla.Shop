@@ -231,7 +231,7 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         #endregion
 
-        #region product galleries
+        #region product galleries - create gallery
 
         [HttpGet("galleryproduct/{productId}")]
         public IActionResult GalleryProduct(long productId)
@@ -252,6 +252,33 @@ namespace Shop.Web.Areas.Admin.Controllers
             }
 
             return JsonResponseStatus.Error();
+        }
+
+        #endregion
+
+        #region list product galleries
+
+        [HttpGet("productgalleries/{productId}")]
+        public async Task<IActionResult> ProductGalleries(long productId)
+        {
+            var galleries = new ShowAllProductGalleriesViewModel()
+            {
+                ProductGallery = await _productService.ShowAllProductGalleries(productId),
+            };
+
+            return View(galleries);
+        }
+
+        #endregion
+
+        #region delete product gallery
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteImage(long galleryId)
+        {
+            await _productService.DeleteImage(galleryId);
+
+            return RedirectToAction("Index");
         }
 
         #endregion

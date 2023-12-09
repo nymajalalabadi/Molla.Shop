@@ -1,0 +1,52 @@
+﻿@using Shop.Domain.ViewModels.Admin.Products
+@model ShowAllProductGalleriesViewModel
+@{
+    ViewData["Title"] = "لیست تصاویر";
+    int index = 1;
+}
+
+<div class="row mt-5">
+    <div class="col-md-12">
+        @if (Model.ProductGallery != null && Model.ProductGallery.Any())
+        {
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">تصویر</th>
+                                <th scope="col">دستورات</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var productGallary in Model.ProductGallery)
+                            {
+                                <tr>
+                                    <th scope="row">@index</th>
+                                    <td>
+                                        <img class="img-thumbnail" style="width:50px;" src="@(PathExtensions.ProductThumb +productGallary.ImageName)">
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-danger btn-sm" asp-area="Admin" asp-controller="Product" asp-action="DeleteImage" asp-route-galleryId="@productGallary.Id">حذف</a>
+                                    </td>
+                                </tr>
+                                index++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                <b>ایتمی وجود ندارد</b>
+            </div>
+        }
+
+    </div>
+</div>

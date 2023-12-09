@@ -55,6 +55,16 @@ namespace Shop.Domain.Interfaces
 
         Task<bool> CheckProduct(long productId);
 
+        Task<List<ProductGalleriesViewModel>> ShowAllProductGalleries(long productId);
+
+        Task<List<ProductGalleries>> GetAllProductGalleries(long productId);
+
+        Task<ProductGalleries> GetProductGallery(long id);
+
+        void UpdateProductGallery(ProductGalleries productGalleries);
+
+        Task DeleteProductGallery(long id);
+        
         #endregion
     }
 }
