@@ -69,6 +69,10 @@ namespace Shop.Domain.Interfaces
 
         Task<List<ProductFeatuersViewModel>> ShowAllProductFeatuers(long productId);
 
+        void UpdateProductFeature(ProductFeature feature);
+
+        Task DeleteFeatuers(long id);
+
         #endregion
     }
 }

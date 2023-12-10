@@ -333,6 +333,17 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region delete productFeatuer
+
+        public async Task<IActionResult> DeleteFeatuers(long featuerId)
+        {
+            await _productService.DeleteFeatuers(featuerId);
+
+            return RedirectToAction("Index");
+        }
+
+        #endregion
+
 
         #endregion
     }

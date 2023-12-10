@@ -293,6 +293,10 @@ namespace Shop.Application.Services
             return await _productRepository.ShowAllProductFeatuers(productId);
         }
 
+        public async Task DeleteFeatuers(long id)
+        {
+            await _productRepository.DeleteFeatuers(id);
+        }
 
         #endregion
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Interfaces;
 using Shop.Domain.Models.ProductEntities;
+using Shop.Domain.ViewModels.Admin.Account;
 using Shop.Domain.ViewModels.Admin.Products;
 using Shop.Domain.ViewModels.Pigging;
 using Shop.Infra.Data.Context;
@@ -329,6 +330,24 @@ namespace Shop.Infra.Data.Repositories
                 }).ToListAsync();
 
             return Featuers;
+        }
+
+        public  void UpdateProductFeature(ProductFeature feature)
+        {
+            _context.ProductFeatures.Update(feature);
+        }
+
+        public async Task DeleteFeatuers(long id)
+        {
+            var currentFeatuer = await _context.ProductFeatures.AsQueryable().Where(f => f.Id == id).FirstOrDefaultAsync();
+
+            if (currentFeatuer != null)
+            {
+                currentFeatuer .IsDelete = true;
+
+                UpdateProductFeature(currentFeatuer);
+                await SaveChanges();
+            }
         }
 
         #endregion
