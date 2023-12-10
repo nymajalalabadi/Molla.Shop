@@ -241,7 +241,7 @@ namespace Shop.Web.Areas.Admin.Controllers
             return View();
         }
 
-        
+
         public async Task<IActionResult> AddImageToProduct(List<IFormFile> images, long productId)
         {
             var result = await _productService.AddProductGallery(productId, images);
@@ -279,6 +279,44 @@ namespace Shop.Web.Areas.Admin.Controllers
             await _productService.DeleteImage(galleryId);
 
             return RedirectToAction("Index");
+        }
+
+        #endregion
+
+        #region product Featuers
+
+        [HttpGet("createproductfeatuers/{productId}")]
+        public async Task<IActionResult> CreateProductFeatuers(long productId)
+        {
+            var model = new CreateProductFeatuersViewModel()
+            {
+                ProductId = productId
+            };
+
+            return View(model);
+        }
+
+        [HttpPost("createproductfeatuers/{productId}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateProductFeatuers(CreateProductFeatuersViewModel productFeatuers)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _productService.CreateProductFeatuers(productFeatuers);
+
+                switch (result)
+                {
+                    case CreateProductFeatuersResult.Error:
+                        TempData[ErrorMessage] = "در ثبت ویژگی خطایی رخ داده است";
+                        break;
+
+                    case CreateProductFeatuersResult.Success:
+                        TempData[SuccessMessage] = "ویژگی با موفقیت ثبت شد";
+
+                        return RedirectToAction("FilterProducts");
+                }
+
+            }
+            return View(productFeatuers);
         }
 
         #endregion

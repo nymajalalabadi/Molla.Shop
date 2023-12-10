@@ -311,6 +311,11 @@ namespace Shop.Infra.Data.Repositories
             }
         }
 
+        public async Task AddProductFeatuers(ProductFeature feature)
+        {
+            await _context.ProductFeatures.AddAsync(feature);
+            await SaveChanges();
+        }
 
         #endregion
     }

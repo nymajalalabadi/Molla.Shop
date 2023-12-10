@@ -47,6 +47,8 @@ namespace Shop.Application.Interfaces
 
         Task DeleteImage(long galleryId);
 
+        Task<CreateProductFeatuersResult> CreateProductFeatuers(CreateProductFeatuersViewModel createProductFetuers);
+
         #endregion
     }
 }

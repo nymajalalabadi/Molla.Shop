@@ -64,7 +64,9 @@ namespace Shop.Domain.Interfaces
         void UpdateProductGallery(ProductGalleries productGalleries);
 
         Task DeleteProductGallery(long id);
-        
+
+        Task AddProductFeatuers(ProductFeature feature);
+
         #endregion
     }
 }

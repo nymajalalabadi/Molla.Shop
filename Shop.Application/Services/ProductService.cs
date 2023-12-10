@@ -269,6 +269,24 @@ namespace Shop.Application.Services
             }
         }
 
+        public async Task<CreateProductFeatuersResult> CreateProductFeatuers(CreateProductFeatuersViewModel createProductFetuers)
+        {
+            if (!await _productRepository.CheckProduct(createProductFetuers.ProductId))
+            {
+                return CreateProductFeatuersResult.Error;
+            }
+
+            var newProductFeatuers = new ProductFeature()
+            {
+                FeatuerTitle = createProductFetuers.Title,
+                FeatureValue = createProductFetuers.Value,
+                ProductId = createProductFetuers.ProductId,
+            };
+
+            await _productRepository.AddProductFeatuers(newProductFeatuers);
+
+            return CreateProductFeatuersResult.Success;
+        }
 
         #endregion
     }
