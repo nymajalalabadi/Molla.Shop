@@ -317,6 +317,20 @@ namespace Shop.Infra.Data.Repositories
             await SaveChanges();
         }
 
+        public async Task<List<ProductFeatuersViewModel>> ShowAllProductFeatuers(long productId)
+        {
+            var Featuers = await _context.ProductFeatures.AsQueryable()
+                .Where(f => f.ProductId == productId && !f.IsDelete)
+                .Select(f => new ProductFeatuersViewModel()
+                {
+                    Id = f.Id,
+                    Title = f.FeatuerTitle,
+                    Value = f.FeatureValue
+                }).ToListAsync();
+
+            return Featuers;
+        }
+
         #endregion
     }
 }

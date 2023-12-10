@@ -319,6 +319,21 @@ namespace Shop.Web.Areas.Admin.Controllers
             return View(productFeatuers);
         }
 
+        #region product featuers
+
+        public async Task<IActionResult> ProductFeatuers(long productId)
+        {
+            var features = new ShowAllProductFeatuersViewModel()
+            {
+                ProductFeatuers = await _productService.ShowAllProductFeatuers(productId)
+            };
+
+            return View(features);
+        }
+
+        #endregion
+
+
         #endregion
     }
 }

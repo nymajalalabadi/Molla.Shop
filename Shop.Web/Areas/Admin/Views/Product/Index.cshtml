@@ -71,10 +71,11 @@
                                         }
                                     </td>
                                     <td>
-                                        <a class="btn btn-info btn-sm" asp-area="Admin" asp-controller="Product" asp-action="EditProduct" asp-route-productId="@product.Id">ویرایش محصول</a>
+                                        <a class="btn btn-dark btn-sm" asp-area="Admin" asp-controller="Product" asp-action="EditProduct" asp-route-productId="@product.Id">ویرایش محصول</a>
                                         <a class="btn btn-success btn-sm" asp-area="Admin" asp-controller="Product" asp-action="GalleryProduct" asp-route-productId="@product.Id">افزودن تصاویر</a>
                                         <a class="btn btn-secondary btn-sm" asp-area="Admin" asp-controller="Product" asp-action="ProductGalleries" asp-route-productId="@product.Id">لیست تصاویر</a>
                                         <a class="btn btn-primary btn-sm" asp-area="Admin" asp-controller="Product" asp-action="CreateProductFeatuers" asp-route-productId="@product.Id">افزودن ویژگی</a>
+                                        <a class="btn btn-info btn-sm" asp-area="Admin" asp-controller="Product" asp-action="ProductFeatuers" asp-route-productId="@product.Id">لیست ویژگی</a>
                                         @if (product.IsDelete)
                                         {
                                             <a class="btn btn-warning btn-sm" asp-area="Admin" asp-controller="Product" asp-action="RecoverProduct" asp-route-productId="@product.Id">بازگرداندن محصول</a>

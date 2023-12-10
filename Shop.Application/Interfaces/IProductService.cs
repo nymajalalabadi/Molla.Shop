@@ -49,6 +49,8 @@ namespace Shop.Application.Interfaces
 
         Task<CreateProductFeatuersResult> CreateProductFeatuers(CreateProductFeatuersViewModel createProductFetuers);
 
+        Task<List<ProductFeatuersViewModel>> ShowAllProductFeatuers(long productId);
+
         #endregion
     }
 }

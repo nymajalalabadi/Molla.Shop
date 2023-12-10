@@ -288,6 +288,12 @@ namespace Shop.Application.Services
             return CreateProductFeatuersResult.Success;
         }
 
+        public async Task<List<ProductFeatuersViewModel>> ShowAllProductFeatuers(long productId)
+        {
+            return await _productRepository.ShowAllProductFeatuers(productId);
+        }
+
+
         #endregion
     }
 }
