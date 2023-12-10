@@ -312,7 +312,7 @@ namespace Shop.Web.Areas.Admin.Controllers
                     case CreateProductFeatuersResult.Success:
                         TempData[SuccessMessage] = "ویژگی با موفقیت ثبت شد";
 
-                        return RedirectToAction("FilterProducts");
+                        return RedirectToAction("Index");
                 }
 
             }
