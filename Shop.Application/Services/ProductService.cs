@@ -225,6 +225,7 @@ namespace Shop.Application.Services
             if (images != null && images.Any())
             {
                 var productGallery = new List<ProductGalleries>();
+
                 foreach (var image in images)
                 {
                     if (image.IsImage())

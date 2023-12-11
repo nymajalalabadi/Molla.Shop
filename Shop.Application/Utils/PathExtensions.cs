@@ -37,5 +37,15 @@ namespace Shop.Application.Utils
         public static string ProductThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/product/thumb/");
 
         #endregion
+
+        #region slider
+
+        public static string SliderOrgin = "/img/slider/orgin/";
+        public static string SliderOrginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/slider/orgin/");
+
+        public static string SliderThumb = "/img/slider/thumb/";
+        public static string SliderThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/slider/thumb/");
+
+        #endregion
     }
 }

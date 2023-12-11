@@ -25,6 +25,8 @@ namespace Shop.Infra.IoC
 
             services.AddScoped<IProductService, ProductService>();
 
+            services.AddScoped<ISiteSettingService, SiteSettingService>();
+
             #endregion
 
 
@@ -35,6 +37,8 @@ namespace Shop.Infra.IoC
             services.AddScoped<IWalletRepository, WalletRepository>();
 
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddScoped<ISiteSettingRepository, SiteSettingRepository>();
 
             #endregion
 

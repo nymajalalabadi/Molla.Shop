@@ -34,6 +34,8 @@
     <Folder Include="wwwroot\img\category\orgin\" />
     <Folder Include="wwwroot\img\product\thumb\" />
     <Folder Include="wwwroot\img\product\orgin\" />
+    <Folder Include="wwwroot\img\slider\thumb\" />
+    <Folder Include="wwwroot\img\slider\orgin\" />
     <Folder Include="wwwroot\img\userAvatar\thumb\" />
     <Folder Include="wwwroot\img\userAvatar\orgin\" />
   </ItemGroup>

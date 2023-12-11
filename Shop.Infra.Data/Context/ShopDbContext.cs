@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Models.Account;
 using Shop.Domain.Models.ProductEntities;
+using Shop.Domain.Models.Site;
 using Shop.Domain.Models.Wallet;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,8 @@ namespace Shop.Infra.Data.Context
         public DbSet<ProductGalleries> ProductGalleries { get; set; }
 
         public DbSet<ProductSelectedCategories> ProductSelectedCategories { get; set; }
+
+        public DbSet<Slider> Sliders { get; set; }
 
         #endregion
 
