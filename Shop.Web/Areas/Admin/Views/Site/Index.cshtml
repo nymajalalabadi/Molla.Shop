@@ -1,30 +1,28 @@
-﻿@model Shop.Domain.ViewModels.Admin.Products.FilterProductCategoriesViewModel
+﻿@model Shop.Domain.ViewModels.Site.Sliders.FilterSlidersViewModel
 @{
-    ViewData["Title"] = "مدریت دسته بندی محصولات";
+    ViewData["Title"] = "مدریت اسلایدر ها";
     var index = 1;
 }
 
 <div class="row mt-5">
     <div class="col-md-3">
-        <a class="btn btn-info mt-3 mb-3 btn-block" asp-area="Admin" asp-controller="Product" asp-action="CreateProductCategory">افزودن دسته بندی</a>
+        <a asp-area="Admin" asp-controller="Site" asp-action="CreateSlider" class="btn btn-info mt-3 mb-3 btn-block">افزودن اسلایدر</a>
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="card-text">@ViewData["Title"]</p>
-                <form asp-area="admin" asp-controller="Product" asp-action="Index" id="filter-Form" method="get">
+                <form asp-area="admin" asp-controller="Site" asp-action="Index" id="filter-Form" method="get">
                     <input asp-for="PageId" type="hidden" />
                     <div class="form-group">
-                        <label class="form-label">فیلتر براساس عنوان:</label>
-                        <input type="text" asp-for="Title" class="form-control" placeholder="عنوان" />
+                        <label class="form-label">فیلتر براساس عنوان اسلایدر:</label>
+                        <input type="text" asp-for="SliderTitle" class="form-control" placeholder="عنوان" />
                     </div>
                     <button type="submit" class="btn btn-info mt-3 mb-3 btn-block">فیلتر</button>
                 </form>
             </div>
         </div>
-
-
     </div>
     <div class="col-md-9">
-        @if (Model.ProductCategories != null && Model.ProductCategories.Any())
+        @if (Model.Sliders != null && Model.Sliders.Any())
         {
             <div class="card shadow-sm">
                 <div class="card-body">
@@ -34,23 +32,23 @@
                                 <th scope="col">#</th>
                                 <th scope="col">تصویر</th>
                                 <th scope="col">عنوان</th>
-                                <th scope="col">url یکتا</th>
+                                <th scope="col">آدرس</th>
                                 <th scope="col">دستورات</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            @foreach (var category in Model.ProductCategories)
+                            @foreach (var slider in Model.Sliders)
                             {
                                 <tr>
                                     <th scope="row">@index</th>
                                     <td>
-                                        <img src="@(PathExtensions.CategoryOrgin +category.ImageName)" class="img-thumbnail" style="width:40px;">
+                                        <img src="@(PathExtensions.SliderOrgin + slider.SliderImage)" class="img-thumbnail" style="width:40px;">
                                     </td>
-                                    <td>@category.Title</td>
-                                    <td>@category.UrlName</td>
+                                    <td>@slider.SliderTitle</td>
+                                    <td>@slider.Href</td>
                                     <td>
-                                        <a class="btn btn-warning btn-sm" asp-area="Admin" asp-controller="Product" asp-action="EditProductCategory" asp-route-categoryId="@category.Id">ویرایش</a>
+                                        <a class="btn btn-warning btn-sm" asp-area="Admin" asp-controller="Site" asp-action="EditSlider" asp-route-sliderId="@slider.Id">ویرایش</a>
                                     </td>
                                 </tr>
                                 index++;
@@ -71,7 +69,4 @@
         <partial name="_AdminPaging" model="Model.GetCurrentPaging()" />
     </div>
 </div>
-
-
-
 

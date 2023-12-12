@@ -20,7 +20,7 @@ namespace Shop.Domain.ViewModels.Site.Sliders
 
         public string TextBtn { get; set; }
 
-        public string ImageFile { get; set; }
+        public string? ImageFile { get; set; }
     }
     public enum EditSliderResult
     {

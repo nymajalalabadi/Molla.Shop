@@ -1,0 +1,71 @@
+﻿@model Shop.Domain.ViewModels.Site.Sliders.EditSliderViewModel
+@{
+    ViewData["Title"] = "ویرایش اسلایدر";
+}
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="card-text">ویرایش اسلایدر</p>
+                <form asp-area="Admin" asp-controller="Site" asp-action="EditSlider" method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="SliderId" />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">عنوان</label>
+                                <input type="text" class="form-control" asp-for="SliderTitle">
+                                <span asp-validation-for="SliderTitle" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">متن</label>
+                                <input type="text" class="form-control" asp-for="SliderText">
+                                <span asp-validation-for="SliderText" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">آدرس</label>
+                                <input type="text" class="form-control" asp-for="Href">
+                                <span asp-validation-for="Href" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">قیمت</label>
+                                <input type="number" class="form-control" asp-for="Price">
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">متن دکمه</label>
+                                <input type="text" class="form-control" asp-for="TextBtn">
+                                <span asp-validation-for="TextBtn" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-lable">عکس</label>
+                                <input class="form-control" type="file" name="image">
+                                <div>
+                                    <img src="@(PathExtensions.SliderThumb + Model.ImageFile)" class="img-thumbnail" style="width:40px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-success btn-block ">ویرایش اسلایدر</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <partial name="_ValidationScripts" />
+}
+
