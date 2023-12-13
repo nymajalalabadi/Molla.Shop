@@ -89,7 +89,7 @@ namespace Shop.Web.ViewComponents
         {
             var filterCategory = new FilterProductCategoriesViewModel()
             {
-                TakeEntity = 10
+                TakeEntity = 6
             };
 
             var data = await _productService.FilterProductCategories(filterCategory);
@@ -97,6 +97,34 @@ namespace Shop.Web.ViewComponents
             return View("PopularCategory", data);
         }
     }
+
+    #endregion
+
+    #region SideBar-Category
+
+    public class SideBarCategoryViewComponent : ViewComponent
+    {
+        #region constractor
+
+        private readonly IProductService _productService;
+
+        public SideBarCategoryViewComponent(IProductService productService)
+        {
+            _productService = productService;
+        }
+
+        #endregion
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var filterCategory = new FilterProductCategoriesViewModel();
+            
+            var data = await _productService.FilterProductCategories(filterCategory);
+
+            return View("SideBarCategory", data);
+        }
+    }
+
 
     #endregion
 }

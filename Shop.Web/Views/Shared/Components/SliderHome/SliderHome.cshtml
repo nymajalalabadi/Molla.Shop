@@ -1,10 +1,9 @@
 ﻿@model Shop.Domain.ViewModels.Site.Sliders.FilterSlidersViewModel
 
-<div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
-     data-owl-options='{"dots": true,"nav": false,"rtl": true,"responsive": {"1200": {"nav": true,"dots": false}}}'>
-
-    @if (Model.Sliders != null && Model.Sliders.Any())
-    {
+@if (Model.Sliders != null && Model.Sliders.Any())
+{
+    <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
+         data-owl-options='{"dots": true,"nav": false,"rtl": true,"responsive": {"1200": {"nav": true,"dots": false}}}'>
         @foreach (var slider in Model.Sliders)
         {
             <div class="intro-slide"
@@ -28,6 +27,6 @@
                 </div>
             </div>
         }
-    }
-</div>
+    </div>
+}
 <span class="slider-loader"></span>

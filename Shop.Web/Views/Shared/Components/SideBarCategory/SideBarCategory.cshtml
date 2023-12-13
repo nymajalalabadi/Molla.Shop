@@ -1,0 +1,24 @@
+﻿@model Shop.Domain.ViewModels.Admin.Products.FilterProductCategoriesViewModel
+
+@if(Model.ProductCategories != null && Model.ProductCategories.Any())
+{
+    <div class="dropdown category-dropdown">
+        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false" data-display="static"
+           title="دسته بندی فروشگاه">
+            فهرست دسته بندی ها <i class="icon-angle-down"></i>
+        </a>
+        <div class="dropdown-menu">
+            <nav class="side-nav">
+                <ul class="menu-vertical sf-arrows">
+                    @foreach (var category in Model.ProductCategories)
+                    {
+                        <li class="item-lead"><a href="@category.UrlName">
+                            @category.Title
+                        </a></li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+}
