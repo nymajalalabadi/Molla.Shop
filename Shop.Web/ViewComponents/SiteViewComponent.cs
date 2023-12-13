@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Interfaces;
+using Shop.Domain.ViewModels.Site.Sliders;
 
 namespace Shop.Web.ViewComponents
 {
@@ -32,6 +33,37 @@ namespace Shop.Web.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             return View("SiteFooter");
+        }
+    }
+
+    #endregion
+
+
+    #region slider - home
+
+    public class SliderHomeViewComponent : ViewComponent
+    {
+        #region constractor
+
+        private readonly ISiteSettingService _siteSettingService;
+
+        public SliderHomeViewComponent(ISiteSettingService siteSettingService)
+        {
+            _siteSettingService = siteSettingService;
+        }
+
+        #endregion
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var filterSlidersViewModel = new FilterSlidersViewModel()
+            {
+                TakeEntity = 10
+            };
+
+            var data = await _siteSettingService.FilterSliders(filterSlidersViewModel);
+
+            return View("SliderHome", data);
         }
     }
 

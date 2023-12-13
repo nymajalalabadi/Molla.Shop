@@ -1,0 +1,33 @@
+﻿@model Shop.Domain.ViewModels.Site.Sliders.FilterSlidersViewModel
+
+<div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
+     data-owl-options='{"dots": true,"nav": false,"rtl": true,"responsive": {"1200": {"nav": true,"dots": false}}}'>
+
+    @if (Model.Sliders != null && Model.Sliders.Any())
+    {
+        @foreach (var slider in Model.Sliders)
+        {
+            <div class="intro-slide"
+                 style="background-image: url(@(PathExtensions.SliderOrgin + slider.SliderImage));">
+                <div class="container intro-content">
+                    <div class="row justify-content-end">
+                        <div class="col-auto col-sm-7 col-md-6 col-lg-5">
+                            <h3 class="intro-subtitle text-third">@slider.SliderTitle</h3>
+                            <h1 class="intro-title">@slider.SliderText</h1>
+                            <div class="intro-price" dir="rtl">
+                                <span class="text-third">
+                                    @slider.Price
+                                </span>
+                            </div>
+                            <a href="@slider.Href" class="btn btn-primary btn-round" target="_blank">
+                                <span>@slider.TextBtn</span>
+                                <i class="icon-long-arrow-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+<span class="slider-loader"></span>
