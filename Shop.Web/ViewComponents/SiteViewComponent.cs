@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Interfaces;
+using Shop.Domain.ViewModels.Admin.Products;
 using Shop.Domain.ViewModels.Site.Sliders;
 
 namespace Shop.Web.ViewComponents
@@ -11,7 +12,7 @@ namespace Shop.Web.ViewComponents
         private readonly IUserService _userService;
         public SiteHeaderViewComponent(IUserService userService)
         {
-                _userService = userService;
+            _userService = userService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -64,6 +65,36 @@ namespace Shop.Web.ViewComponents
             var data = await _siteSettingService.FilterSliders(filterSlidersViewModel);
 
             return View("SliderHome", data);
+        }
+    }
+
+    #endregion
+
+    #region popular category - home
+
+    public class PopularCategoryViewComponent : ViewComponent
+    {
+        #region constractor
+
+        private readonly IProductService _productService;
+
+        public PopularCategoryViewComponent(IProductService productService)
+        {
+            _productService = productService;
+        }
+
+        #endregion
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var filterCategory = new FilterProductCategoriesViewModel()
+            {
+                TakeEntity = 10
+            };
+
+            var data = await _productService.FilterProductCategories(filterCategory);
+
+            return View("PopularCategory", data);
         }
     }
 
