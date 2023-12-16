@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Interfaces;
+using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.ViewModels.Admin.Products;
+using Shop.Domain.ViewModels.Site.Products;
 using Shop.Domain.ViewModels.Site.Sliders;
 
 namespace Shop.Web.ViewComponents
@@ -125,6 +127,32 @@ namespace Shop.Web.ViewComponents
         }
     }
 
+
+    #endregion
+
+
+    #region All Product InSlider
+
+    public class AllProductInSlider : ViewComponent
+    {
+        #region constractor
+
+        private readonly IProductService _productService;
+
+        public AllProductInSlider(IProductService productService)
+        {
+            _productService = productService;
+        }
+
+        #endregion
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var data = await _productService.ShowAllProductInSlider();
+
+            return View("AllProductInSlider", data);
+        }
+    }
 
     #endregion
 }

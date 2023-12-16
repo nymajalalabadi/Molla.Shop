@@ -5,6 +5,7 @@ using Shop.Application.Utils;
 using Shop.Domain.Interfaces;
 using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.ViewModels.Admin.Products;
+using Shop.Domain.ViewModels.Site.Products;
 
 namespace Shop.Application.Services
 {
@@ -297,6 +298,11 @@ namespace Shop.Application.Services
         public async Task DeleteFeatuers(long id)
         {
             await _productRepository.DeleteFeatuers(id);
+        }
+
+        public async Task<List<ProductItemViewModel>> ShowAllProductInSlider()
+        {
+            return await _productRepository.ShowAllProductInSlider();
         }
 
         #endregion

@@ -4,6 +4,7 @@ using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.ViewModels.Admin.Account;
 using Shop.Domain.ViewModels.Admin.Products;
 using Shop.Domain.ViewModels.Pigging;
+using Shop.Domain.ViewModels.Site.Products;
 using Shop.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
@@ -332,7 +333,7 @@ namespace Shop.Infra.Data.Repositories
             return Featuers;
         }
 
-        public  void UpdateProductFeature(ProductFeature feature)
+        public void UpdateProductFeature(ProductFeature feature)
         {
             _context.ProductFeatures.Update(feature);
         }
@@ -343,11 +344,28 @@ namespace Shop.Infra.Data.Repositories
 
             if (currentFeatuer != null)
             {
-                currentFeatuer .IsDelete = true;
+                currentFeatuer.IsDelete = true;
 
                 UpdateProductFeature(currentFeatuer);
                 await SaveChanges();
             }
+        }
+
+        public async Task<List<ProductItemViewModel>> ShowAllProductInSlider()
+        {
+            var allProduct = await _context.Products.Include(p => p.ProductSelectedCategories).ThenInclude(s => s.ProductCategory)
+                .AsQueryable()
+                .Select(c => new ProductItemViewModel
+                {
+                    ProductCategory = c.ProductSelectedCategories.Select(c => c.ProductCategory).First(),
+                    CommentCount = 0,
+                    Price = c.Price,
+                    ProductId = c.Id,
+                    ProductImageName = c.ProductImageName,
+                    ProductName = c.Name
+                }).ToListAsync();
+
+            return allProduct;
         }
 
         #endregion

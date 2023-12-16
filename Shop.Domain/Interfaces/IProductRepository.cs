@@ -1,5 +1,6 @@
 ﻿using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.ViewModels.Admin.Products;
+using Shop.Domain.ViewModels.Site.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,6 +73,8 @@ namespace Shop.Domain.Interfaces
         void UpdateProductFeature(ProductFeature feature);
 
         Task DeleteFeatuers(long id);
+
+        Task<List<ProductItemViewModel>> ShowAllProductInSlider();
 
         #endregion
     }

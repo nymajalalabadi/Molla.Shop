@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.ViewModels.Admin.Products;
+using Shop.Domain.ViewModels.Site.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +53,8 @@ namespace Shop.Application.Interfaces
         Task<List<ProductFeatuersViewModel>> ShowAllProductFeatuers(long productId);
 
         Task DeleteFeatuers(long id);
+
+        Task<List<ProductItemViewModel>> ShowAllProductInSlider();
 
         #endregion
     }
