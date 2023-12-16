@@ -261,10 +261,7 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpGet("productgalleries/{productId}")]
         public async Task<IActionResult> ProductGalleries(long productId)
         {
-            var galleries = new ShowAllProductGalleriesViewModel()
-            {
-                ProductGallery = await _productService.ShowAllProductGalleries(productId),
-            };
+            var galleries = await _productService.ShowAllProductGalleries(productId);
 
             return View(galleries);
         }
@@ -323,10 +320,7 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> ProductFeatuers(long productId)
         {
-            var features = new ShowAllProductFeatuersViewModel()
-            {
-                ProductFeatuers = await _productService.ShowAllProductFeatuers(productId)
-            };
+            var features = await _productService.ShowAllProductFeatuers(productId);
 
             return View(features);
         }

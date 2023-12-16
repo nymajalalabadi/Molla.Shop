@@ -1,5 +1,5 @@
 ﻿@using Shop.Domain.ViewModels.Admin.Products;
-@model ShowAllProductFeatuersViewModel
+@model List<ProductFeatuersViewModel>
 
 @{
     ViewData["Title"] = "ویزگی های محصول";
@@ -9,7 +9,7 @@
 
 <div class="row mt-5">
     <div class="col-md-12">
-        @if (Model.ProductFeatuers != null && Model.ProductFeatuers.Any())
+        @if (Model != null && Model.Any())
         {
             <div class="card shadow-sm">
                 <div class="card-body">
@@ -24,7 +24,7 @@
                         </thead>
 
                         <tbody>
-                            @foreach (var productFeatuer in Model.ProductFeatuers)
+                            @foreach (var productFeatuer in Model)
                             {
                                 <tr>
                                     <th scope="row">@index</th>

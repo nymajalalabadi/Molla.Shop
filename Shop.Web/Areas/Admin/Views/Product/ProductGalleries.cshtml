@@ -1,5 +1,5 @@
 ﻿@using Shop.Domain.ViewModels.Admin.Products
-@model ShowAllProductGalleriesViewModel
+@model List<ProductGalleriesViewModel>
 @{
     ViewData["Title"] = "لیست تصاویر";
     int index = 1;
@@ -7,7 +7,7 @@
 
 <div class="row mt-5">
     <div class="col-md-12">
-        @if (Model.ProductGallery != null && Model.ProductGallery.Any())
+        @if (Model != null && Model.Any())
         {
             <div class="card shadow-sm">
                 <div class="card-body">
@@ -21,7 +21,7 @@
                         </thead>
 
                         <tbody>
-                            @foreach (var productGallary in Model.ProductGallery)
+                            @foreach (var productGallary in Model)
                             {
                                 <tr>
                                     <th scope="row">@index</th>
