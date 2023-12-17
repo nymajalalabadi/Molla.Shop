@@ -131,15 +131,15 @@ namespace Shop.Web.ViewComponents
     #endregion
 
 
-    #region All Product InSlider
+    #region All Product InSlider - home
 
-    public class AllProductInSlider : ViewComponent
+    public class AllProductInSliderViewComponent : ViewComponent
     {
         #region constractor
 
         private readonly IProductService _productService;
 
-        public AllProductInSlider(IProductService productService)
+        public AllProductInSliderViewComponent(IProductService productService)
         {
             _productService = productService;
         }
@@ -151,6 +151,31 @@ namespace Shop.Web.ViewComponents
             var data = await _productService.ShowAllProductInSlider();
 
             return View("AllProductInSlider", data);
+        }
+    }
+
+    #endregion
+
+    #region All-productInCategoryPc - home
+
+    public class AllInCategoryPcViewComponent : ViewComponent
+    {
+        #region constractor
+
+        private readonly IProductService _productService;
+
+        public AllInCategoryPcViewComponent(IProductService productService)
+        {
+            _productService = productService;
+        }
+
+        #endregion
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var data = await _productService.ShowAllProductInCategory("pc");
+
+            return View("AllInCategoryPc", data);
         }
     }
 

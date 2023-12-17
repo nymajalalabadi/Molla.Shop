@@ -368,6 +368,33 @@ namespace Shop.Infra.Data.Repositories
             return allProduct;
         }
 
+        public async Task<List<ProductItemViewModel>> ShowAllProductInCategory(string hrefName)
+        {
+            //var allProducts = await _context.ProductCategories
+            //    .Include(c => c.ProductSelectedCategories).ThenInclude(s => s.Product)
+            //    .Where(c => c.UrlName == hrefName)
+            //    .Select(c => c.ProductSelectedCategories.Select(s => s.Product))
+            //    .ToListAsync();
+
+            var product = await _context.Products
+                .Include(p => p.ProductSelectedCategories)
+                .ThenInclude(s => s.ProductCategory)
+                .Where(p => p.ProductSelectedCategories.Any(s => s.ProductCategory.UrlName == hrefName))
+                .ToListAsync();
+
+            var data = product.Select(c => new ProductItemViewModel
+            {
+                ProductCategory = c.ProductSelectedCategories.Select(c => c.ProductCategory).First(),
+                CommentCount = 0,
+                Price = c.Price,
+                ProductId = c.Id,
+                ProductImageName = c.ProductImageName,
+                ProductName = c.Name
+            }).ToList();
+
+            return data;
+        }
+
         #endregion
     }
 }

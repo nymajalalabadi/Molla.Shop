@@ -305,6 +305,12 @@ namespace Shop.Application.Services
             return await _productRepository.ShowAllProductInSlider();
         }
 
+        public async Task<List<ProductItemViewModel>> ShowAllProductInCategory(string hrefName)
+        {
+            return await _productRepository.ShowAllProductInCategory(hrefName);
+        }
+
+
         #endregion
     }
 }
