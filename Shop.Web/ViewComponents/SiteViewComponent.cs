@@ -180,4 +180,26 @@ namespace Shop.Web.ViewComponents
     }
 
     #endregion
+
+    #region All-productInCategoryTv - home
+    public class AllInCategoryTvViewComponent : ViewComponent
+    {
+        #region constractor
+        private readonly IProductService _productService;
+        public AllInCategoryTvViewComponent(IProductService productService)
+        {
+            _productService = productService;
+        }
+        #endregion
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+
+            var data = await _productService.ShowAllProductInCategory("tv");
+
+            return View("AllInCategoryTv", data);
+        }
+    }
+    #endregion
+
 }
