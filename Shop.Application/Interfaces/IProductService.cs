@@ -58,6 +58,8 @@ namespace Shop.Application.Interfaces
 
         Task<List<ProductItemViewModel>> ShowAllProductInCategory(string hrefName);
 
+        Task<List<ProductItemViewModel>> LastProducts();
+
         #endregion
     }
 }

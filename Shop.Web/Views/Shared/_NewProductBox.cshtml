@@ -1,0 +1,54 @@
+﻿@using Shop.Domain.ViewModels.Site.Products
+@model List<ProductItemViewModel>
+
+@if(Model != null && Model.Any())
+{
+    @foreach (var product in Model)
+    {
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="product product-2">
+                <figure class="product-media">
+                    <span class="product-label label-circle label-sale">جدید </span>
+                    <a href="product.html">
+                        <img src=@(PathExtensions.ProductOrgin + product.ProductImageName) alt="@product.ProductName"
+                             class="product-image" title="@product.ProductName">
+                    </a>
+
+                    <div class="product-action-vertical">
+                        <a href="#" class="btn-product-icon btn-wishlist"
+                           title="افزودن به لیست علاقه مندی"></a>
+                    </div>
+
+                    <div class="product-action">
+                        <a href="#" class="btn-product btn-cart" title="افزودن به سبد خرید">
+                            <span>
+                                افزودن
+                                به
+                                سبد خرید
+                            </span>
+                        </a>
+                        <a href="popup/quickView.html" class="btn-product btn-quickview"
+                           title="مشاهده سریع محصول"><span>مشاهده سریع</span></a>
+                    </div>
+                </figure>
+
+                <div class="product-body">
+                    <div class="product-cat">
+                        <a href="#">@product.ProductCategory.Title</a>
+                    </div>
+                    <h3 class="product-title"><a href="product.html">@product.ProductName</a></h3>
+
+                    <div class="product-price">
+                        <span class="new-price">@product.Price.ToString("#,0 تومان")</span>
+                    </div>
+                    <div class="ratings-container">
+                        <div class="ratings">
+                            <div class="ratings-val" style="width: 80%;"></div>
+                        </div>
+                        <span class="ratings-text">(@product.CommentCount)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

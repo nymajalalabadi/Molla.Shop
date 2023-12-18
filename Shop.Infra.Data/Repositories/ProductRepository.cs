@@ -395,6 +395,27 @@ namespace Shop.Infra.Data.Repositories
             return data;
         }
 
+        public async Task<List<ProductItemViewModel>> LastProducts()
+        {
+            var lastProduct = await _context.Products
+                .Include(p => p.ProductSelectedCategories)
+                .ThenInclude(s => s.ProductCategory)
+                .OrderByDescending(p => p.CreateDate)
+                .Select(p => new ProductItemViewModel()
+                {
+                    ProductCategory = p.ProductSelectedCategories.Select(c => c.ProductCategory).First(),
+                    CommentCount = 0,
+                    Price = p.Price,
+                    ProductId = p.Id,
+                    ProductImageName = p.ProductImageName,
+                    ProductName = p.Name
+                })
+                .Take(8)
+                .ToListAsync();
+
+            return lastProduct;
+        }
+
         #endregion
     }
 }
