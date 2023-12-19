@@ -22,6 +22,8 @@ namespace Shop.Web.Controllers
         [HttpGet("products")]
         public async Task<IActionResult> Products(FilterProductsViewModel filterProducts)
         {
+            ViewData["Categories"] = await _productService.GetAllProductCategories();
+
             filterProducts.TakeEntity = 12;
             filterProducts.ProductBox = ProductBox.ItemBoxInSite;
 

@@ -7,7 +7,7 @@
             @foreach (var category in Model.ProductCategories)
             {
                 <div class="col-6 col-sm-4 col-lg-2">
-                    <a href="@category.UrlName" class="cat-block">
+                    <a asp-area="" asp-controller="Product" asp-action="Products" asp-route-FilterByCategory="@category.UrlName" class="cat-block">
                         <figure>
                             <span>
                                 <img src="@(PathExtensions.CategoryOrgin + category.ImageName)" alt="Category image">

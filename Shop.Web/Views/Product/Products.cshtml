@@ -1,6 +1,10 @@
-﻿@model Shop.Domain.ViewModels.Admin.Products.FilterProductsViewModel
+﻿@using Shop.Domain.Models.ProductEntities
+@using Shop.Domain.ViewModels.Admin.Products
+@model FilterProductsViewModel
 @{
     ViewData["Title"] = "محصولات";
+
+    var categories = (List<ProductCategory>)ViewData["Categories"];
 }
 
 <main class="main">
@@ -30,16 +34,17 @@
                         </div>
 
                         <div class="toolbox-right">
-                            <div class="toolbox-sort">
-                                <label for="sortby">مرتب سازی براساس : </label>
-                                <div class="select-custom">
-                                    <select name="sortby" id="sortby" class="form-control">
-                                        <option value="popularity" selected="selected">بیشترین خرید</option>
-                                        <option value="rating">بیشترین امتیاز</option>
-                                        <option value="date">تاریخ</option>
-                                    </select>
+                            <form asp-controller="Product" asp-action="Products" method="get" id="fromProducts">
+                                <input type="hidden" asp-for="PageId" />
+                                <input type="hidden" asp-for="FilterByCategory" />
+                                <div class="toolbox-sort">
+                                    <label for="sortby">مرتب سازی براساس : </label>
+                                    <div class="select-custom">
+                                        <select class="form-control" asp-for="ProductOrder" asp-items="@Html.GetEnumSelectList<ProductOrder>()">
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                             <div class="toolbox-layout">
                                 <a href="category-4cols.html" class="btn-layout active">
                                     <svg width="22" height="10">
@@ -71,7 +76,7 @@
                     <div class="sidebar sidebar-shop">
                         <div class="widget widget-clean">
                             <label>فیلترها : </label>
-                            <a href="#" class="sidebar-filter-clear btn btn-warning">فیلتر</a>
+                            <a onclick="SumbitForm()" class="sidebar-filter-clear btn btn-warning">فیلتر</a>
                         </div>
 
                         <div class="widget widget-collapsible">
@@ -80,14 +85,21 @@
                                     دسته بندی
                                 </a>
                             </h3>
+                            @if (categories != null && categories.Any())
+                            {
+                                <div class="collapse show" id="widget-1">
+                                    <div class="widget-body">
+                                        @foreach (var category in categories)
+                                        {
+                                            <div class="filter-items filter-items-count">
 
-                            <div class="collapse show" id="widget-1">
-                                <div class="widget-body">
-                                    <div class="filter-items filter-items-count">
-                                        <a class="text-primary">لباس</a>
+                                                <a asp-area="" asp-controller="Product" asp-action="Products" asp-route-FilterByCategory="@category.UrlName" class="text-primary">@category.Title</a>
+
+                                            </div>
+                                        }
                                     </div>
                                 </div>
-                            </div>
+                            }
                         </div>
 
                     </div>
@@ -96,3 +108,17 @@
         </div>
     </div>
 </main>
+
+@section scripts
+{
+    <script>
+        function SumbitForm()
+        {
+            $('#fromProducts').submit();
+        }
+
+        // $('#ProductOrder').on('change', function () {
+        //     $('#fromProducts').submit();
+        // });
+    </script>
+}
