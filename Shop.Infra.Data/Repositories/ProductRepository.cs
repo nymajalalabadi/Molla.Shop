@@ -158,7 +158,33 @@ namespace Shop.Infra.Data.Repositories
 
             #endregion
 
-            #region paging
+            #region product item
+
+            switch (filter.ProductBox)
+            {
+                case ProductBox.Default:
+
+                    break;
+
+                case ProductBox.ItemBoxInSite:
+                    var pagerBox = Pager.Build(filter.PageId, await _context.ProductCategories.CountAsync(), filter.TakeEntity, filter.CountForShowAfterAndBefore);
+
+                    var allDataBox = await query.Paging(pagerBox).Select(p => new ProductItemViewModel()
+                    {
+                        ProductCategory = p.ProductSelectedCategories.Select(c => c.ProductCategory).First(),
+                        CommentCount = 0,
+                        Price = p.Price,
+                        ProductId = p.Id,
+                        ProductImageName = p.ProductImageName,
+                        ProductName = p.Name
+                    }).ToListAsync();
+
+                    return filter.SetPaging(pagerBox).SetProductItems(allDataBox);
+            }
+
+            #endregion
+
+            #region set paging
 
             var pager = Pager.Build(filter.PageId, await _context.ProductCategories.CountAsync(), filter.TakeEntity, filter.CountForShowAfterAndBefore);
 
@@ -167,6 +193,7 @@ namespace Shop.Infra.Data.Repositories
             #endregion
 
             return filter.SetPaging(pager).SetProducts(allData);
+
         }
 
         public async Task<Product> GetProductById(long productId)

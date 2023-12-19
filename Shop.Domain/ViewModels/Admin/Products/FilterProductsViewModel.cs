@@ -1,5 +1,6 @@
 ﻿using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.ViewModels.Pigging;
+using Shop.Domain.ViewModels.Site.Products;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,9 +20,13 @@ namespace Shop.Domain.ViewModels.Admin.Products
 
         public List<Product>? Products { get; set; }
 
+        public List<ProductItemViewModel>? ProductItems { get; set; }
+
         public ProductState ProductState { get; set; }
 
         public ProductOrder ProductOrder { get; set; }
+
+        public ProductBox ProductBox { get; set; }
 
         #endregion
 
@@ -30,6 +35,12 @@ namespace Shop.Domain.ViewModels.Admin.Products
         public FilterProductsViewModel SetProducts(List<Product> products)
         {
             this.Products = products;
+            return this;
+        }
+
+        public FilterProductsViewModel SetProductItems(List<ProductItemViewModel> productItems)
+        {
+            this.ProductItems = productItems;
             return this;
         }
 
@@ -75,6 +86,12 @@ namespace Shop.Domain.ViewModels.Admin.Products
 
         [Display(Name = "ارزان ترین ها")]
         ProductInExprnsive
+    }
+
+    public enum ProductBox
+    {
+        Default,
+        ItemBoxInSite
     }
 
 }
