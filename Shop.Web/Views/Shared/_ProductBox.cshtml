@@ -25,7 +25,7 @@
 
     <div class="product-body">
         <div class="product-cat">
-            <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@Model.ProductId">@Model.ProductCategory.Title</a>
+            <a asp-controller="Product" asp-action="Products" asp-route-FilterByCategory="@Model.ProductCategory.UrlName">@Model.ProductCategory.Title</a>
         </div>
         <h3 class="product-title">
             <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@Model.ProductId">
