@@ -460,7 +460,7 @@ namespace Shop.Infra.Data.Repositories
                     ProductImageName = p.ProductImageName,
                     ProductComment = 0,
                     ProductFeatures = p.ProductFeatures.Where(s => s.ProductId == ProductId).ToList(),
-                    ProductImages = p.ProductGalleries.Where(s => s.ProductId == ProductId).Select(g => g.ImageName).ToList(),
+                    ProductImages = p.ProductGalleries.Where(s => s.ProductId == ProductId && !s.IsDelete).Select(g => g.ImageName).ToList(),
                     ProductCategory = p.ProductSelectedCategories.Select(p => p.ProductCategory).First()
                 }).FirstOrDefaultAsync();
         }
