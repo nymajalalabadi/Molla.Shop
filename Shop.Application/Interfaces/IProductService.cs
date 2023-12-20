@@ -60,6 +60,8 @@ namespace Shop.Application.Interfaces
 
         Task<List<ProductItemViewModel>> LastProducts();
 
+        Task<ProductDetailViewModel> ShowProductDetail(long ProductId);
+
         #endregion
     }
 }

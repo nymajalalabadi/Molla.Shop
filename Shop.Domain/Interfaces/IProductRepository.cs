@@ -79,7 +79,8 @@ namespace Shop.Domain.Interfaces
         Task<List<ProductItemViewModel>> ShowAllProductInCategory(string hrefName);
 
         Task<List<ProductItemViewModel>> LastProducts();
-        
+
+        Task<ProductDetailViewModel> ShowProductDetail(long ProductId);
 
         #endregion
     }

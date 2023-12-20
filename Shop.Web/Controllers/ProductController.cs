@@ -32,6 +32,22 @@ namespace Shop.Web.Controllers
 
         #endregion
 
+        #region Product-Detail
+
+        [HttpGet("ProductDetail/{productId}")]
+        public async Task<IActionResult> ProductDetail(long productId)
+        {
+            var product = await _productService.ShowProductDetail(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
+
+        #endregion
 
     }
 }

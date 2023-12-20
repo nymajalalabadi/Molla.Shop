@@ -9,7 +9,7 @@
             <div class="product product-2">
                 <figure class="product-media">
                     <span class="product-label label-circle label-sale">جدید </span>
-                    <a href="product.html">
+                    <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.ProductId">
                         <img src=@(PathExtensions.ProductOrgin + product.ProductImageName) alt="@product.ProductName"
                              class="product-image" title="@product.ProductName">
                     </a>
@@ -34,9 +34,9 @@
 
                 <div class="product-body">
                     <div class="product-cat">
-                        <a href="#">@product.ProductCategory.Title</a>
+                        <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.ProductId">@product.ProductCategory.Title</a>
                     </div>
-                    <h3 class="product-title"><a href="product.html">@product.ProductName</a></h3>
+                    <h3 class="product-title"><a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.ProductId">@product.ProductName</a></h3>
 
                     <div class="product-price">
                         <span class="new-price">@product.Price.ToString("#,0 تومان")</span>

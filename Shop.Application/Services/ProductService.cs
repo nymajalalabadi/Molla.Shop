@@ -315,6 +315,12 @@ namespace Shop.Application.Services
             return await _productRepository.LastProducts();
         }
 
+        public async Task<ProductDetailViewModel> ShowProductDetail(long ProductId)
+        {
+           return await _productRepository.ShowProductDetail(ProductId);
+        }
+
+
         #endregion
     }
 }

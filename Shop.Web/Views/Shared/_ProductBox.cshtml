@@ -3,7 +3,7 @@
 <div class="product product-2">
     <figure class="product-media">
         <span class="product-label label-circle label-new">جدید</span>
-        <a href="product.html">
+        <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@Model.ProductId">
             <img src="@(PathExtensions.ProductOrgin + Model.ProductImageName)" alt="تصویر محصول" class="product-image">
         </a>
 
@@ -25,10 +25,10 @@
 
     <div class="product-body">
         <div class="product-cat">
-            <a href="#">@Model.ProductCategory.Title</a>
+            <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@Model.ProductId">@Model.ProductCategory.Title</a>
         </div>
         <h3 class="product-title">
-            <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-ProductId="@Model.ProductId">
+            <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@Model.ProductId">
                 @Model.ProductName
             </a>
         </h3>

@@ -443,6 +443,28 @@ namespace Shop.Infra.Data.Repositories
             return lastProduct;
         }
 
+        public async Task<ProductDetailViewModel> ShowProductDetail(long ProductId)
+        {
+            return await _context.Products
+                .Include(p => p.ProductFeatures)
+                .Include(p => p.ProductGalleries)
+                .Include(p => p.ProductSelectedCategories).ThenInclude(s => s.ProductCategory)
+                .Where(p => p.Id == ProductId)
+                .Select(p => new ProductDetailViewModel()
+                {
+                    ProductId = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    ShortDescription = p.ShortDescription,
+                    Price = p.Price,
+                    ProductImageName = p.ProductImageName,
+                    ProductComment = 0,
+                    ProductFeatures = p.ProductFeatures.Where(s => s.ProductId == ProductId).ToList(),
+                    ProductImages = p.ProductGalleries.Where(s => s.ProductId == ProductId).Select(g => g.ImageName).ToList(),
+                    ProductCategory = p.ProductSelectedCategories.Select(p => p.ProductCategory).First()
+                }).FirstOrDefaultAsync();
+        }
+
         #endregion
     }
 }
