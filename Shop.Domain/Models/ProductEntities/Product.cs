@@ -48,6 +48,8 @@ namespace Shop.Domain.Models.ProductEntities
 
         public ICollection<ProductSelectedCategories> ProductSelectedCategories { get; set; }
 
+        public ICollection<ProductComment> ProductComments { get; set; }
+
         #endregion
     }
 

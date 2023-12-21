@@ -1,4 +1,5 @@
 ﻿using Shop.Domain.Models.BaseEntities;
+using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.Models.Wallet;
 using System;
 using System.Collections.Generic;
@@ -68,6 +69,8 @@ namespace Shop.Domain.Models.Account
         public ICollection<UserWallet> UserWallets { get; set; }
 
         public ICollection<UserRole> UserRoles { get; set; }
+
+        public ICollection<ProductComment> ProductComments { get; set; }
 
         #endregion
     }

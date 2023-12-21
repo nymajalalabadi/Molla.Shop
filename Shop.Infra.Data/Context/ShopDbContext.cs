@@ -49,6 +49,8 @@ namespace Shop.Infra.Data.Context
 
         public DbSet<Slider> Sliders { get; set; }
 
+        public DbSet<ProductComment> ProductComments { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
