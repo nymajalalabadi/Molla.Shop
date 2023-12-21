@@ -465,6 +465,12 @@ namespace Shop.Infra.Data.Repositories
                 }).FirstOrDefaultAsync();
         }
 
+        public async Task AddProductComment(ProductComment productComment)
+        {
+            await _context.ProductComments.AddAsync(productComment);
+        }
+
+
         #endregion
     }
 }

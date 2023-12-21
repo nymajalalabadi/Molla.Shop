@@ -82,6 +82,8 @@ namespace Shop.Domain.Interfaces
 
         Task<ProductDetailViewModel> ShowProductDetail(long ProductId);
 
+        Task AddProductComment(ProductComment productComment);
+
         #endregion
     }
 }

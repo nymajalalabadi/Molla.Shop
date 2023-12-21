@@ -15,9 +15,12 @@ namespace Shop.Application.Services
 
         private readonly IProductRepository _productRepository;
 
-        public ProductService(IProductRepository productRepository)
+        private readonly IUserRepository _userRepository;
+
+        public ProductService(IProductRepository productRepository, IUserRepository userRepository)
         {
             _productRepository = productRepository;
+            _userRepository = userRepository;
         }
 
         #endregion
@@ -320,6 +323,32 @@ namespace Shop.Application.Services
            return await _productRepository.ShowProductDetail(ProductId);
         }
 
+        public async Task<CreateProductCommentResult> CreateProductComment(CreateProductCommentViewModel createProductComment, long userId)
+        {
+            var user = await _userRepository.GetUserById(userId);
+
+            if (user == null)
+            {
+                return CreateProductCommentResult.CheckUser;
+            }
+
+            if (!await _productRepository.CheckProduct(createProductComment.ProductId))
+            {
+                return CreateProductCommentResult.CheckProduct;
+            }
+
+            var newComment = new ProductComment()
+            {
+                ProductId = createProductComment.ProductId,
+                UserId = userId,
+                Text = createProductComment.Text
+            };
+
+            await _productRepository.AddProductComment(newComment);
+            await _productRepository.SaveChanges();
+
+            return CreateProductCommentResult.Success;
+        }
 
         #endregion
     }
