@@ -64,6 +64,8 @@ namespace Shop.Application.Interfaces
 
         Task<CreateProductCommentResult> CreateProductComment(CreateProductCommentViewModel createProductComment, long userId);  
 
+        Task<List<ProductComment>> AllProductCommentById(long ProductId);
+
         #endregion
     }
 }

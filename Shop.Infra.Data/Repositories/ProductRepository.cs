@@ -99,6 +99,7 @@ namespace Shop.Infra.Data.Repositories
         public async Task<FilterProductsViewModel> FilterProducts(FilterProductsViewModel filter)
         {
             var query = _context.Products
+                .Include(p => p.ProductComments)
                 .Include(c => c.ProductSelectedCategories)
                 .ThenInclude(c => c.ProductCategory)
                 .AsQueryable();
@@ -172,7 +173,7 @@ namespace Shop.Infra.Data.Repositories
                     var allDataBox = await query.Paging(pagerBox).Select(p => new ProductItemViewModel()
                     {
                         ProductCategory = p.ProductSelectedCategories.Select(c => c.ProductCategory).First(),
-                        CommentCount = 0,
+                        CommentCount = p.ProductComments.Count(),
                         Price = p.Price,
                         ProductId = p.Id,
                         ProductImageName = p.ProductImageName,
@@ -380,12 +381,13 @@ namespace Shop.Infra.Data.Repositories
 
         public async Task<List<ProductItemViewModel>> ShowAllProductInSlider()
         {
-            var allProduct = await _context.Products.Include(p => p.ProductSelectedCategories).ThenInclude(s => s.ProductCategory)
+            var allProduct = await _context.Products
+                .Include(p => p.ProductComments).Include(p => p.ProductSelectedCategories).ThenInclude(s => s.ProductCategory)
                 .AsQueryable()
                 .Select(c => new ProductItemViewModel
                 {
                     ProductCategory = c.ProductSelectedCategories.Select(c => c.ProductCategory).First(),
-                    CommentCount = 0,
+                    CommentCount = c.ProductComments.Count(),
                     Price = c.Price,
                     ProductId = c.Id,
                     ProductImageName = c.ProductImageName,
@@ -404,6 +406,7 @@ namespace Shop.Infra.Data.Repositories
             //    .ToListAsync();
 
             var product = await _context.Products
+                .Include(p => p.ProductComments)
                 .Include(p => p.ProductSelectedCategories)
                 .ThenInclude(s => s.ProductCategory)
                 .Where(p => p.ProductSelectedCategories.Any(s => s.ProductCategory.UrlName == hrefName))
@@ -412,7 +415,7 @@ namespace Shop.Infra.Data.Repositories
             var data = product.Select(c => new ProductItemViewModel
             {
                 ProductCategory = c.ProductSelectedCategories.Select(c => c.ProductCategory).First(),
-                CommentCount = 0,
+                CommentCount = c.ProductComments.Count(),
                 Price = c.Price,
                 ProductId = c.Id,
                 ProductImageName = c.ProductImageName,
@@ -425,13 +428,14 @@ namespace Shop.Infra.Data.Repositories
         public async Task<List<ProductItemViewModel>> LastProducts()
         {
             var lastProduct = await _context.Products
+                .Include(p => p.ProductComments)
                 .Include(p => p.ProductSelectedCategories)
                 .ThenInclude(s => s.ProductCategory)
                 .OrderByDescending(p => p.CreateDate)
                 .Select(p => new ProductItemViewModel()
                 {
                     ProductCategory = p.ProductSelectedCategories.Select(c => c.ProductCategory).First(),
-                    CommentCount = 0,
+                    CommentCount = p.ProductComments.Count(),
                     Price = p.Price,
                     ProductId = p.Id,
                     ProductImageName = p.ProductImageName,
@@ -447,6 +451,7 @@ namespace Shop.Infra.Data.Repositories
         {
             return await _context.Products
                 .Include(p => p.ProductFeatures)
+                .Include(p => p.ProductComments)
                 .Include(p => p.ProductGalleries)
                 .Include(p => p.ProductSelectedCategories).ThenInclude(s => s.ProductCategory)
                 .Where(p => p.Id == ProductId)
@@ -458,7 +463,7 @@ namespace Shop.Infra.Data.Repositories
                     ShortDescription = p.ShortDescription,
                     Price = p.Price,
                     ProductImageName = p.ProductImageName,
-                    ProductComment = 0,
+                    ProductComment = p.ProductComments.Count(),
                     ProductFeatures = p.ProductFeatures.Where(s => s.ProductId == ProductId).ToList(),
                     ProductImages = p.ProductGalleries.Where(s => s.ProductId == ProductId && !s.IsDelete).Select(g => g.ImageName).ToList(),
                     ProductCategory = p.ProductSelectedCategories.Select(p => p.ProductCategory).First()
@@ -470,6 +475,14 @@ namespace Shop.Infra.Data.Repositories
             await _context.ProductComments.AddAsync(productComment);
         }
 
+        public async Task<List<ProductComment>> AllProductCommentById(long ProductId)
+        {
+            return await _context.ProductComments
+                .Include(c => c.User)
+                .AsQueryable()
+                .Where(c => c.ProductId == ProductId)
+                .ToListAsync();
+        }
 
         #endregion
     }

@@ -1,0 +1,20 @@
+﻿@model List<Shop.Domain.Models.ProductEntities.ProductComment> 
+@if (Model != null && Model.Any())
+{
+    @foreach (var productComment in Model)
+    {
+        <div class="review">
+            <div class="row no-gutters">
+                <div class="col-auto">
+                    <h4><a href="#">@productComment.User.GetUserName()</a></h4>
+                    <span class="review-date">@productComment.CreateDate.ToStringShamsiDate()</span>
+                </div>
+                <div class="col-12">
+                    <h5>
+                        @productComment.Text
+                    </h5>
+                </div>
+            </div>
+        </div>
+    }
+}

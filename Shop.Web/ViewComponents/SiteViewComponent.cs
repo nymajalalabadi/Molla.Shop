@@ -202,4 +202,27 @@ namespace Shop.Web.ViewComponents
     }
     #endregion
 
+    #region Show-Product-Comment
+    public class ProductCommentsViewComponent : ViewComponent
+    {
+        #region constractor
+
+        private readonly IProductService _productService;
+
+        public ProductCommentsViewComponent(IProductService productService)
+        {
+            _productService = productService;
+        }
+
+        #endregion
+
+        public async Task<IViewComponentResult> InvokeAsync(long productId)
+        {
+            var data = await _productService.AllProductCommentById(productId);
+
+            return View("ProductComments", data);
+        }
+    }
+    #endregion
+
 }

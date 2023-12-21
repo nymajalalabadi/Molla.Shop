@@ -84,6 +84,8 @@ namespace Shop.Domain.Interfaces
 
         Task AddProductComment(ProductComment productComment);
 
+        Task<List<ProductComment>> AllProductCommentById(long ProductId);
+        
         #endregion
     }
 }

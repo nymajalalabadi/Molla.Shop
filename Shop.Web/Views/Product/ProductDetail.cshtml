@@ -131,7 +131,7 @@
                     <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">ویژگی محصول</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">نظرات (2)</a>
+                    <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">نظرات (@Model.ProductComment)</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -147,13 +147,13 @@
                     <div class="product-desc-content">
                         @if (Model.ProductFeatures != null && Model.ProductFeatures.Any())
                         {
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">عنوان</th>
-                                    <th scope="col">مقدار</th>
-                                </tr>
-                            </thead>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">عنوان</th>
+                                        <th scope="col">مقدار</th>
+                                    </tr>
+                                </thead>
 
                                 <tbody>
                                     @foreach (var feature in Model.ProductFeatures)
@@ -164,74 +164,33 @@
                                         </tr>
                                     }
                                 </tbody>
-                        </table>
+                            </table>
                         }
                     </div>
                 </div>
                 <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form asp-area="" asp-controller="Product" asp-action="CreateProductComment" method="post">
+                                    <input hidden="hidden" value="@Model.ProductId" name="ProductId" />
+                                    <label>نظر شما</label>
+                                    <textarea name="Text" class="form-control"></textarea>
+                                    <button type="submit" class="btn btn-success">ارسال نظر</button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning">
+                            برای درج نظر لطفا لاگین کنید
+                        </div>
+                    }
                     <div class="reviews">
-                        <h3>نظر (2)</h3>
-                        <div class="review">
-                            <div class="row no-gutters">
-                                <div class="col-auto">
-                                    <h4><a href="#">کاربر 1</a></h4>
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div>
-                                            <!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                    </div><!-- End .rating-container -->
-                                    <span class="review-date">4 روز پیش</span>
-                                </div><!-- End .col -->
-                                <div class="col-12">
-                                    <h4>عالی، سایز فوق العاده</h4>
-
-                                    <div class="review-content">
-                                        <p>
-                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم،لورم ایپسوم متن
-                                            ساختگی با تولید سادگی نامفهوم، لورم ایپسوم متن ساختگی با تولید
-                                            سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم!
-                                        </p>
-                                    </div><!-- End .review-content -->
-
-                                    <div class="review-action">
-                                        <a href="#"><i class="icon-thumbs-up"></i>مثبت (2)</a>
-                                        <a href="#"><i class="icon-thumbs-down"></i>منفی (0)</a>
-                                    </div><!-- End .review-action -->
-                                </div><!-- End .col-auto -->
-                            </div><!-- End .row -->
-                        </div><!-- End .review -->
-
-                        <div class="review">
-                            <div class="row no-gutters">
-                                <div class="col-auto">
-                                    <h4><a href="#">کاربر 2</a></h4>
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div>
-                                            <!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                    </div><!-- End .rating-container -->
-                                    <span class="review-date">2 روز پیش</span>
-                                </div><!-- End .col -->
-                                <div class="col-12">
-                                    <h4>خیلی عالی</h4>
-
-                                    <div class="review-content">
-                                        <p>
-                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم، لورم ایپسوم متن
-                                            ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید
-                                            سادگی نامفهوم.
-                                        </p>
-                                    </div><!-- End .review-content -->
-
-                                    <div class="review-action">
-                                        <a href="#"><i class="icon-thumbs-up"></i>مثبت (0)</a>
-                                        <a href="#"><i class="icon-thumbs-down"></i>منفی (0)</a>
-                                    </div><!-- End .review-action -->
-                                </div><!-- End .col-auto -->
-                            </div><!-- End .row -->
-                        </div><!-- End .review -->
+                        <h3>@Model.ProductComment</h3>
+                        @await Component.InvokeAsync("ProductComments", new {productId = Model.ProductId})
                     </div><!-- End .نظر -->
                 </div><!-- .End .tab-pane -->
             </div><!-- End .tab-content -->
