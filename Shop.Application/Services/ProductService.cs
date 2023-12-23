@@ -270,7 +270,7 @@ namespace Shop.Application.Services
             {
                 UploadImageExtension.DeleteImage(productGallery.ImageName, PathExtensions.ProductOrginServer, PathExtensions.ProductThumbServer);
 
-               await _productRepository.DeleteProductGallery(galleryId);
+                await _productRepository.DeleteProductGallery(galleryId);
             }
         }
 
@@ -320,7 +320,7 @@ namespace Shop.Application.Services
 
         public async Task<ProductDetailViewModel> ShowProductDetail(long ProductId)
         {
-           return await _productRepository.ShowProductDetail(ProductId);
+            return await _productRepository.ShowProductDetail(ProductId);
         }
 
         public async Task<CreateProductCommentResult> CreateProductComment(CreateProductCommentViewModel createProductComment, long userId)
@@ -355,6 +355,10 @@ namespace Shop.Application.Services
             return await _productRepository.AllProductCommentById(ProductId);
         }
 
+        public async Task<List<ProductItemViewModel>> GetRelatedProduct(string categoryName)
+        {
+            return await _productRepository.GetRelatedProduct(categoryName);
+        }
 
         #endregion
     }

@@ -484,6 +484,29 @@ namespace Shop.Infra.Data.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<ProductItemViewModel>> GetRelatedProduct(string categoryName)
+        {
+            var product = await _context.Products
+                .Include(p => p.ProductComments)
+                .Include(p => p.ProductSelectedCategories)
+                .ThenInclude(s => s.ProductCategory)
+                .Where(p => p.ProductSelectedCategories.Any(s => s.ProductCategory.UrlName == categoryName))
+                .Take(6)
+                .ToListAsync();
+
+            var data = product.Select(c => new ProductItemViewModel
+            {
+                ProductCategory = c.ProductSelectedCategories.Select(c => c.ProductCategory).First(),
+                CommentCount = c.ProductComments.Count(),
+                Price = c.Price,
+                ProductId = c.Id,
+                ProductImageName = c.ProductImageName,
+                ProductName = c.Name
+            }).ToList();
+
+            return data;
+        }
+
         #endregion
     }
 }
