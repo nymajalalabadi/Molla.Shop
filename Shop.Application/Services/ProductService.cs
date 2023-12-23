@@ -350,7 +350,7 @@ namespace Shop.Application.Services
             return CreateProductCommentResult.Success;
         }
 
-        public async Task<List<ProductComment>> AllProductCommentById(long ProductId)
+        public async Task<List<ShowComments>> AllProductCommentById(long ProductId)
         {
             return await _productRepository.AllProductCommentById(ProductId);
         }

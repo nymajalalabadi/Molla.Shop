@@ -62,9 +62,9 @@ namespace Shop.Application.Interfaces
 
         Task<ProductDetailViewModel> ShowProductDetail(long ProductId);
 
-        Task<CreateProductCommentResult> CreateProductComment(CreateProductCommentViewModel createProductComment, long userId);  
+        Task<CreateProductCommentResult> CreateProductComment(CreateProductCommentViewModel createProductComment, long userId);
 
-        Task<List<ProductComment>> AllProductCommentById(long ProductId);
+        Task<List<ShowComments>> AllProductCommentById(long ProductId);
 
         Task<List<ProductItemViewModel>> GetRelatedProduct(string categoryName, long productId);
 

@@ -84,7 +84,7 @@ namespace Shop.Domain.Interfaces
 
         Task AddProductComment(ProductComment productComment);
 
-        Task<List<ProductComment>> AllProductCommentById(long ProductId);
+        Task<List<ShowComments>> AllProductCommentById(long ProductId);
 
         Task<List<ProductItemViewModel>> GetRelatedProduct(string categoryName, long productId);
         

@@ -475,13 +475,22 @@ namespace Shop.Infra.Data.Repositories
             await _context.ProductComments.AddAsync(productComment);
         }
 
-        public async Task<List<ProductComment>> AllProductCommentById(long ProductId)
+        public async Task<List<ShowComments>> AllProductCommentById(long ProductId)
         {
-            return await _context.ProductComments
+            var comment = await _context.ProductComments
                 .Include(c => c.User)
                 .AsQueryable()
                 .Where(c => c.ProductId == ProductId)
                 .ToListAsync();
+
+            var data = comment.Select(c => new ShowComments()
+            {
+                CreateDate = c.CreateDate,
+                Text = c.Text,
+                User = c.User
+            }).ToList();
+
+            return data;
         }
 
         public async Task<List<ProductItemViewModel>> GetRelatedProduct(string categoryName, long productId)
