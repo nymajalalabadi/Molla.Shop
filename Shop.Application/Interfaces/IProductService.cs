@@ -66,7 +66,7 @@ namespace Shop.Application.Interfaces
 
         Task<List<ProductComment>> AllProductCommentById(long ProductId);
 
-        Task<List<ProductItemViewModel>> GetRelatedProduct(string categoryName);
+        Task<List<ProductItemViewModel>> GetRelatedProduct(string categoryName, long productId);
 
         #endregion
     }

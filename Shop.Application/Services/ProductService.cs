@@ -355,9 +355,9 @@ namespace Shop.Application.Services
             return await _productRepository.AllProductCommentById(ProductId);
         }
 
-        public async Task<List<ProductItemViewModel>> GetRelatedProduct(string categoryName)
+        public async Task<List<ProductItemViewModel>> GetRelatedProduct(string categoryName, long productId)
         {
-            return await _productRepository.GetRelatedProduct(categoryName);
+            return await _productRepository.GetRelatedProduct(categoryName, productId);
         }
 
         #endregion

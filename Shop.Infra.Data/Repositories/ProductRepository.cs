@@ -484,13 +484,13 @@ namespace Shop.Infra.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<ProductItemViewModel>> GetRelatedProduct(string categoryName)
+        public async Task<List<ProductItemViewModel>> GetRelatedProduct(string categoryName, long productId)
         {
             var product = await _context.Products
                 .Include(p => p.ProductComments)
                 .Include(p => p.ProductSelectedCategories)
-                .ThenInclude(s => s.ProductCategory)
-                .Where(p => p.ProductSelectedCategories.Any(s => s.ProductCategory.UrlName == categoryName))
+                .ThenInclude(s => s.ProductCategory) 
+                .Where(p => p.ProductSelectedCategories.Any(s => s.ProductCategory.UrlName == categoryName) && p.Id != productId)
                 .Take(6)
                 .ToListAsync();
 

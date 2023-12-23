@@ -46,7 +46,7 @@ namespace Shop.Web.Controllers
                 return NotFound();
             }
 
-            TempData["RelatedProduct"] = await _productService.GetRelatedProduct(product.ProductCategory.UrlName);
+            TempData["RelatedProduct"] = await _productService.GetRelatedProduct(product.ProductCategory.UrlName, productId);
 
             return View(product);
         }
