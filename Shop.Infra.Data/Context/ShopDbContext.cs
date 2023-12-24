@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Models.Account;
+using Shop.Domain.Models.Orders;
 using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.Models.Site;
 using Shop.Domain.Models.Wallet;
@@ -50,6 +51,10 @@ namespace Shop.Infra.Data.Context
         public DbSet<Slider> Sliders { get; set; }
 
         public DbSet<ProductComment> ProductComments { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
         #endregion
 
