@@ -28,7 +28,7 @@ namespace Shop.Web.Controllers
 
         #endregion
 
-        public IActionResult Privacy()
+        public IActionResult Error()
         {
             return View();
         }
