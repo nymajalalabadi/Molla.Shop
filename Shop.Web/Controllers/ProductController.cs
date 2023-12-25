@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Interfaces;
 using Shop.Domain.ViewModels.Admin.Products;
 using Shop.Domain.ViewModels.Site.Products;
@@ -81,6 +82,16 @@ namespace Shop.Web.Controllers
 
             TempData[ErrorMessage] = "لطفا نظر خود را وارد نمایید";
             return RedirectToAction("ProductDetail", new { productId = productComment.ProductId });
+        }
+
+        #endregion
+
+        #region buy-product
+
+        [Authorize]
+        public async Task<IActionResult> BuyProduct(long productId)
+        {
+            return Redirect("/User/Basket"+1);
         }
 
         #endregion

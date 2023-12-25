@@ -27,6 +27,8 @@ namespace Shop.Infra.IoC
 
             services.AddScoped<ISiteSettingService, SiteSettingService>();
 
+            services.AddScoped<IOrderService, OrderService>();
+
             #endregion
 
 
@@ -39,6 +41,8 @@ namespace Shop.Infra.IoC
             services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddScoped<ISiteSettingRepository, SiteSettingRepository>();
+
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             #endregion
 
