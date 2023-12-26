@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shop.Domain.Models.Orders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,7 @@ namespace Shop.Application.Interfaces
         Task<long> AddOrder(long userId, long productId);
 
         Task UpdatePriceOrder(long orderId);
+
+        Task<Order> GetBasketForUser(long orderId, long userId);
     }
 }

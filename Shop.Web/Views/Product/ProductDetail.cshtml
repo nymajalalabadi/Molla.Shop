@@ -86,7 +86,7 @@
                         </div><!-- End .details-filter-row -->
 
                         <div class="product-details-action">
-                            <a href="#" class="btn-product btn-cart"><span>افزودن به سبد خرید</span></a>
+                            <a asp-area="" asp-controller="Product" asp-action="BuyProduct" asp-route-productId="@Model.ProductId" class="btn-product btn-cart"><span>افزودن به سبد خرید</span></a>
 
                             <div class="details-action-wrapper">
                                 <a href="#" class="btn-product btn-wishlist" title="لیست علاقه مندی">

@@ -13,9 +13,12 @@ namespace Shop.Web.Controllers
 
         private readonly IProductService _productService;
 
-        public ProductController(IProductService productService)
+        private readonly IOrderService _orderService;
+
+        public ProductController(IProductService productService, IOrderService orderService)
         {
-               _productService = productService;
+            _productService = productService;
+            _orderService = orderService;
         }
 
         #endregion
@@ -91,7 +94,8 @@ namespace Shop.Web.Controllers
         [Authorize]
         public async Task<IActionResult> BuyProduct(long productId)
         {
-            return Redirect("/User/Basket"+1);
+            long orderId = await _orderService.AddOrder(User.GetUserId(), productId);
+            return Redirect("/User/Basket" + orderId);
         }
 
         #endregion

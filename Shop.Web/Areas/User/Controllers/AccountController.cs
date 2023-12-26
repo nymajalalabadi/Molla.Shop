@@ -19,12 +19,14 @@ namespace Shop.Web.Areas.User.Controllers
         private readonly IUserService _userService;
         private readonly IWalletService _walletService;
         private readonly IConfiguration _configuration;
+        private readonly IOrderService _orderService;
 
-        public AccountController(IUserService userService, IWalletService walletService, IConfiguration configuration)
+        public AccountController(IUserService userService, IWalletService walletService, IConfiguration configuration, IOrderService orderService)
         {
             _userService = userService;
             _walletService = walletService;
             _configuration = configuration;
+            _orderService = orderService;
         }
 
         #endregion
@@ -190,10 +192,49 @@ namespace Shop.Web.Areas.User.Controllers
         }
 
         #endregion
+
+        #region user-basket
+        [HttpGet("basket/{orderId}")]
+        public async Task<IActionResult> UserBasket(long orderId)
+        {
+            var order = await _orderService.GetBasketForUser(orderId, User.GetUserId());
+            if (order == null)
+            {
+                return NotFound();
+            }
+            //ViewBag.UserWalletAmount = await _walletService.GetUserWalletAmount(User.GetUserId());
+
+            return View(order);
+        }
+
+        //[HttpPost("basket/{orderId}"), ValidateAntiForgeryToken]
+        //public async Task<IActionResult> UserBasket(FinallyOrderViewModel finallyOrder)
+        //{
+        //    var result = await _orderService.FinallyOrder(finallyOrder, User.GetUserId());
+
+        //    switch (result)
+        //    {
+        //        case FinallyOrderResult.HasNotUser:
+        //            TempData[ErrorMessage] = "سفارش شما یفت نشد";
+        //            break;
+        //        case FinallyOrderResult.NotFound:
+        //            TempData[ErrorMessage] = "سفارش شما یفت نشد";
+        //            break;
+        //        case FinallyOrderResult.Error:
+        //            TempData[ErrorMessage] = "موجودی کیف پول شما کافی نمیباشد";
+        //            return RedirectToAction("UserWallet");
+        //        case FinallyOrderResult.Suceess:
+        //            TempData[SuccessMessage] = "فاکتور شما با موفقیت پرداخت شد از خرید متشکریم";
+        //            return RedirectToAction("UserWallet");
+
+        //    }
+
+        //    ViewBag.UserWalletAmount = await _walletService.GetUserWalletAmount(User.GetUserId());
+
+        //    return View();
+        //}
+
+        #endregion
+
     }
-
-
-
-
-
 }

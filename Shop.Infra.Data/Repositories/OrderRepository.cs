@@ -49,7 +49,7 @@ namespace Shop.Infra.Data.Repositories
         {
             return await _context.OrderDetails.AsQueryable()
                 .Where(d => d.Id == OrderId && !d.IsDelete)
-                .SumAsync(d => d.Price);
+                .SumAsync(d => d.Price * d.Count);
         }
 
 
@@ -79,6 +79,26 @@ namespace Shop.Infra.Data.Repositories
         {
             _context.OrderDetails.Update(orderDetail);
         }
+
+        public async Task<Order> GetBasketForUser(long orderId, long userId)
+        {
+            return await _context.Orders.AsQueryable()
+                .Include(o => o.User)
+                .Where(o => o.Id == orderId && o.UserId == userId)
+                .Select(o => new Order()
+                {
+                    UserId = o.UserId,
+                    CreateDate = o.CreateDate,
+                    Id = o.Id,
+                    IsDelete = o.IsDelete,
+                    IsFinaly = o.IsFinaly,
+                    OrderSum = o.OrderSum,
+                    OrderDetails = _context.OrderDetails.Include(c => c.Product).Where(d => !d.IsDelete && !d.Order.IsFinaly && d.Order.UserId == userId)
+                    .ToList()
+                })
+                .FirstOrDefaultAsync();
+        }
+
 
         #endregion
     }

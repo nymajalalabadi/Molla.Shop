@@ -25,7 +25,8 @@ namespace Shop.Domain.Interfaces
 
         void UpdateOrder(Order order);
 
-
         void UpdateOrderDetail(OrderDetail orderDetail);
+
+        Task<Order> GetBasketForUser(long orderId, long userId);
     }
 }

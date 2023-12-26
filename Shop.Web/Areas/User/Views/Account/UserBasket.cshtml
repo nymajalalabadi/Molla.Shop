@@ -1,0 +1,130 @@
+﻿@model Shop.Domain.Models.Orders.Order
+@{
+    ViewData["Title"] = "سبد خرید";
+
+    int userWalletAmount = (Int32)ViewBag.UserWalletAmount;
+}
+
+<div class="page-header text-center" style="background-image: url('/images/page-header-bg.jpg')">
+    <div class="container">
+        <h1 class="page-title">سبد خرید<span>فروشگاه</span></h1>
+    </div>
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">خانه</a></li>
+            <li class="breadcrumb-item"><a asp-area="" asp-controller="Product" asp-action="Products">فروشگاه</a></li>
+            <li class="breadcrumb-item active" aria-current="page">سبد خرید</li>
+        </ol>
+    </div>
+</nav>
+
+<div class="page-content">
+    <div class="cart">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    @if (Model.OrderDetails != null && Model.OrderDetails.Any())
+                    {
+                        <table class="table table-cart table-mobile">
+                            <thead>
+                                <tr>
+                                    <th>محصول</th>
+                                    <th>قیمت</th>
+                                    <th>تعداد</th>
+                                    <th>مجموع</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var order in Model.OrderDetails)
+                                {
+                                    <tr>
+                                        <td class="product-col">
+                                            <div class="product">
+                                                <figure class="product-media">
+                                                    <a href="#">
+                                                        <img src="@(PathExtensions.ProductThumb + order.Product.ProductImageName)" alt="@order.Product.Name">
+                                                    </a>
+                                                </figure>
+
+                                                <h3 class="product-title">
+                                                    <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@order.Product.Id">@order.Product.Name</a>
+                                                </h3>
+                                            </div>
+                                        </td>
+                                        <td class="price-col">@order.Price.ToString("#,0 تومان")</td>
+                                        <td class="quantity-col">
+                                            <div class="cart-product-quantity">
+                                                @order.Count
+                                            </div>
+                                        </td>
+                                        @{
+                                            var price = order.Price * order.Count;
+                                            var productFinallyPrice = price.ToString("#,0 تومان");
+                                        }
+
+                                        <td class="total-col">@(productFinallyPrice)</td>
+                                        <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    }
+
+                    <div class="cart-bottom">
+                        <a href="#" class="btn btn-outline-dark-2"><span>به روز رسانی سبد خرید</span><i class="icon-refresh"></i></a>
+                    </div>
+                </div>
+                <aside class="col-lg-3">
+                    <form asp-area="User" asp-controller="Account" asp-action="UserBasket" method="post">
+                        <input type="hidden" name="OrderId" value="@Model.Id" />
+                        <input type="hidden" name="UserId" value="@Model.UserId" />
+
+                        <div class="summary summary-cart">
+                            <h3 class="summary-title">جمع سبد خرید</h3>
+
+                            <table class="table table-summary">
+                                <tbody>
+                                    <tr class="summary-subtotal">
+                                        <td>موجودی کیف پول شما: </td>
+                                        <td class="text-left">@userWalletAmount.ToString("#,0 تومان")</td>
+                                    </tr>
+
+                                    <tr class="summary-subtotal">
+                                        <td>جمع کل سبد خرید : </td>
+                                        <td class="text-left">@Model.OrderSum.ToString("#,0 تومان")</td>
+                                    </tr>
+
+                                    <tr class="summary-total">
+                                        <td>مبلغ قابل پرداخت :</td>
+                                        <td class="text-left">@Model.OrderSum.ToString("#,0 تومان")</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            @if (Model.OrderSum <= userWalletAmount)
+                            {
+                                <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                    پرداخت
+                                </button>
+                            }
+                            else
+                            {
+                                <div class="alert alert-info">
+                                    <b>
+                                        موجودی کیف پول شما کافی نمیباشد ، لطفا از طریق این <a asp-area="User" asp-controller="Account" asp-action="UserWallet">لینک</a> اقدام به شارژ حساب کاربری خود کنید
+                                    </b>
+                                </div>
+                            }
+                        </div>
+                    </form>
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>
+

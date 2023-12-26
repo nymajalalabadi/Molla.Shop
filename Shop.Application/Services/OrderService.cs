@@ -99,7 +99,10 @@ namespace Shop.Application.Services
             await _orderRepository.SaveChanges();
         }
 
-
+        public async Task<Order> GetBasketForUser(long orderId, long userId)
+        {
+            return await _orderRepository.GetBasketForUser(orderId, userId);
+        }
         #endregion
     }
 }
