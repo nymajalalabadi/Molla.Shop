@@ -95,6 +95,7 @@ namespace Shop.Web.Controllers
         public async Task<IActionResult> BuyProduct(long productId)
         {
             long orderId = await _orderService.AddOrder(User.GetUserId(), productId);
+
             return Redirect("/User/Basket" + orderId);
         }
 

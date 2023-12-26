@@ -66,7 +66,6 @@ namespace Shop.Application.Services
                     orderDetail.Count += 1;
 
                     _orderRepository.UpdateOrderDetail(orderDetail);
-                   //await _orderRepository.SaveChanges();
                 }
                 else
                 {
@@ -79,7 +78,6 @@ namespace Shop.Application.Services
                     };
 
                     await _orderRepository.AddOrderDetail(orderDetail);
-                    // _orderRepository.SaveChanges();
                 }
                 await _orderRepository.SaveChanges();
             }
