@@ -28,13 +28,14 @@ namespace Shop.Infra.Data.Repositories
         public async Task<Order> CheckUserOrder(long userId)
         {
             return await _context.Orders.AsQueryable()
-                .FirstOrDefaultAsync(o => o.UserId == userId);
+                .Include(o => o.OrderDetails)
+                .FirstOrDefaultAsync(o => o.UserId == userId && !o.IsFinaly);
         }
 
         public async Task<OrderDetail> CheckOrderDetail(long orderId, long productId)
         {
             return await _context.OrderDetails.AsQueryable()
-                .Where(d => d.OrderId == orderId && d.ProductId == productId)
+                .Where(c => c.OrderId == orderId && c.ProductId == productId)
                 .FirstOrDefaultAsync();
         }
 
@@ -55,8 +56,7 @@ namespace Shop.Infra.Data.Repositories
         public async Task<int> OrderSum(long OrderId)
         {
             return await _context.OrderDetails.AsQueryable()
-                .Where(d => d.Id == OrderId && !d.IsDelete)
-                .SumAsync(d => d.Price * d.Count);
+                .Where(c => c.OrderId == OrderId && !c.IsDelete).SumAsync(c => c.Price * c.Count);
         }
 
 
@@ -91,6 +91,7 @@ namespace Shop.Infra.Data.Repositories
         {
             return await _context.Orders.AsQueryable()
                 .Include(o => o.User)
+                .Include(o => o.OrderDetails).ThenInclude(d => d.Product)
                 .Where(o => o.Id == orderId && o.UserId == userId)
                 .Select(o => new Order()
                 {
@@ -100,8 +101,7 @@ namespace Shop.Infra.Data.Repositories
                     IsDelete = o.IsDelete,
                     IsFinaly = o.IsFinaly,
                     OrderSum = o.OrderSum,
-                    OrderDetails = _context.OrderDetails.Include(c => c.Product).Where(d => !d.IsDelete && !d.Order.IsFinaly && d.Order.UserId == userId)
-                    .ToList()
+                    OrderDetails = o.OrderDetails.Where(d => d.OrderId == orderId && !d.IsDelete && !d.Order.IsFinaly).ToList()
                 })
                 .FirstOrDefaultAsync();
         }

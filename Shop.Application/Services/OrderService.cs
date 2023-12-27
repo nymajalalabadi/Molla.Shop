@@ -124,6 +124,7 @@ namespace Shop.Application.Services
             if (await _walletRepository.GetUserWalletAmount(userId) >= order.OrderSum)
             {
                 order.IsFinaly = true;
+                order.OrderState = OrderState.Requested;
 
                 var wallet = new UserWallet()
                 {

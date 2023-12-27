@@ -96,7 +96,7 @@ namespace Shop.Web.Controllers
         {
             long orderId = await _orderService.AddOrder(User.GetUserId(), productId);
 
-            return Redirect("/User/Basket" + orderId);
+            return Redirect("/User/Basket/" + orderId);
         }
 
         #endregion

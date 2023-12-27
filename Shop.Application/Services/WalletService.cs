@@ -70,5 +70,10 @@ namespace Shop.Application.Services
             return await _walletRepository.FilterWallets(filter);
         }
 
+        public async Task<int> GetUserWalletAmount(long userId)
+        {
+            return await _walletRepository.GetUserWalletAmount(userId);
+        }
+
     }
 }
