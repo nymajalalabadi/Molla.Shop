@@ -15,6 +15,8 @@ namespace Shop.Domain.Interfaces
 
         Task<Order> GetOrderById(long OrderId);
 
+        Task<Order> GetOrderById(long OrderId, long userId);
+
         Task<int> OrderSum(long OrderId);
 
         Task AddOrder(Order order);

@@ -22,6 +22,8 @@ namespace Shop.Domain.Interfaces
 
         Task<FilterWalletViewModel> FilterWallets(FilterWalletViewModel filter);
 
+        Task<int> GetUserWalletAmount(long userId);
+
         #endregion
     }
 }

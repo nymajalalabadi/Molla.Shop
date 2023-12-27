@@ -72,6 +72,17 @@ namespace Shop.Infra.Data.Repositories
             return filter.SetPaging(pager).SetWallets(allData);
         }
 
+        public async Task<int> GetUserWalletAmount(long userId)
+        {
+            var variz = await _context.UserWallets.Where(w => w.UserId == userId && w.WalletType == WalletType.Variz && w.IsPay).Select(w => w.Amount).ToListAsync();
+
+            var Bardasht = await _context.UserWallets.Where(w => w.UserId == userId && w.WalletType == WalletType.Bardasht && w.IsPay)
+                .Select(w => w.Amount).ToListAsync();
+
+            return (variz.Sum() - Bardasht.Sum());
+        }
+
+
         #endregion
     }
 }

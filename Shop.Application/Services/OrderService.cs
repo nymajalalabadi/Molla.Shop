@@ -1,6 +1,8 @@
 ﻿using Shop.Application.Interfaces;
 using Shop.Domain.Interfaces;
 using Shop.Domain.Models.Orders;
+using Shop.Domain.Models.Wallet;
+using Shop.Domain.ViewModels.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +19,13 @@ namespace Shop.Application.Services
             ;
         private readonly IProductRepository _productRepository;
 
-        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository)
+        private readonly IWalletRepository _walletRepository;
+
+        public OrderService(IOrderRepository orderRepository, IProductRepository productRepository, IWalletRepository walletRepository)
         {
             _orderRepository = orderRepository;
             _productRepository = productRepository;
+            _walletRepository = walletRepository;
 
         }
         #endregion
@@ -101,6 +106,45 @@ namespace Shop.Application.Services
         {
             return await _orderRepository.GetBasketForUser(orderId, userId);
         }
+
+        public async Task<FinallyOrderResult> FinallyOrder(FinallyOrderViewModel finallyOrder, long userId)
+        {
+            if (userId != finallyOrder.UserId)
+            {
+                return FinallyOrderResult.HasNotUser;
+            }
+
+            var order = await _orderRepository.GetOrderById(finallyOrder.OrderId, userId);
+            
+            if (order == null || order.IsFinaly == true)
+            {
+                return FinallyOrderResult.NotFound;
+            }
+
+            if (await _walletRepository.GetUserWalletAmount(userId) >= order.OrderSum)
+            {
+                order.IsFinaly = true;
+
+                var wallet = new UserWallet()
+                {
+                    Amount = order.OrderSum,
+                    Description = $"فاکتور شماره {order.Id}",
+                    WalletType = WalletType.Bardasht,
+                    UserId = userId
+                };
+
+                await _walletRepository.CreateWallet(wallet);
+
+                _orderRepository.UpdateOrder(order);
+
+                await _orderRepository.SaveChanges();
+
+                return FinallyOrderResult.Suceess;
+            }
+
+            return FinallyOrderResult.Error;
+        }
+
         #endregion
     }
 }

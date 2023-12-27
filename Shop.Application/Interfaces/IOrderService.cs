@@ -1,4 +1,5 @@
 ﻿using Shop.Domain.Models.Orders;
+using Shop.Domain.ViewModels.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace Shop.Application.Interfaces
         Task UpdatePriceOrder(long orderId);
 
         Task<Order> GetBasketForUser(long orderId, long userId);
+
+        Task<FinallyOrderResult> FinallyOrder(FinallyOrderViewModel finallyOrder, long userId);
     }
 }

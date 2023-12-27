@@ -45,6 +45,13 @@ namespace Shop.Infra.Data.Repositories
                 .SingleOrDefaultAsync(o => o.Id == OrderId);
         }
 
+        public async Task<Order> GetOrderById(long OrderId, long userId)
+        {
+            return await _context.Orders
+                .AsQueryable()
+                .SingleOrDefaultAsync(o => o.Id == OrderId && o.UserId == userId);
+        }
+
         public async Task<int> OrderSum(long OrderId)
         {
             return await _context.OrderDetails.AsQueryable()
