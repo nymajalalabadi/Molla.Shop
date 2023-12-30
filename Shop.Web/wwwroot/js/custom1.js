@@ -1,4 +1,5 @@
-﻿function ShowMessage(title, text, theme) {
+﻿
+function ShowMessage(title, text, theme) {
     window.createNotification({
         closeOnClick: true,
         displayCloseButton: false,
