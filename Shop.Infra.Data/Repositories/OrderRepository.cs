@@ -35,7 +35,7 @@ namespace Shop.Infra.Data.Repositories
         public async Task<OrderDetail> CheckOrderDetail(long orderId, long productId)
         {
             return await _context.OrderDetails.AsQueryable()
-                .Where(c => c.OrderId == orderId && c.ProductId == productId)
+                .Where(c => c.OrderId == orderId && c.ProductId == productId && !c.IsDelete)
                 .FirstOrDefaultAsync();
         }
 
@@ -58,7 +58,6 @@ namespace Shop.Infra.Data.Repositories
             return await _context.OrderDetails.AsQueryable()
                 .Where(c => c.OrderId == OrderId && !c.IsDelete).SumAsync(c => c.Price * c.Count);
         }
-
 
         public async Task AddOrder(Order order)
         {
@@ -106,6 +105,11 @@ namespace Shop.Infra.Data.Repositories
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<OrderDetail> GetOrderDetailById(long detailId)
+        {
+            return await _context.OrderDetails.AsQueryable()
+                .SingleOrDefaultAsync(d => d.Id == detailId);
+        }
 
         #endregion
     }

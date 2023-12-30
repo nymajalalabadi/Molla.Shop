@@ -42,7 +42,7 @@
                             <tbody>
                                 @foreach (var order in Model.OrderDetails)
                                 {
-                                    <tr>
+                                    <tr id="ajax-url-item-@order.Id">
                                         <td class="product-col">
                                             <div class="product">
                                                 <figure class="product-media">
@@ -68,7 +68,7 @@
                                         }
 
                                         <td class="total-col">@(productFinallyPrice)</td>
-                                        <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
+                                        <td class="remove-col"><a asp-area="User" asp-controller="Account" asp-action="DeleteOrderDetail" asp-route-orderDetailId="@order.Id" class="btn-remove" ajax-url-button="@order.Id"><i class="icon-close"></i></a></td>
                                     </tr>
                                 }
                             </tbody>
@@ -82,44 +82,11 @@
                 </div>
                 <aside class="col-lg-3">
                     <form asp-area="User" asp-controller="Account" asp-action="UserBasket" method="post">
-                        <input type="hidden" name="OrderId" value="@Model.Id" />
+                        <input type="hidden" name="OrderId" id="OrderId" value="@Model.Id" />
                         <input type="hidden" name="UserId" value="@Model.UserId" />
 
-                        <div class="summary summary-cart">
-                            <h3 class="summary-title">جمع سبد خرید</h3>
-
-                            <table class="table table-summary">
-                                <tbody>
-                                    <tr class="summary-subtotal">
-                                        <td>موجودی کیف پول شما: </td>
-                                        <td class="text-left">@userWalletAmount.ToString("#,0 تومان")</td>
-                                    </tr>
-
-                                    <tr class="summary-subtotal">
-                                        <td>جمع کل سبد خرید : </td>
-                                        <td class="text-left">@Model.OrderSum.ToString("#,0 تومان")</td>
-                                    </tr>
-
-                                    <tr class="summary-total">
-                                        <td>مبلغ قابل پرداخت :</td>
-                                        <td class="text-left">@Model.OrderSum.ToString("#,0 تومان")</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            @if (Model.OrderSum <= userWalletAmount)
-                            {
-                                <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-                                    پرداخت
-                                </button>
-                            }
-                            else
-                            {
-                                <div class="alert alert-info">
-                                    <b>
-                                        موجودی کیف پول شما کافی نمیباشد ، لطفا از طریق این <a asp-area="User" asp-controller="Account" asp-action="UserWallet">لینک</a> اقدام به شارژ حساب کاربری خود کنید
-                                    </b>
-                                </div>
-                            }
+                        <div class="summary summary-cart" id="main-payments">
+                            <partial name="_OrderPrice" model="Model"/> 
                         </div>
                     </form>
                 </aside>
@@ -127,4 +94,55 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script>
+        $('[ajax-url-button]').on('click', function (e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+            var itemId = $(this).attr('ajax-url-button');
+            swal({
+                title: 'اخطار',
+                text: "آیا از انجام عملیات مورد نظر اطمینان دارید؟",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "بله",
+                cancelButtonText: "خیر",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }).then((result) => {
+                if (result.value) {
+                    $.get(url).then(result => {
+                        if (result.status === 'Success') {
+                            ShowMessage('موفقیت', "محصول شما با موفقیت حذف شد");
+                            $('#ajax-url-item-' + itemId).hide(1500);
+
+                            //$('#main-payment').ready(() => {
+                            //    location.reload();
+                            //});
+
+                            ReloadPrice();
+                        }
+                    });
+                } else if (result.dismiss === swal.DismissReason.cancel) {
+                    swal('اعلام', 'عملیات لغو شد', 'error');
+                }
+            });
+        });
+
+
+        function ReloadPrice() {
+            var orderId = $('#OrderId').val();
+            $.ajax({
+                type: "Get",
+                data: { id: orderId },
+                async: true,
+                url: "/user/reload-price"
+            }).done(function (res) {
+                $("#main-payments").html(res);
+            });
+        }
+    </script>
+}
 

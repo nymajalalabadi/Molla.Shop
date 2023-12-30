@@ -146,6 +146,29 @@ namespace Shop.Application.Services
             return FinallyOrderResult.Error;
         }
 
+        public async Task<bool> RemoveOrderDetailFromOrder(long detailId)
+        {
+            var orderDetail = await _orderRepository.GetOrderDetailById(detailId);
+
+            var order = await _orderRepository.GetOrderById(orderDetail.OrderId);
+
+            if (orderDetail != null)
+            {
+                orderDetail.IsDelete = true;
+                _orderRepository.UpdateOrderDetail(orderDetail);
+
+                order.OrderSum = (await _orderRepository.OrderSum(order.Id) - orderDetail.Price);
+                _orderRepository.UpdateOrder(order);
+
+                await _orderRepository.SaveChanges();
+
+                return true;
+            }
+
+            return false;
+        }
+
+
         #endregion
     }
 }

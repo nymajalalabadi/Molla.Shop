@@ -242,5 +242,35 @@ namespace Shop.Web.Areas.User.Controllers
 
         #endregion
 
+        #region delete-order-detail
+
+        [HttpGet("delete-orderDetail/{orderDetailId}")]
+        public async Task<IActionResult> DeleteOrderDetail(long orderDetailId)
+        {
+            var result = await _orderService.RemoveOrderDetailFromOrder(orderDetailId);
+
+            if (result)
+            {
+                return JsonResponseStatus.Success();
+            }
+            return JsonResponseStatus.Error();
+        }
+
+        #endregion
+
+        #region reload-price
+
+        [HttpGet("reload-price")]
+        public async Task<IActionResult> ReloadOrderPrice(long id)
+        {
+            var order = await _orderService.GetBasketForUser(id, User.GetUserId());
+
+            ViewBag.UserWalletAmount = await _walletService.GetUserWalletAmount(User.GetUserId());
+
+            return PartialView("_OrderPrice", order);
+        }
+
+        #endregion
+
     }
 }

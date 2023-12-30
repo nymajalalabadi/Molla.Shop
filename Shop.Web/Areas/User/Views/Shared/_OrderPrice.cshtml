@@ -1,0 +1,39 @@
+﻿@model Shop.Domain.Models.Orders.Order
+@{
+    int userWalletAmount = (Int32)ViewBag.UserWalletAmount;
+}
+
+<h3 class="summary-title">جمع سبد خرید</h3>
+
+<table class="table table-summary">
+    <tbody>
+        <tr class="summary-subtotal">
+            <td>موجودی کیف پول شما: </td>
+            <td class="text-left">@userWalletAmount.ToString("#,0 تومان")</td>
+        </tr>
+
+        <tr class="summary-subtotal">
+            <td>جمع کل سبد خرید : </td>
+            <td class="text-left">@Model.OrderSum.ToString("#,0 تومان")</td>
+        </tr>
+
+        <tr class="summary-total">
+            <td>مبلغ قابل پرداخت :</td>
+            <td class="text-left">@Model.OrderSum.ToString("#,0 تومان")</td>
+        </tr>
+    </tbody>
+</table>
+@if (Model.OrderSum <= userWalletAmount && Model.OrderSum != 0)
+{
+    <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+        پرداخت
+    </button>
+}
+else
+{
+    <div class="alert alert-info">
+        <b>
+            موجودی کیف پول شما کافی نمیباشد ، لطفا از طریق این <a asp-area="User" asp-controller="Account" asp-action="UserWallet">لینک</a> اقدام به شارژ حساب کاربری خود کنید
+        </b>
+    </div>
+}
