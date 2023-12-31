@@ -1,8 +1,9 @@
 ﻿@using Shop.Domain.Models.Account
 @using Shop.Application.Extentions
-
+@using Shop.Domain.Models.Orders
 @{
     var user = (User)ViewBag.User;
+    var order = (Order)ViewBag.Order;
 }
 
 <header class="header header-intro-clearance header-4">
@@ -63,122 +64,128 @@
                 </div><!-- End .header-search -->
             </div>
 
-            <div class="header-right">
-                <div class="dropdown compare-dropdown">
-                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false" data-display="static" title="مقایسه محصولات"
-                       aria-label="Compare Products">
-                        <div class="icon">
-                            <i class="icon-random"></i>
-                        </div>
-                        <p>مقایسه</p>
-                    </a>
+            @if (User.Identity.IsAuthenticated)
+            {
 
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <ul class="compare-products">
-                            <li class="compare-product">
-                                <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
-                                <h4 class="compare-product-title">
-                                    <a href="product.html">گوشی سامسونگ مدل S9</a>
-                                </h4>
-                            </li>
-                            <li class="compare-product">
-                                <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
-                                <h4 class="compare-product-title">
-                                    <a href="product.html">گوشی سامسونگ مدل S8</a>
-                                </h4>
-                            </li>
-                        </ul>
+                <div class="header-right">
+                    <div class="dropdown compare-dropdown">
+                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" data-display="static" title="مقایسه محصولات"
+                           aria-label="Compare Products">
+                            <div class="icon">
+                                <i class="icon-random"></i>
+                            </div>
+                            <p>مقایسه</p>
+                        </a>
 
-                        <div class="compare-actions">
-                            <a href="#" class="action-link">حذف همه</a>
-                            <a href="compare.html" class="btn btn-outline-primary-2">
-                                <span>مقایسه</span><i class="icon-long-arrow-left"></i>
-                            </a>
-                        </div>
-                    </div><!-- End .dropdown-menu -->
-                </div><!-- End .compare-dropdown -->
-
-                <div class="wishlist">
-                    <a href="wishlist.html" title="لیست محصولات مورد علاقه شما">
-                        <div class="icon">
-                            <i class="icon-heart-o"></i>
-                            <span class="wishlist-count badge">3</span>
-                        </div>
-                        <p>علاقه مندی</p>
-                    </a>
-                </div><!-- End .compare-dropdown -->
-
-                <div class="dropdown cart-dropdown">
-                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false" data-display="static">
-                        <div class="icon">
-                            <i class="icon-shopping-cart"></i>
-                            <span class="cart-count">2</span>
-                        </div>
-                        <p>سبد خرید</p>
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-cart-products">
-                            <div class="product">
-                                <div class="product-cart-details">
-                                    <h4 class="product-title">
-                                        <a href="product.html">کتونی ورزشی مخصوص دویدن رنگ بژ</a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <ul class="compare-products">
+                                <li class="compare-product">
+                                    <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
+                                    <h4 class="compare-product-title">
+                                        <a href="product.html">گوشی سامسونگ مدل S9</a>
                                     </h4>
-
-                                    <span class="cart-product-info">
-                                        <span class="cart-product-qty">1 x </span>
-                                        84,000 تومان
-                                    </span>
-                                </div><!-- End .product-cart-details -->
-
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="/images/products/cart/product-1.jpg" alt="product">
-                                    </a>
-                                </figure>
-                                <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
-                            </div><!-- End .product -->
-
-                            <div class="product">
-                                <div class="product-cart-details">
-                                    <h4 class="product-title">
-                                        <a href="product.html">لباس زنانه آبی</a>
+                                </li>
+                                <li class="compare-product">
+                                    <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
+                                    <h4 class="compare-product-title">
+                                        <a href="product.html">گوشی سامسونگ مدل S8</a>
                                     </h4>
+                                </li>
+                            </ul>
 
-                                    <span class="cart-product-info">
-                                        <span class="cart-product-qty">1 x </span>
-                                        76,000 تومان
+                            <div class="compare-actions">
+                                <a href="#" class="action-link">حذف همه</a>
+                                <a href="compare.html" class="btn btn-outline-primary-2">
+                                    <span>مقایسه</span><i class="icon-long-arrow-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wishlist">
+                        <a href="wishlist.html" title="لیست محصولات مورد علاقه شما">
+                            <div class="icon">
+                                <i class="icon-heart-o"></i>
+                                <span class="wishlist-count badge">3</span>
+                            </div>
+                            <p>علاقه مندی</p>
+                        </a>
+                    </div>
+
+                    <div class="dropdown cart-dropdown">
+                        @if (order != null)
+                        {
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false" data-display="static">
+                                <div class="icon">
+                                    <i class="icon-shopping-cart"></i>
+                                    <span class="cart-count">
+                                        @if (order.OrderDetails != null && order.OrderDetails.Any())
+                                        {
+                                            <span> @order.OrderDetails.Count()</span>
+                                        }
+                                        else
+                                        {
+                                            <span>0</span>
+                                        }
                                     </span>
-                                </div><!-- End .product-cart-details -->
-
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="/images/products/cart/product-2.jpg" alt="product">
-                                    </a>
-                                </figure>
-                                <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
-                            </div><!-- End .product -->
-                        </div><!-- End .cart-product -->
-
-                        <div class="dropdown-cart-total">
-                            <span>مجموع</span>
-
-                            <span class="cart-total-price">160,000 تومان</span>
-                        </div><!-- End .dropdown-cart-total -->
-
-                        <div class="dropdown-cart-action">
-                            <a href="cart.html" class="btn btn-primary">مشاهده سبد خرید</a>
-                            <a href="checkout.html" class="btn btn-outline-primary-2">
-                                <span>پرداخت</span><i class="icon-long-arrow-left"></i>
+                                </div>
+                                <p>سبد خرید</p>
                             </a>
-                        </div><!-- End .dropdown-cart-total -->
-                    </div><!-- End .dropdown-menu -->
-                </div><!-- End .cart-dropdown -->
-            </div><!-- End .header-right -->
-        </div><!-- End .container -->
-    </div><!-- End .header-middle -->
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-cart-products">
+                                    @if (order.OrderDetails != null && order.OrderDetails.Any())
+                                    {
+                                        @foreach (var item in order.OrderDetails)
+                                        {
+
+                                            <div class="product">
+                                                <div class="product-cart-details">
+                                                    <h4 class="product-title">
+                                                        <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.Product.Id">@item.Product.Name</a>
+                                                    </h4>
+
+                                                    <span class="cart-product-info">
+                                                        <span class="cart-product-qty">@item.Count * </span>
+                                                        @{
+                                                            var price = (item.Count * item.Price);
+                                                        }
+                                                        @price.ToString("#,0 تومان")
+                                                    </span>
+                                                </div>
+
+                                                <figure class="product-image-container">
+                                                    <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.Product.Id" class="product-image">
+                                                        <img src="@(PathExtensions.ProductOrgin +item.Product.ProductImageName)" alt="@item.Product.Name">
+                                                    </a>
+                                                </figure>
+                                            </div>
+                                        }
+                                    }
+
+
+                                </div>
+
+                                <div class="dropdown-cart-total">
+                                    <span>مجموع</span>
+
+                                    <span class="cart-total-price">@order.OrderSum.ToString("#,0 تومان")</span>
+                                </div>
+
+                                <div class="dropdown-cart-action">
+                                    <a asp-area="User" asp-controller="Account" asp-action="UserBasket" asp-route-orderId="@order.Id" class="btn btn-outline-primary-2">
+                                        <span>مشاهده سبد خرید</span><i class="icon-long-arrow-left"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 
     <div class="header-bottom sticky-header">
         <div class="container">

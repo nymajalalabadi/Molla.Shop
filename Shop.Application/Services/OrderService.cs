@@ -107,6 +107,11 @@ namespace Shop.Application.Services
             return await _orderRepository.GetBasketForUser(orderId, userId);
         }
 
+        public async Task<Order> GetBasketForUser(long userId)
+        {
+            return await _orderRepository.GetBasketForUser(userId);
+        }
+
         public async Task<Order> GetOrderById(long OrderId)
         {
             return await _orderRepository.GetOrderById(OrderId);

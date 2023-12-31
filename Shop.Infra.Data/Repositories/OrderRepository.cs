@@ -5,6 +5,7 @@ using Shop.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -102,6 +103,13 @@ namespace Shop.Infra.Data.Repositories
                     OrderSum = o.OrderSum,
                     OrderDetails = o.OrderDetails.Where(d => d.OrderId == orderId && !d.IsDelete && !d.Order.IsFinaly).ToList()
                 })
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<Order> GetBasketForUser(long userId)
+        {
+            return await _context.Orders.Include(c => c.OrderDetails).ThenInclude(c => c.Product).AsQueryable()
+                .Where(c => c.UserId == userId && c.OrderState == OrderState.Processing && !c.IsFinaly && !c.IsDelete)
                 .FirstOrDefaultAsync();
         }
 

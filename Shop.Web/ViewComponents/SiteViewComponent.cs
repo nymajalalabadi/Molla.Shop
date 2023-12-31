@@ -4,6 +4,7 @@ using Shop.Domain.Models.ProductEntities;
 using Shop.Domain.ViewModels.Admin.Products;
 using Shop.Domain.ViewModels.Site.Products;
 using Shop.Domain.ViewModels.Site.Sliders;
+using Shop.Web.Extentions;
 
 namespace Shop.Web.ViewComponents
 {
@@ -12,9 +13,11 @@ namespace Shop.Web.ViewComponents
     public class SiteHeaderViewComponent : ViewComponent
     {
         private readonly IUserService _userService;
-        public SiteHeaderViewComponent(IUserService userService)
+        private readonly IOrderService _orderService;
+        public SiteHeaderViewComponent(IUserService userService, IOrderService orderService)
         {
             _userService = userService;
+            _orderService = orderService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -22,6 +25,8 @@ namespace Shop.Web.ViewComponents
             if (User.Identity.IsAuthenticated)
             {
                 ViewBag.User = await _userService.GetUserByPhoneNumber(User.Identity.Name);
+
+                ViewBag.Order = await _orderService.GetBasketForUser(User.GetUserId());
             }
             return View("SiteHeader");
         }

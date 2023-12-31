@@ -31,6 +31,8 @@ namespace Shop.Domain.Interfaces
 
         Task<Order> GetBasketForUser(long orderId, long userId);
 
+        Task<Order> GetBasketForUser(long userId);
+        
         Task<OrderDetail> GetOrderDetailById(long detailId);
     }
 }
