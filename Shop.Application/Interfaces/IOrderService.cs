@@ -16,9 +16,12 @@ namespace Shop.Application.Interfaces
 
         Task<Order> GetBasketForUser(long orderId, long userId);
 
+        Task<Order> GetOrderById(long OrderId);
+
         Task<FinallyOrderResult> FinallyOrder(FinallyOrderViewModel finallyOrder, long userId);
 
         Task<bool> RemoveOrderDetailFromOrder(long detailId);
 
+        Task ChangeIsFilnalyToOrder(long orderId);
     }
 }

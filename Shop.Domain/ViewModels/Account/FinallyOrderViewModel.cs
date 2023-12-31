@@ -11,6 +11,8 @@ namespace Shop.Domain.ViewModels.Account
         public long OrderId { get; set; }
 
         public long UserId { get; set; }
+
+        public bool IsWallet { get; set; }
     }
 
     public enum FinallyOrderResult

@@ -212,27 +212,53 @@ namespace Shop.Web.Areas.User.Controllers
         [HttpPost("Basket/{orderId}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> UserBasket(FinallyOrderViewModel finallyOrder)
         {
-            var result = await _orderService.FinallyOrder(finallyOrder, User.GetUserId());
-
-            switch (result)
+            if (finallyOrder.IsWallet)
             {
-                case FinallyOrderResult.HasNotUser:
-                    TempData[ErrorMessage] = "سفارش شما یافت نشد";
-                    break;
+                var result = await _orderService.FinallyOrder(finallyOrder, User.GetUserId());
 
-                case FinallyOrderResult.NotFound:
-                    TempData[ErrorMessage] = "سفارش شما یافت نشد";
-                    break;
+                switch (result)
+                {
+                    case FinallyOrderResult.HasNotUser:
+                        TempData[ErrorMessage] = "سفارش شما یافت نشد";
+                        break;
 
-                case FinallyOrderResult.Error:
-                    TempData[ErrorMessage] = "موجودی کیف پول شما کافی نمیباشد";
+                    case FinallyOrderResult.NotFound:
+                        TempData[ErrorMessage] = "سفارش شما یافت نشد";
+                        break;
 
-                    return RedirectToAction("UserWallet");
+                    case FinallyOrderResult.Error:
+                        TempData[ErrorMessage] = "موجودی کیف پول شما کافی نمیباشد";
 
-                case FinallyOrderResult.Suceess:
-                    TempData[SuccessMessage] = "فاکتور شما با موفقیت پرداخت شد از خرید متشکریم";
+                        return RedirectToAction("UserWallet");
 
-                    return RedirectToAction("UserWallet");
+                    case FinallyOrderResult.Suceess:
+                        TempData[SuccessMessage] = "فاکتور شما با موفقیت پرداخت شد از خرید متشکریم";
+
+                        return RedirectToAction("UserWallet");
+                }
+            }
+            else
+            {
+                var order = await _orderService.GetOrderById(finallyOrder.OrderId);
+
+                #region payment
+
+                var payment = new Payment(order.OrderSum);
+
+                var url = _configuration.GetSection("DefaultUrl")["Host"] + "/user/online-order/" + order.Id;
+
+                var result = payment.PaymentRequest("شارژ کیف پول", url);
+
+                if (result.Result.Status == 100)
+                {
+                    return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + result.Result.Authority);
+                }
+                else
+                {
+                    TempData[ErrorMessage] = "مشکلی در پرداخت به وجود آماده است،لطفا مجددا امتحان کنید";
+                }
+
+                #endregion
             }
 
             ViewBag.UserWalletAmount = await _walletService.GetUserWalletAmount(User.GetUserId());
@@ -241,6 +267,43 @@ namespace Shop.Web.Areas.User.Controllers
         }
 
         #endregion
+
+
+        #region online order
+
+        [HttpGet("online-order/{id}")]
+        public async Task<IActionResult> OrderPeyment(long id)
+        {
+            if (HttpContext.Request.Query["Status"] != "" && HttpContext.Request.Query["Status"].ToString().ToLower() == "ok" && HttpContext.Request.Query["Authority"] != "")
+            {
+                string authority = HttpContext.Request.Query["Authority"];
+
+                var order = await _orderService.GetOrderById(id);
+
+                if (order != null)
+                {
+                    var payment = new Payment(order.OrderSum);
+                    var result = payment.Verification(authority).Result;
+
+                    if (result.Status == 100)
+                    {
+                        ViewBag.RefId = result.RefId;
+                        ViewBag.Success = true;
+
+                        await _orderService.ChangeIsFilnalyToOrder(order.Id);
+                    }
+
+                    return View();
+                }
+
+                return NotFound();
+            }
+
+            return View();
+        }
+
+        #endregion
+
 
         #region delete-order-detail
 
@@ -271,6 +334,5 @@ namespace Shop.Web.Areas.User.Controllers
         }
 
         #endregion
-
     }
 }

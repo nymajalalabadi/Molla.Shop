@@ -107,6 +107,12 @@ namespace Shop.Application.Services
             return await _orderRepository.GetBasketForUser(orderId, userId);
         }
 
+        public async Task<Order> GetOrderById(long OrderId)
+        {
+            return await _orderRepository.GetOrderById(OrderId);
+        }
+
+
         public async Task<FinallyOrderResult> FinallyOrder(FinallyOrderViewModel finallyOrder, long userId)
         {
             if (userId != finallyOrder.UserId)
@@ -168,6 +174,20 @@ namespace Shop.Application.Services
             return false;
         }
 
+        public async Task ChangeIsFilnalyToOrder(long orderId)
+        {
+            var order = await _orderRepository.GetOrderById(orderId);
+
+            if (order != null)
+            {
+                order.IsFinaly = true;
+                order.OrderState = OrderState.Requested;
+
+
+                _orderRepository.UpdateOrder(order);
+                await _orderRepository.SaveChanges();
+            }
+        }
 
         #endregion
     }

@@ -3,15 +3,9 @@
     int userWalletAmount = (Int32)ViewBag.UserWalletAmount;
 }
 
-<h3 class="summary-title">جمع سبد خرید</h3>
-
+<h3 class="summary-title">فاکتور</h3>
 <table class="table table-summary">
     <tbody>
-        <tr class="summary-subtotal">
-            <td>موجودی کیف پول شما: </td>
-            <td class="text-left">@userWalletAmount.ToString("#,0 تومان")</td>
-        </tr>
-
         <tr class="summary-subtotal">
             <td>جمع کل سبد خرید : </td>
             <td class="text-left">@Model.OrderSum.ToString("#,0 تومان")</td>
@@ -21,19 +15,41 @@
             <td>مبلغ قابل پرداخت :</td>
             <td class="text-left">@Model.OrderSum.ToString("#,0 تومان")</td>
         </tr>
+        <tr class="summary-total">
+            <td>موجودی کیف پول شما :</td>
+            <td class="text-left">@userWalletAmount.ToString("#,0 تومان")</td>
+        </tr>
+
+        <tr class="summary-shipping">
+            <td>شیوه پرداخت : </td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr class="summary-shipping-row">
+            <td>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="free-shipping" name="IsWallet" value="true" class="custom-control-input" checked>
+                    <label class="custom-control-label" for="free-shipping">
+                        کیف پول
+                    </label>
+                </div>
+            </td>
+        </tr>
+        <tr class="summary-shipping-row">
+            <td>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="online" name="IsWallet" value="false" class="custom-control-input">
+                    <label class="custom-control-label" for="online">
+                        آنلاین
+                    </label>
+                </div>
+            </td>
+        </tr>
+
     </tbody>
 </table>
-@if (Model.OrderSum <= userWalletAmount && Model.OrderSum != 0)
+@if (Model.OrderSum != 0)
 {
     <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
         پرداخت
     </button>
-}
-else
-{
-    <div class="alert alert-info">
-        <b>
-            موجودی کیف پول شما کافی نمیباشد ، لطفا از طریق این <a asp-area="User" asp-controller="Account" asp-action="UserWallet">لینک</a> اقدام به شارژ حساب کاربری خود کنید
-        </b>
-    </div>
 }
