@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Interfaces;
 using Shop.Domain.Models.Orders;
+using Shop.Domain.ViewModels.Admin.Orders;
+using Shop.Domain.ViewModels.Pigging;
 using Shop.Infra.Data.Context;
 using System;
 using System.Collections.Generic;
@@ -117,6 +119,77 @@ namespace Shop.Infra.Data.Repositories
         {
             return await _context.OrderDetails.AsQueryable()
                 .SingleOrDefaultAsync(d => d.Id == detailId);
+        }
+
+        public async Task<ResultOrderStateViewModel> GetResultOrder()
+        {
+            return new ResultOrderStateViewModel()
+            {
+                CancelCount = await _context.Orders.AsQueryable().Where(o => o.OrderState == OrderState.Cancel 
+                && o.CreateDate.Day == DateTime.Now.Day).CountAsync(),
+
+                RequestCount = await _context.Orders.AsQueryable().Where(o => o.OrderState == OrderState.Requested).CountAsync(),
+
+                ProcessingCount = await _context.Orders.AsQueryable().Where(o => o.OrderState == OrderState.Processing).CountAsync(),
+
+                SentCount = await _context.Orders.AsQueryable().Where(o => o.OrderState == OrderState.Sent).CountAsync()
+            };
+        }
+
+        public async Task<FilterOrdersViewModel> filterOrders(FilterOrdersViewModel filter)
+        {
+            var query = _context.Orders.Include(o => o.OrderDetails).AsQueryable();
+
+            #region filter
+
+            if (filter.UserId.HasValue && filter.UserId != 0)
+            {
+                query = query.Where(o => o.UserId == filter.UserId);
+            }
+
+            #endregion
+
+            #region state
+
+            switch (filter.OrderStateFilter)
+            {
+                case OrderStateFilter.All:
+
+                    break;
+
+                case OrderStateFilter.Requested:
+                    query = query.Where(o => o.OrderState == OrderState.Requested);
+
+                    break;
+
+                case OrderStateFilter.Processing:
+                    query = query.Where(o => o.OrderState == OrderState.Processing);
+
+                    break;
+
+                case OrderStateFilter.Sent:
+                    query = query.Where(o => o.OrderState == OrderState.Sent);
+
+                    break;
+
+                case OrderStateFilter.Cancel:
+                    query = query.Where(o => o.OrderState == OrderState.Cancel);
+
+                    break;
+            }
+
+            #endregion
+
+            #region set paging
+
+            var pager = Pager.Build(filter.PageId, await query.CountAsync(), filter.TakeEntity, filter.CountForShowAfterAndBefore);
+
+            var allData = await query.Paging(pager).ToListAsync();
+
+            #endregion
+
+            return filter.SetPaging(pager).SetOrders(allData);
+
         }
 
         #endregion

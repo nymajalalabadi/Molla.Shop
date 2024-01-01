@@ -3,6 +3,7 @@ using Shop.Domain.Interfaces;
 using Shop.Domain.Models.Orders;
 using Shop.Domain.Models.Wallet;
 using Shop.Domain.ViewModels.Account;
+using Shop.Domain.ViewModels.Admin.Orders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -192,6 +193,16 @@ namespace Shop.Application.Services
                 _orderRepository.UpdateOrder(order);
                 await _orderRepository.SaveChanges();
             }
+        }
+
+        public async Task<ResultOrderStateViewModel> GetResultOrder()
+        {
+            return await _orderRepository.GetResultOrder();
+        }
+
+        public async Task<FilterOrdersViewModel> filterOrders(FilterOrdersViewModel filterOrdersViewModel)
+        {
+            return await _orderRepository.filterOrders(filterOrdersViewModel);  
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using Shop.Domain.Models.Orders;
+using Shop.Domain.ViewModels.Admin.Orders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,5 +35,10 @@ namespace Shop.Domain.Interfaces
         Task<Order> GetBasketForUser(long userId);
         
         Task<OrderDetail> GetOrderDetailById(long detailId);
+
+        Task<ResultOrderStateViewModel> GetResultOrder();
+
+        Task<FilterOrdersViewModel> filterOrders(FilterOrdersViewModel filterOrdersViewModel);
+       
     }
 }

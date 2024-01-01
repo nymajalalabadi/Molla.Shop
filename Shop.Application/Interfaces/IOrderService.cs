@@ -1,5 +1,7 @@
 ﻿using Shop.Domain.Models.Orders;
 using Shop.Domain.ViewModels.Account;
+using Shop.Domain.ViewModels.Admin.Orders;
+using Shop.Domain.ViewModels.Admin.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,5 +27,9 @@ namespace Shop.Application.Interfaces
         Task<bool> RemoveOrderDetailFromOrder(long detailId);
 
         Task ChangeIsFilnalyToOrder(long orderId);
+
+        Task<ResultOrderStateViewModel> GetResultOrder();
+
+        Task<FilterOrdersViewModel> filterOrders(FilterOrdersViewModel filterOrdersViewModel);
     }
 }

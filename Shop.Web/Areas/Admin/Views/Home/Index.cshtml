@@ -1,7 +1,31 @@
-﻿@{
+﻿@using Shop.Domain.ViewModels.Admin.Orders
+
+@{
     ViewData["Title"] = "داشبورد";
+    var orderResult = (ResultOrderStateViewModel) ViewData["ResultOrder"];
 }
 
-
-<h1>صفحه اصلی</h1>
+<div class="row mt-5">
+    <h2 class="mb-3">سفارش ها</h2>
+    <div class="col-md-3">
+        <button type="button" class="btn btn-primary">
+            درخواست شده <span class="badge bg-secondary">@orderResult.RequestCount</span>
+        </button>
+    </div>
+    <div class="col-md-3">
+        <button type="button" class="btn btn-primary">
+            درحال بررسی <span class="badge bg-secondary">@orderResult.ProcessingCount</span>
+        </button>
+    </div>
+    <div class="col-md-3">
+        <button type="button" class="btn btn-primary">
+            ارسال شده <span class="badge bg-secondary">@orderResult.SentCount</span>
+        </button>
+    </div>
+    <div class="col-md-3">
+        <button type="button" class="btn btn-primary">
+            لغو شده <span class="badge bg-secondary">@orderResult.CancelCount</span>
+        </button>
+    </div>
+</div>
 
