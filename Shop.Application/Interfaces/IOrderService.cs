@@ -31,5 +31,7 @@ namespace Shop.Application.Interfaces
         Task<ResultOrderStateViewModel> GetResultOrder();
 
         Task<FilterOrdersViewModel> filterOrders(FilterOrdersViewModel filterOrdersViewModel);
+
+        Task<bool> ChangeStateToSent(long orderId);
     }
 }

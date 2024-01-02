@@ -10,7 +10,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <p class="card-text">@ViewData["Title"]</p>
-                <form asp-area="admin" asp-controller="Order" asp-action="FilterOrder" id="filter-Form" method="get">
+                <form asp-area="admin" asp-controller="Order" asp-action="FilterOrder" id="filter-Form" method="get" >
                     <input asp-for="PageId" type="hidden" />
                     <div class="form-group">
                         <label>وضعیت</label>
@@ -25,7 +25,7 @@
     <div class="col-md-9">
         @if (Model.Orders != null && Model.Orders.Any())
         {
-            <div class="card shadow-sm">
+            <div class="card shadow-sm" id="upgrade">
                 <div class="card-body">
                     <table class="table">
                         <thead>

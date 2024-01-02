@@ -35,14 +35,14 @@ $('[ajax-url-button]').on('click', function (e) {
         if (result.value) {
             $.get(url).then(result => {
                 if (result.status === 'Success') {
-                    ShowMessage('موفقیت', "محصول شما با موفقیت حذف شد");
+                    ShowMessage('موفقیت', "عملیات با موفقیت انجام شد");
                     $('#ajax-url-item-' + itemId).hide(1500);
 
-                    //$('#main-payment').ready(() => {
-                    //    location.reload();
-                    //});
+                    $('#upgrade').ready(() => {
+                        location.reload();
+                    });
 
-                    ReloadPrice();
+                    //ReloadPrice();
                 }
             });
         } else if (result.dismiss === swal.DismissReason.cancel) {

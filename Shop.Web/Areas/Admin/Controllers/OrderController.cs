@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Interfaces;
 using Shop.Domain.ViewModels.Admin.Orders;
+using Shop.Web.Extentions;
 
 namespace Shop.Web.Areas.Admin.Controllers
 {
@@ -23,6 +24,23 @@ namespace Shop.Web.Areas.Admin.Controllers
         public async Task<IActionResult> FilterOrder(FilterOrdersViewModel filter)
         {
             return View(await _orderService.filterOrders(filter));
+        }
+
+        #endregion
+
+        #region Change-order-state
+
+        [HttpGet("ChangeStateToSent/{orderId}")]
+        public async Task<IActionResult> ChangeStateToSent(long orderId)
+        {
+            var result = await _orderService.ChangeStateToSent(orderId);
+
+            if (result)
+            {
+                return JsonResponseStatus.Success();
+            }
+
+            return JsonResponseStatus.Error();
         }
 
         #endregion

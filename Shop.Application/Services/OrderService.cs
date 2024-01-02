@@ -127,7 +127,7 @@ namespace Shop.Application.Services
             }
 
             var order = await _orderRepository.GetOrderById(finallyOrder.OrderId, userId);
-            
+
             if (order == null || order.IsFinaly == true)
             {
                 return FinallyOrderResult.NotFound;
@@ -202,8 +202,24 @@ namespace Shop.Application.Services
 
         public async Task<FilterOrdersViewModel> filterOrders(FilterOrdersViewModel filterOrdersViewModel)
         {
-            return await _orderRepository.filterOrders(filterOrdersViewModel);  
+            return await _orderRepository.filterOrders(filterOrdersViewModel);
         }
+
+        public async Task<bool> ChangeStateToSent(long orderId)
+        {
+            var currentOrder = await _orderRepository.GetOrderById(orderId);
+
+            if (currentOrder != null)
+            {
+                currentOrder.OrderState = OrderState.Sent;
+                _orderRepository.UpdateOrder(currentOrder);
+                await _orderRepository.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
 
         #endregion
     }

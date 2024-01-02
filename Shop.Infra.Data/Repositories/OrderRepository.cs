@@ -138,7 +138,7 @@ namespace Shop.Infra.Data.Repositories
 
         public async Task<FilterOrdersViewModel> filterOrders(FilterOrdersViewModel filter)
         {
-            var query = _context.Orders.Include(o => o.OrderDetails).AsQueryable();
+            var query = _context.Orders.Include(o => o.OrderDetails).Include(o => o.User).AsQueryable();
 
             #region filter
 
@@ -160,15 +160,12 @@ namespace Shop.Infra.Data.Repositories
                     break;
                 case OrderStateFilter.Processing:
                     query = query.Where(c => c.OrderState == OrderState.Processing);
-
                     break;
                 case OrderStateFilter.Sent:
                     query = query.Where(c => c.OrderState == OrderState.Sent);
-
                     break;
                 case OrderStateFilter.Cancel:
                     query = query.Where(c => c.OrderState == OrderState.Cancel);
-
                     break;
             }
 
@@ -184,7 +181,6 @@ namespace Shop.Infra.Data.Repositories
             #endregion
 
             return filter.SetPaging(pager).SetOrders(allData);
-
         }
 
         #endregion
