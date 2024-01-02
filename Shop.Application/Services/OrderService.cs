@@ -220,6 +220,10 @@ namespace Shop.Application.Services
             return false;
         }
 
+        public async Task<Order> GetOrderDetail(long orderId)
+        {
+            return await _orderRepository.GetOrderDetail(orderId);
+        }
 
         #endregion
     }

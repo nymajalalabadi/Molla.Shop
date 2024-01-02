@@ -1,0 +1,80 @@
+﻿@model Shop.Domain.Models.Orders.Order
+@{
+    ViewData["Title"] = "جززیات سفارش";
+    int index = 1;
+}
+
+<div class="row mt-5">
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="card-text">@ViewData["Title"]</p>
+                <div class="form-group">
+                    <label>نام درخواست کننده:</label>
+                    <p>@Model.User.GetUserName()</p>
+                </div>
+                <div class="form-group">
+                    <label>شماره تماس درخواست کننده:</label>
+                    <p>@Model.User.PhoneNumber</p>
+                </div>
+                <div class="form-group">
+                    <label>مبلغ نهایی:</label>
+                    <p>@Model.OrderSum.ToString("#,0 تومان")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        @if (Model.OrderDetails != null && Model.OrderDetails.Any())
+        {
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">تصویر محصول</th>
+                                <th scope="col">نام محصول</th>
+                                <th scope="col">قیمت محصول</th>
+                                <th scope="col">تعداد</th>
+                                <th scope="col">قیمت کل</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var orderDetail in Model.OrderDetails)
+                            {
+                                <tr>
+                                    <th scope="row">@index</th>
+                                    <td>
+                                        <img src="@(PathExtensions.ProductOrgin + orderDetail.Product.ProductImageName)" class="img-thumbnail" style="width:40px;">
+
+                                    </td>
+                                    <td>
+                                        @orderDetail.Product.Name
+                                    </td>
+                                    <td>@orderDetail.Product.Price.ToString("#,0 تومان")</td>
+                                    <td>@orderDetail.Count</td>
+
+                                    @{
+                                        var price = orderDetail.Price * orderDetail.Count;
+                                    }
+
+                                    <td>@price.ToString("#,0 تومان")</td>
+                                </tr>
+                                index++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                <b>ایتمی وجود ندارد</b>
+            </div>
+        }
+    </div>
+</div>
+

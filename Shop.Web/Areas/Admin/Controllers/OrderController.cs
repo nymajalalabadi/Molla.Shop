@@ -44,5 +44,20 @@ namespace Shop.Web.Areas.Admin.Controllers
         }
 
         #endregion
+
+        #region OrderDetail
+        public async Task<IActionResult> OrderDetail(long orderId)
+        {
+            var data = await _orderService.GetOrderDetail(orderId);
+
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            return View(data);
+        }
+        #endregion
+
     }
 }

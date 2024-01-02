@@ -183,6 +183,15 @@ namespace Shop.Infra.Data.Repositories
             return filter.SetPaging(pager).SetOrders(allData);
         }
 
+        public async Task<Order> GetOrderDetail(long orderId)
+        {
+            return await _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.OrderDetails).ThenInclude(d => d.Product)
+                .AsQueryable()
+                .Where(o => o.Id == orderId)
+                .FirstOrDefaultAsync();
+        }
         #endregion
     }
 }

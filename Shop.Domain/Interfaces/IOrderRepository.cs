@@ -39,6 +39,8 @@ namespace Shop.Domain.Interfaces
         Task<ResultOrderStateViewModel> GetResultOrder();
 
         Task<FilterOrdersViewModel> filterOrders(FilterOrdersViewModel filterOrdersViewModel);
-       
+
+        Task<Order> GetOrderDetail(long orderId);
+        
     }
 }
