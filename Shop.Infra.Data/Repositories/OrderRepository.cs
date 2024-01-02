@@ -154,31 +154,26 @@ namespace Shop.Infra.Data.Repositories
             switch (filter.OrderStateFilter)
             {
                 case OrderStateFilter.All:
-
                     break;
-
                 case OrderStateFilter.Requested:
-                    query = query.Where(o => o.OrderState == OrderState.Requested);
-
+                    query = query.Where(c => c.OrderState == OrderState.Requested);
                     break;
-
                 case OrderStateFilter.Processing:
-                    query = query.Where(o => o.OrderState == OrderState.Processing);
+                    query = query.Where(c => c.OrderState == OrderState.Processing);
 
                     break;
-
                 case OrderStateFilter.Sent:
-                    query = query.Where(o => o.OrderState == OrderState.Sent);
+                    query = query.Where(c => c.OrderState == OrderState.Sent);
 
                     break;
-
                 case OrderStateFilter.Cancel:
-                    query = query.Where(o => o.OrderState == OrderState.Cancel);
+                    query = query.Where(c => c.OrderState == OrderState.Cancel);
 
                     break;
             }
 
             #endregion
+
 
             #region set paging
 

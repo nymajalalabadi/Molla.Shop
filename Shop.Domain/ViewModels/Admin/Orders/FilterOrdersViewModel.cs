@@ -13,7 +13,7 @@ namespace Shop.Domain.ViewModels.Admin.Orders
     {
         public long? UserId { get; set; }
 
-        public OrderStateFilter OrderStateFilter { get; set; }
+        public OrderStateFilter? OrderStateFilter { get; set; }
 
         public List<Order> Orders { get; set; }
 

@@ -19,6 +19,7 @@ namespace Shop.Web.Areas.Admin.Controllers
 
         #region filter-order
 
+        [HttpGet]
         public async Task<IActionResult> FilterOrder(FilterOrdersViewModel filter)
         {
             return View(await _orderService.filterOrders(filter));

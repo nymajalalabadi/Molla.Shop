@@ -1,0 +1,85 @@
+﻿@using Shop.Domain.ViewModels.Admin.Orders
+@model FilterOrdersViewModel
+
+@{
+    ViewData["Title"] = "مدریت سفارش ها";
+    int index = 1;
+}
+<div class="row mt-5">
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="card-text">@ViewData["Title"]</p>
+                <form asp-area="admin" asp-controller="Order" asp-action="FilterOrder" id="filter-Form" method="get">
+                    <input asp-for="PageId" type="hidden" />
+                    <div class="form-group">
+                        <label>وضعیت</label>
+                        <select class="form-control" asp-for="OrderStateFilter" asp-items="@Html.GetEnumSelectList<OrderStateFilter>()"></select>
+
+                    </div>
+                    <button type="submit" class="btn btn-info mt-3 mb-3 btn-block">فیلتر</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        @if (Model.Orders != null && Model.Orders.Any())
+        {
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">کاربر</th>
+                                <th scope="col">پرداخت شده / نشده</th>
+                                <th scope="col">مبلغ پرداخت نهایی</th>
+                                <th scope="col">وضعیت</th>
+                                <th scope="col">دستورات</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var order in Model.Orders)
+                            {
+                                <tr id="ajax-url-item-@order.Id">
+                                    <th scope="row">@index</th>
+                                    <td>
+                                        @order.User.GetUserName()
+                                    </td>
+                                    <td>
+                                        @if (order.IsFinaly)
+                                        {
+                                            <span class="text-success">پرداخت شده</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">پرداخت نشده</span>
+                                        }
+                                    </td>
+                                    <td>@order.OrderSum.ToString("#,0 تومان")</td>
+                                    <td>@order.OrderState.GetEnumName()</td>
+                                    <td>
+                                        <a class="btn btn-info btn-sm" asp-area="Admin" asp-controller="Order" asp-action="ChangeStateToSent" asp-route-orderId="@order.Id" ajax-url-button="@order.Id">ارسال</a>
+
+                                        <a class="btn btn-warning btn-sm" asp-area="Admin" asp-controller="Order" asp-action="OrderDetail" asp-route-orderId="@order.Id">جزییات</a>
+                                    </td>
+                                </tr>
+                                index++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="alert alert-danger">
+                <b>ایتمی وجود ندارد</b>
+            </div>
+        }
+        <partial name="_AdminPaging" model="Model.GetCurrentPaging()" />
+    </div>
+</div>
+
