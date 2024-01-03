@@ -32,6 +32,9 @@ namespace Shop.Application.Interfaces
 
         bool CheckPermission(long permissionId, string phoneNumber);
         
+        Task<bool> AddProductToFavorite(long userId, long productId);  
+
+        Task<bool> AddProductToCompare(long userId, long productId);
 
         #endregion
 

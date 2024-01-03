@@ -182,6 +182,42 @@ namespace Shop.Application.Services
             return _userRepository.CheckPermission(permissionId, phoneNumber);
         }
 
+        public async Task<bool> AddProductToFavorite(long userId, long productId)
+        {
+            if (!await _userRepository.IsExistProductFavorite(productId, userId))
+            {
+                //add
+                var newUserFavorite = new UserFavorite()
+                {
+                    ProductId = productId,
+                    UserId = userId
+                };
+                await _userRepository.AddUserFavorite(newUserFavorite);
+                await _userRepository.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> AddProductToCompare(long userId, long productId)
+        {
+            if (!await _userRepository.IsExistProductCompare(productId, userId))
+            {
+                //add
+                var newUserCompare = new UserCompare()
+                {
+                    ProductId = productId,
+                    UserId = userId
+                };
+                await _userRepository.AddUserComapre(newUserCompare);
+                await _userRepository.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
         #endregion
 
         #region admin

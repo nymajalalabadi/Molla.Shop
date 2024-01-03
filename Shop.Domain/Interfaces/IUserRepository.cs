@@ -21,6 +21,14 @@ namespace Shop.Domain.Interfaces
 
         bool CheckPermission(long permissionId, string phoneNumber);
 
+        Task<bool> IsExistProductFavorite(long productId, long userId);
+
+        Task AddUserFavorite(UserFavorite userFavorite);
+
+        Task<bool> IsExistProductCompare(long productId, long userId);
+
+        Task AddUserComapre(UserCompare userCompare);
+
         #endregion
 
         #region admin

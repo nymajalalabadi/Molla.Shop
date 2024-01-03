@@ -81,6 +81,28 @@ namespace Shop.Infra.Data.Repositories
             return permissions.Any(c => userRole.Contains(c));
         }
 
+        public async Task<bool> IsExistProductFavorite(long productId, long userId)
+        {
+            return await _context.UserFavorites.AsQueryable()
+                .AnyAsync(c => c.ProductId == productId && c.UserId == userId);
+        }
+
+        public async Task AddUserFavorite(UserFavorite userFavorite)
+        {
+            await _context.UserFavorites.AddAsync(userFavorite);
+        }
+
+        public async Task<bool> IsExistProductCompare(long productId, long userId)
+        {
+            return await _context.UserCompares.AsQueryable()
+                .AnyAsync(c => c.ProductId == productId && c.UserId == userId); 
+        }
+
+        public async Task AddUserComapre(UserCompare userCompare)
+        {
+            await _context.UserCompares.AddAsync(userCompare);
+        }
+
         #endregion
 
         #region admin
