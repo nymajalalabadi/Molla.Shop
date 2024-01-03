@@ -56,6 +56,10 @@ namespace Shop.Infra.Data.Context
 
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
+        public DbSet<UserFavorite> UserFavorites { get; set; }
+
+        public DbSet<UserCompare> UserCompares { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

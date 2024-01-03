@@ -6,6 +6,7 @@ using Shop.Application.Interfaces;
 using Shop.Application.Utils;
 using Shop.Domain.Models.Account;
 using Shop.Domain.ViewModels.Account;
+using Shop.Domain.ViewModels.Admin.Orders;
 using Shop.Domain.ViewModels.Wallet;
 using Shop.Web.Extentions;
 using ZarinpalSandbox;
@@ -331,6 +332,37 @@ namespace Shop.Web.Areas.User.Controllers
             ViewBag.UserWalletAmount = await _walletService.GetUserWalletAmount(User.GetUserId());
 
             return PartialView("_OrderPrice", order);
+        }
+
+        #endregion
+
+        #region user - orders
+
+        [HttpGet("user-orders")]
+        public async Task<IActionResult> UserOrders(FilterOrdersViewModel filter)
+        {
+            filter.UserId = User.GetUserId();
+
+            var data = await _orderService.filterOrders(filter);
+
+            return View(data);
+        }
+
+        #endregion
+
+        #region OrderDetail
+
+        [HttpGet("orderdetail/{orderId}")]
+        public async Task<IActionResult> OrderDetail(long orderId)
+        {
+            var data = await _orderService.GetOrderDetail(orderId);
+
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            return View(data);
         }
 
         #endregion

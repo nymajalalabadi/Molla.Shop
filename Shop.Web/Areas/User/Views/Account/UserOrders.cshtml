@@ -1,0 +1,72 @@
+﻿@using Shop.Domain.ViewModels.Admin.Orders
+@model FilterOrdersViewModel
+
+@{
+    ViewData["Title"] = "لیست سفارشات";
+    int index = 1;
+}
+
+<div class="container text-right mt-5 mb-5">
+    <div class="user-account">
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <aside>
+                    @await Component.InvokeAsync("UserSideBar")
+                </aside>
+            </div>
+            <div class="col-md-9 col-sm-8 col-xs-12 ">
+                <section class="user-account-content box-shadow">
+                    <header>
+                        <h1>@ViewData["Title"]</h1>
+                    </header>
+                    <div class="inner">
+                        <div class="account-information">
+                            <form method="get" asp-area="user" asp-controller="Account" asp-action="UserOrders" id="filter-Form">
+                                <input type="hidden" asp-for="PageId" />
+                            </form>
+                            <div class="table-responsive">
+                                @if (Model.Orders != null && Model.Orders.Any())
+                                {
+                                    <table class="table table-bordered table-hover dataTable table-striped text-center">
+                                        <tr class="active">
+                                            <td>#</td>
+                                            <td>مبلغ نهایی</td>
+                                            <td>وضعیت</td>
+                                            <td>پرداخت شده / نشد</td>
+                                            <td>جزیات</td>
+                                        </tr>
+                                        @foreach (var order in Model.Orders)
+                                        {
+                                            <tr>
+                                                <td>@index</td>
+                                                <td>@order.OrderSum.ToString("#,0 تومان")</td>
+                                                <td>@order.OrderState.GetEnumName()</td>
+                                                @if (order.IsFinaly)
+                                                {
+
+                                                    <td>پرداخت شده</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>پرداخت نشده</td>
+                                                }
+                                                <td>
+                                                    <a class="btn btn-warning btn-sm" asp-area="user" asp-controller="Account" asp-action="OrderDetail" asp-route-orderId="@order.Id">جزییات</a>
+                                                </td>
+                                            </tr>
+                                            index++;
+                                        }
+                                    </table>
+                                }
+                            </div>
+                            <partial name="_Paging" model="Model.GetCurrentPaging()" />
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

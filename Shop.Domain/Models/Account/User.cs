@@ -75,6 +75,10 @@ namespace Shop.Domain.Models.Account
 
         public ICollection<Order> Orders { get; set; }
 
+        public ICollection<UserCompare> userCompares { get; set; }
+
+        public ICollection<UserFavorite> userFavorites { get; set; }
+
         #endregion
     }
 

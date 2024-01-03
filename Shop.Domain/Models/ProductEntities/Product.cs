@@ -1,4 +1,5 @@
-﻿using Shop.Domain.Models.BaseEntities;
+﻿using Shop.Domain.Models.Account;
+using Shop.Domain.Models.BaseEntities;
 using Shop.Domain.Models.Orders;
 using System;
 using System.Collections.Generic;
@@ -52,6 +53,10 @@ namespace Shop.Domain.Models.ProductEntities
         public ICollection<ProductComment> ProductComments { get; set; }
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
+
+        public ICollection<UserCompare> userCompares { get; set; }
+
+        public ICollection<UserFavorite> userFavorites { get; set; }
 
         #endregion
     }
