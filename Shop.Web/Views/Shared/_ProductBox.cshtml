@@ -8,7 +8,7 @@
         </a>
 
         <div class="product-action-vertical">
-            <a href="#" class="btn-product-icon btn-wishlist" title="افزودن به لیست علاقه مندی"></a>
+            <a asp-area="user" asp-controller="Account" asp-action="AddUserFavorite" asp-route-productId="@Model.ProductId" class="btn-product-icon btn-wishlist" title="افزودن به لیست علاقه مندی"></a>
         </div>
 
         <div class="product-action">

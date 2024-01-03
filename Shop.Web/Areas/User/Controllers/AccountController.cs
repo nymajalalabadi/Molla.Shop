@@ -366,5 +366,44 @@ namespace Shop.Web.Areas.User.Controllers
         }
 
         #endregion
+
+        #region user-favorite
+
+        [HttpGet("add-favorite/{productId}")]
+        public async Task<IActionResult> AddUserFavorite(long productId)
+        {
+            var result = await _userService.AddProductToFavorite(productId, User.GetUserId());
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "محصول مورد نظر با موفقیت در قسمت علاقه مندی اضافه شد";
+                return RedirectToAction("UserFavorits");
+            }
+
+            TempData[WarningMessage] = "محصول مورد نظر قبلا در علاقه مندی اضافه شده است";
+            return RedirectToAction("UserFavorits");
+        }
+
+        #endregion
+
+        #region user-compatre
+
+        [HttpGet("add-compare/{productId}")]
+        public async Task<IActionResult> AddUserCompare(long productId)
+        {
+            var result = await _userService.AddProductToCompare(productId, User.GetUserId());
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "محصول مورد نظر با موفقیت در قسمت مقایسه اضافه شد";
+                return RedirectToAction("UserCompares");
+            }
+
+            TempData[WarningMessage] = "محصول مورد نظر قبلا در مقایسه اضافه شده است";
+            return RedirectToAction("UserCompares");
+        }
+
+        #endregion
+
     }
 }

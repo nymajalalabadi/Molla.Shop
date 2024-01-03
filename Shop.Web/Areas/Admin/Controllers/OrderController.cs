@@ -23,6 +23,7 @@ namespace Shop.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> FilterOrder(FilterOrdersViewModel filter)
         {
+            filter.TakeEntity = 15;
             return View(await _orderService.filterOrders(filter));
         }
 

@@ -38,11 +38,8 @@ $('[ajax-url-button]').on('click', function (e) {
                     ShowMessage('موفقیت', "عملیات با موفقیت انجام شد");
                     $('#ajax-url-item-' + itemId).hide(1500);
 
-                    $('#upgrade').ready(() => {
-                        location.reload();
-                    });
-
-                    //ReloadPrice();
+                     $('#upgrade').submit();
+                    
                 }
             });
         } else if (result.dismiss === swal.DismissReason.cancel) {

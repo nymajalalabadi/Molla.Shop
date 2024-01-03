@@ -176,7 +176,7 @@ namespace Shop.Infra.Data.Repositories
 
             var pager = Pager.Build(filter.PageId, await query.CountAsync(), filter.TakeEntity, filter.CountForShowAfterAndBefore);
 
-            var allData = await query.Paging(pager).ToListAsync();
+            var allData = await query.Paging(pager).OrderByDescending(w => w.CreateDate).ToListAsync();
 
             #endregion
 

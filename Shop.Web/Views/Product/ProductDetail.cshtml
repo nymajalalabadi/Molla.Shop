@@ -89,14 +89,14 @@
                             <a asp-area="" asp-controller="Product" asp-action="BuyProduct" asp-route-productId="@Model.ProductId" class="btn-product btn-cart"><span>افزودن به سبد خرید</span></a>
 
                             <div class="details-action-wrapper">
-                                <a href="#" class="btn-product btn-wishlist" title="لیست علاقه مندی">
+                                <a asp-area="user" asp-controller="Account" asp-action="AddUserFavorite" asp-route-productId="@Model.ProductId" class="btn-product btn-wishlist" title="لیست علاقه مندی">
                                     <span>
                                         افزودن
                                         به
                                         علاقه مندی
                                     </span>
                                 </a>
-                                <a href="#" class="btn-product btn-compare" title="مقایسه">
+                                <a asp-area="user" asp-controller="Account" asp-action="AddUserCompare" asp-route-productId="@Model.ProductId" class="btn-product btn-compare" title="مقایسه">
                                     <span>
                                         افزودن به
                                         لیست مقایسه
