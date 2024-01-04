@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Shop.Application.Extentions;
 using Shop.Application.Interfaces;
-using Shop.Application.Utils;
-using Shop.Domain.Models.Account;
 using Shop.Domain.ViewModels.Account;
 using Shop.Domain.ViewModels.Admin.Orders;
 using Shop.Domain.ViewModels.Wallet;
