@@ -27,6 +27,10 @@ namespace Shop.Web.ViewComponents
                 ViewBag.User = await _userService.GetUserByPhoneNumber(User.Identity.Name);
 
                 ViewBag.Order = await _orderService.GetBasketForUser(User.GetUserId());
+
+                ViewBag.UserCompare = await _userService.GetUserCompares(User.GetUserId());
+
+                ViewBag.FavoriteCount = await _userService.UserFavoriteCount(User.GetUserId());
             }
             return View("SiteHeader");
         }

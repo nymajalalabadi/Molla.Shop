@@ -36,6 +36,16 @@ namespace Shop.Application.Interfaces
 
         Task<bool> AddProductToCompare(long userId, long productId);
 
+        Task<List<UserCompare>> GetUserCompares(long userId);
+
+        Task<int> UserFavoriteCount(long userId);
+
+        Task<List<UserFavorite>> GetUserFavorite(long userId);
+
+        Task<bool> RemoveAllUserComapre(long userId);
+
+        Task<bool> RemoveUserComapre(long userId, long productId);
+
         #endregion
 
         #region admin

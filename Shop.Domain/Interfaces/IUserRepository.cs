@@ -29,6 +29,16 @@ namespace Shop.Domain.Interfaces
 
         Task AddUserComapre(UserCompare userCompare);
 
+        Task<List<UserCompare>> GetUserCompares(long userId);
+
+        Task<int> UserFavoriteCount(long userId);
+
+        Task<List<UserFavorite>> GetUserFavorite(long userId);
+
+        void UpdateUserComapre(UserCompare userCompare);
+
+        Task<UserCompare> GetUserCompare(long userId, long productId);
+
         #endregion
 
         #region admin

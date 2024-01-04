@@ -84,6 +84,7 @@ namespace Shop.Infra.Data.Repositories
         public async Task<bool> IsExistProductFavorite(long productId, long userId)
         {
             return await _context.UserFavorites.AsQueryable()
+                .Where(c => !c.IsDelete)
                 .AnyAsync(c => c.ProductId == productId && c.UserId == userId);
         }
 
@@ -95,12 +96,41 @@ namespace Shop.Infra.Data.Repositories
         public async Task<bool> IsExistProductCompare(long productId, long userId)
         {
             return await _context.UserCompares.AsQueryable()
+                .Where(c => !c.IsDelete)
                 .AnyAsync(c => c.ProductId == productId && c.UserId == userId); 
         }
 
         public async Task AddUserComapre(UserCompare userCompare)
         {
             await _context.UserCompares.AddAsync(userCompare);
+        }
+
+        public async Task<List<UserCompare>> GetUserCompares(long userId)
+        {
+            return await _context.UserCompares.Include(c => c.Product).AsQueryable()
+                .Where(c => c.UserId == userId && !c.IsDelete).ToListAsync();
+        }
+
+        public async Task<int> UserFavoriteCount(long userId)
+        {
+            return await _context.UserFavorites.Where(f => f.UserId == userId && !f.IsDelete).CountAsync();
+        }
+
+        public async Task<List<UserFavorite>> GetUserFavorite(long userId)
+        {
+            return await _context.UserFavorites.Include(c => c.Product).AsQueryable()
+                .Where(c => c.UserId == userId && !c.IsDelete).ToListAsync();
+        }
+
+        public void UpdateUserComapre(UserCompare userCompare)
+        {
+            _context.UserCompares.Update(userCompare);
+        }
+
+        public async Task<UserCompare> GetUserCompare(long userId, long productId)
+        {
+            return await _context.UserCompares.AsQueryable()
+                .Where(c => c.UserId == userId && c.ProductId == productId).FirstOrDefaultAsync();
         }
 
         #endregion

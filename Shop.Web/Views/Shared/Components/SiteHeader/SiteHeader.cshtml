@@ -4,6 +4,8 @@
 @{
     var user = (User)ViewBag.User;
     var order = (Order)ViewBag.Order;
+    var userCompare = (List<UserCompare>)ViewBag.UserCompare;
+    var favoriteCount = (int)ViewBag.FavoriteCount;
 }
 
 <header class="header header-intro-clearance header-4">
@@ -45,7 +47,7 @@
                     <i class="icon-bars"></i>
                 </button>
 
-                <a href="index-1.html" class="logo">
+                <a href="/" class="logo">
                     <img src="/images/demos/demo-4/logo.png" alt="Molla Logo" width="105" height="25">
                 </a>
             </div><!-- End .header-left -->
@@ -79,27 +81,26 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right">
-                            <ul class="compare-products">
-                                <li class="compare-product">
-                                    <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
-                                    <h4 class="compare-product-title">
-                                        <a href="product.html">گوشی سامسونگ مدل S9</a>
-                                    </h4>
-                                </li>
-                                <li class="compare-product">
-                                    <a href="#" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
-                                    <h4 class="compare-product-title">
-                                        <a href="product.html">گوشی سامسونگ مدل S8</a>
-                                    </h4>
-                                </li>
-                            </ul>
-
-                            <div class="compare-actions">
-                                <a href="#" class="action-link">حذف همه</a>
-                                <a href="compare.html" class="btn btn-outline-primary-2">
-                                    <span>مقایسه</span><i class="icon-long-arrow-left"></i>
-                                </a>
-                            </div>
+                            @if (userCompare != null && userCompare.Any())
+                            {
+                                <ul class="compare-products">
+                                    @foreach (var compare in userCompare)
+                                    {
+                                        <li class="compare-product">
+                                            <a asp-area="User" asp-controller="Account" asp-action="RemoveUserCompare" asp-route-productId="@compare.ProductId" class="btn-remove" title="حذف محصول"><i class="icon-close"></i></a>
+                                            <h4 class="compare-product-title">
+                                                <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@compare.ProductId">@compare.Product.Name</a>
+                                            </h4>
+                                        </li>
+                                    }
+                                </ul>
+                                <div class="compare-actions">
+                                    <a asp-area="User" asp-controller="Account" asp-action="RemoveAllUserCompare" class="action-link">حذف همه</a>
+                                    <a href="compare.html" class="btn btn-outline-primary-2">
+                                        <span>مقایسه</span><i class="icon-long-arrow-left"></i>
+                                    </a>
+                                </div>
+                            }
                         </div>
                     </div>
 
@@ -107,7 +108,9 @@
                         <a href="wishlist.html" title="لیست محصولات مورد علاقه شما">
                             <div class="icon">
                                 <i class="icon-heart-o"></i>
-                                <span class="wishlist-count badge">3</span>
+                                <span class="wishlist-count badge">
+                                    @favoriteCount
+                                </span>
                             </div>
                             <p>علاقه مندی</p>
                         </a>

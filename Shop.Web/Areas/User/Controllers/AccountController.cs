@@ -405,5 +405,43 @@ namespace Shop.Web.Areas.User.Controllers
 
         #endregion
 
+        #region all-remove-usercompare
+
+        [HttpGet("removeAllUserCompare")]
+        public async Task<IActionResult> RemoveAllUserCompare()
+        {
+            var result = await _userService.RemoveAllUserComapre(User.GetUserId());
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "تمامی محصولاتی که در لیست مقایسه بود حذف شده";
+                return RedirectToAction("UserCompares");
+
+            }
+
+            TempData[WarningMessage] = "لیست مقایسه شما خالی میباشد";
+            return RedirectToAction("UserCompares");
+        }
+
+        #endregion
+
+        #region remove-userCompare
+
+        [HttpGet("removeUserCompare/{productId}")]
+        public async Task<IActionResult> RemoveUserCompare(long productId)
+        {
+            var result = await _userService.RemoveUserComapre(User.GetUserId(), productId);
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "محصول مورد نظر که در لیست مقایسه بود حذف شده";
+                return RedirectToAction("UserCompares");
+            }
+
+            TempData[WarningMessage] = "همچین محصولی در لیست مقایسه ی شما وجود ندارد";
+            return RedirectToAction("UserCompares");
+
+        }
+        #endregion
     }
 }
