@@ -80,7 +80,7 @@ namespace Shop.Domain.Interfaces
 
         Task<List<ProductItemViewModel>> LastProducts();
 
-        Task<ProductDetailViewModel> ShowProductDetail(long ProductId);
+        Task<ProductDetailViewModel> ShowProductDetail(long productId);
 
         Task AddProductComment(ProductComment productComment);
 

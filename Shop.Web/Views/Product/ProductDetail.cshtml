@@ -89,14 +89,14 @@
                             <a asp-area="" asp-controller="Product" asp-action="BuyProduct" asp-route-productId="@Model.ProductId" class="btn-product btn-cart"><span>افزودن به سبد خرید</span></a>
 
                             <div class="details-action-wrapper">
-                                <a asp-area="user" asp-controller="Account" asp-action="AddUserFavorite" asp-route-productId="@Model.ProductId" class="btn-product btn-wishlist" title="لیست علاقه مندی">
+                                <a asp-area="User" asp-controller="Account" asp-action="AddUserFavorit" asp-route-productId="@Model.ProductId" class="btn-product btn-wishlist" title="لیست علاقه مندی">
                                     <span>
                                         افزودن
                                         به
                                         علاقه مندی
                                     </span>
                                 </a>
-                                <a asp-area="user" asp-controller="Account" asp-action="AddUserCompare" asp-route-productId="@Model.ProductId" class="btn-product btn-compare" title="مقایسه">
+                                <a asp-area="User" asp-controller="Account" asp-action="AddUserCompare" asp-route-productId="@Model.ProductId" class="btn-product btn-compare" title="مقایسه">
                                     <span>
                                         افزودن به
                                         لیست مقایسه
@@ -242,14 +242,14 @@
                                         </a>
 
                                         <div class="product-action-vertical">
-                                            <a href="#" class="btn-product-icon btn-wishlist btn-expandable">
+                                            <a asp-area="User" asp-controller="Account" asp-action="AddUserFavorite" asp-route-productId="@product.ProductId" class="btn-product-icon btn-wishlist btn-expandable">
                                                 <span>
                                                     افزودن به
                                                     لیست علاقه مندی
                                                 </span>
                                             </a>
                                             <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="مشاهده سریع"><span>مشاهده سریع</span></a>
-                                            <a href="#" class="btn-product-icon btn-compare" title="مقایسه">
+                                            <a asp-area="User" asp-controller="Account" asp-action="AddUserCompare" asp-route-productId="@product.ProductId" class="btn-product-icon btn-compare" title="مقایسه">
                                                 <span>
                                                     لیست
                                                     مقایسه
@@ -257,7 +257,7 @@
                                             </a>
                                         </div>
                                         <div class="product-action">
-                                            <a href="#" class="btn-product btn-cart"><span>افزودن به سبد خرید</span></a>
+                                            <a asp-area="" asp-controller="Product" asp-action="BuyProduct" asp-route-productId="@product.ProductId" class="btn-product btn-cart"><span>افزودن به سبد خرید</span></a>
                                         </div>
                                     </figure>
 

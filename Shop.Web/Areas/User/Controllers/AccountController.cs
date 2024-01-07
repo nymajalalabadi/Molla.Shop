@@ -365,10 +365,10 @@ namespace Shop.Web.Areas.User.Controllers
 
         #region user-favorite
 
-        [HttpGet("add-favorite/{productId}")]
-        public async Task<IActionResult> AddUserFavorite(long productId)
+        [HttpGet("add-favorit/{productId}")]
+        public async Task<IActionResult> AddUserFavorit(long productId)
         {
-            var result = await _userService.AddProductToFavorite(productId, User.GetUserId());
+            var result = await _userService.AddProductToFavorite(User.GetUserId(), productId);
 
             if (result)
             {
@@ -387,7 +387,7 @@ namespace Shop.Web.Areas.User.Controllers
         [HttpGet("add-compare/{productId}")]
         public async Task<IActionResult> AddUserCompare(long productId)
         {
-            var result = await _userService.AddProductToCompare(productId, User.GetUserId());
+            var result = await _userService.AddProductToCompare(User.GetUserId(), productId);
 
             if (result)
             {
@@ -440,5 +440,26 @@ namespace Shop.Web.Areas.User.Controllers
         }
 
         #endregion
+
+        #region list-user-favorits
+
+        [HttpGet("user-favorits")]
+        public async Task<IActionResult> UserFavorits(UserFavoritsViewModel filter)
+        {
+            return View(await _userService.UserFavorits(filter));
+        }
+
+        #endregion
+
+        #region list-user-compares
+
+        [HttpGet("user-compares")]
+        public async Task<IActionResult> UserCompares(UserComparesViewModel filter)
+        {
+            return View(await _userService.UserCompares(filter));
+        }
+
+        #endregion
+
     }
 }

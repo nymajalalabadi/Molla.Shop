@@ -318,9 +318,9 @@ namespace Shop.Application.Services
             return await _productRepository.LastProducts();
         }
 
-        public async Task<ProductDetailViewModel> ShowProductDetail(long ProductId)
+        public async Task<ProductDetailViewModel> ShowProductDetail(long productId)
         {
-            return await _productRepository.ShowProductDetail(ProductId);
+            return await _productRepository.ShowProductDetail(productId);
         }
 
         public async Task<CreateProductCommentResult> CreateProductComment(CreateProductCommentViewModel createProductComment, long userId)

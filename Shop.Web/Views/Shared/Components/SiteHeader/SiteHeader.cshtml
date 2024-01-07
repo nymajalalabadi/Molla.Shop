@@ -71,7 +71,7 @@
 
                 <div class="header-right">
                     <div class="dropdown compare-dropdown">
-                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                        <a asp-area="User" asp-controller="Account" asp-action="UserCompares" class="dropdown-toggle" role="button" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false" data-display="static" title="مقایسه محصولات"
                            aria-label="Compare Products">
                             <div class="icon">
@@ -96,7 +96,7 @@
                                 </ul>
                                 <div class="compare-actions">
                                     <a asp-area="User" asp-controller="Account" asp-action="RemoveAllUserCompare" class="action-link">حذف همه</a>
-                                    <a href="compare.html" class="btn btn-outline-primary-2">
+                                    <a asp-area="User" asp-controller="Account" asp-action="UserCompares" class="btn btn-outline-primary-2">
                                         <span>مقایسه</span><i class="icon-long-arrow-left"></i>
                                     </a>
                                 </div>
@@ -105,7 +105,7 @@
                     </div>
 
                     <div class="wishlist">
-                        <a href="wishlist.html" title="لیست محصولات مورد علاقه شما">
+                        <a asp-area="User" asp-controller="Account" asp-action="UserFavorits" title="لیست محصولات مورد علاقه شما">
                             <div class="icon">
                                 <i class="icon-heart-o"></i>
                                 <span class="wishlist-count badge">
@@ -119,7 +119,7 @@
                     <div class="dropdown cart-dropdown">
                         @if (order != null)
                         {
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                            <a asp-area="User" asp-controller="Account" asp-action="UserBasket" asp-route-orderId="@order.Id" class="dropdown-toggle" role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false" data-display="static">
                                 <div class="icon">
                                     <i class="icon-shopping-cart"></i>
@@ -143,13 +143,11 @@
                                     {
                                         @foreach (var item in order.OrderDetails)
                                         {
-
                                             <div class="product">
                                                 <div class="product-cart-details">
                                                     <h4 class="product-title">
                                                         <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.Product.Id">@item.Product.Name</a>
                                                     </h4>
-
                                                     <span class="cart-product-info">
                                                         <span class="cart-product-qty">@item.Count * </span>
                                                         @{
@@ -158,7 +156,6 @@
                                                         @price.ToString("#,0 تومان")
                                                     </span>
                                                 </div>
-
                                                 <figure class="product-image-container">
                                                     <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.Product.Id" class="product-image">
                                                         <img src="@(PathExtensions.ProductOrgin +item.Product.ProductImageName)" alt="@item.Product.Name">
@@ -167,16 +164,12 @@
                                             </div>
                                         }
                                     }
-
-
                                 </div>
-
                                 <div class="dropdown-cart-total">
                                     <span>مجموع</span>
 
                                     <span class="cart-total-price">@order.OrderSum.ToString("#,0 تومان")</span>
                                 </div>
-
                                 <div class="dropdown-cart-action">
                                     <a asp-area="User" asp-controller="Account" asp-action="UserBasket" asp-route-orderId="@order.Id" class="btn btn-outline-primary-2">
                                         <span>مشاهده سبد خرید</span><i class="icon-long-arrow-left"></i>

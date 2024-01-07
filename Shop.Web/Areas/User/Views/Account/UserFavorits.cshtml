@@ -1,0 +1,53 @@
+﻿@model Shop.Domain.ViewModels.Account.UserFavoritsViewModel
+@{
+    ViewData["Title"] = "لیست علاقه مندی ها";
+    int index = 1;
+}
+
+<div class="container text-right mt-5 mb-5">
+    <div class="user-account">
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <aside>
+                    @await Component.InvokeAsync("UserSideBar")
+
+                </aside>
+            </div>
+            <div class="col-md-9 col-sm-8 col-xs-12 ">
+                <section class="user-account-content box-shadow">
+                    <header>
+                        <h1>@ViewData["Title"]</h1>
+                    </header>
+                    <div class="inner">
+                        <div class="account-information">
+                            <form method="get" asp-area="user" asp-controller="Account" asp-action="UserFavorits" id="filter-Form">
+                                <input type="hidden" asp-for="PageId" />
+                            </form>
+                            <div class="table-responsive">
+                                @if (Model.UserFavorites != null && Model.UserFavorites.Any())
+                                {
+                                    <table class="table table-bordered table-hover dataTable table-striped text-center">
+                                        <tr class="active">
+                                            <td>#</td>
+                                            <td>نام محصول</td>
+                                        </tr>
+                                        @foreach (var userFavorit in Model.UserFavorites)
+                                        {
+                                            <tr>
+                                                <td>@index</td>
+                                                <td>@userFavorit.Product.Name</td>
+                                            </tr>
+                                            index++;
+                                        }
+                                    </table>
+                                }
+                            </div>
+                            <partial name="_Paging" model="Model.GetCurrentPaging()" />
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+

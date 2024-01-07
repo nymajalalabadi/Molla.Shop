@@ -1,0 +1,65 @@
+﻿@model Shop.Domain.ViewModels.Account.UserComparesViewModel
+@{
+    ViewData["Title"] = "لیست مقایسه";
+    int index = 1;
+}
+
+<div class="container text-right mt-5 mb-5">
+    <div class="user-account">
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <aside>
+                    @await Component.InvokeAsync("UserSideBar")
+
+                </aside>
+            </div>
+            <div class="col-md-9 col-sm-8 col-xs-12 ">
+                <section class="user-account-content box-shadow">
+                    <header>
+                        <h1>@ViewData["Title"]</h1>
+                    </header>
+                    <div class="inner">
+                        <div class="account-information">
+                            <form asp-area="user" asp-controller="Account" asp-action="UserCompares" id="filter-Form" method="get">
+                                <input type="hidden" asp-for="PageId" />
+                            </form>
+                            <div class="table-responsive">
+                                @if (Model.UserCompares != null && Model.UserCompares.Any())
+                                {
+                                    <table class="table table-bordered table-hover dataTable table-striped text-center">
+                                        <tr class="active">
+                                            <td>#</td>
+                                            <td>نام محصول</td>
+                                            <td>قیمت محصول</td>
+                                            <td>ویژگی محصول</td>
+                                            <td>مقدار محصول</td>
+                                        </tr>
+                                        @foreach (var userCompare in Model.UserCompares)
+                                        {
+                                            <tr>
+                                                <td>@index</td>
+                                                <td>@userCompare.Product.Name</td>
+                                                <td>@userCompare.Product.Price.ToString("#,0 تومان")</td>
+                                                    @foreach (var feature in userCompare.Product.ProductFeatures.Where(p => p.ProductId == userCompare.ProductId))
+                                                    {
+                                                    <td>
+                                                        @feature.FeatuerTitle
+                                                    </td>
+                                                    <td>
+                                                        @feature.FeatureValue
+                                                    </td>
+                                                    }
+                                            </tr>
+                                            index++;
+                                        }
+                                    </table>
+                                }
+                            </div>
+                            <partial name="_Paging" model="Model.GetCurrentPaging()" />
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

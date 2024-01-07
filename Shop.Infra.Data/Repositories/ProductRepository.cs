@@ -447,14 +447,14 @@ namespace Shop.Infra.Data.Repositories
             return lastProduct;
         }
 
-        public async Task<ProductDetailViewModel> ShowProductDetail(long ProductId)
+        public async Task<ProductDetailViewModel> ShowProductDetail(long productId)
         {
             return await _context.Products
                 .Include(p => p.ProductFeatures)
                 .Include(p => p.ProductComments)
                 .Include(p => p.ProductGalleries)
                 .Include(p => p.ProductSelectedCategories).ThenInclude(s => s.ProductCategory)
-                .Where(p => p.Id == ProductId)
+                .Where(p => p.Id == productId)
                 .Select(p => new ProductDetailViewModel()
                 {
                     ProductId = p.Id,
@@ -464,8 +464,8 @@ namespace Shop.Infra.Data.Repositories
                     Price = p.Price,
                     ProductImageName = p.ProductImageName,
                     ProductComment = p.ProductComments.Count(),
-                    ProductFeatures = p.ProductFeatures.Where(s => s.ProductId == ProductId).ToList(),
-                    ProductImages = p.ProductGalleries.Where(s => s.ProductId == ProductId && !s.IsDelete).Select(g => g.ImageName).ToList(),
+                    ProductFeatures = p.ProductFeatures.Where(s => s.ProductId == productId).ToList(),
+                    ProductImages = p.ProductGalleries.Where(s => s.ProductId == productId && !s.IsDelete).Select(g => g.ImageName).ToList(),
                     ProductCategory = p.ProductSelectedCategories.Select(p => p.ProductCategory).First()
                 }).FirstOrDefaultAsync();
         }

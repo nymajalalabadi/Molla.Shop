@@ -60,7 +60,7 @@ namespace Shop.Application.Interfaces
 
         Task<List<ProductItemViewModel>> LastProducts();
 
-        Task<ProductDetailViewModel> ShowProductDetail(long ProductId);
+        Task<ProductDetailViewModel> ShowProductDetail(long productId);
 
         Task<CreateProductCommentResult> CreateProductComment(CreateProductCommentViewModel createProductComment, long userId);
 
