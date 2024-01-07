@@ -85,8 +85,8 @@ namespace Shop.Infra.Data.Repositories
         public async Task<bool> IsExistProductFavorite(long productId, long userId)
         {
             return await _context.UserFavorites.AsQueryable()
-                .Where(c => !c.IsDelete)
-                .AnyAsync(c => c.ProductId == productId && c.UserId == userId);
+                .Where(c => !c.IsDelete && c.ProductId == productId && c.UserId == userId)
+                .AnyAsync();
         }
 
         public async Task AddUserFavorite(UserFavorite userFavorite)
@@ -142,7 +142,7 @@ namespace Shop.Infra.Data.Repositories
 
             var pager = Pager.Build(userCompares.PageId, await query.CountAsync(), userCompares.TakeEntity, userCompares.CountForShowAfterAndBefore);
 
-            var allData = await query.Paging(pager).ToListAsync();
+            var allData = await query.Paging(pager).Where(c => !c.IsDelete).ToListAsync();
 
             #endregion
 
@@ -157,7 +157,7 @@ namespace Shop.Infra.Data.Repositories
 
             var pager = Pager.Build(userFavorits.PageId, await query.CountAsync(), userFavorits.TakeEntity, userFavorits.CountForShowAfterAndBefore);
 
-            var allData = await query.Paging(pager).ToListAsync();
+            var allData = await query.Paging(pager).Where(c => !c.IsDelete).ToListAsync();
 
             #endregion
 
