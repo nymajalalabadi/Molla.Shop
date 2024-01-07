@@ -46,6 +46,10 @@ namespace Shop.Application.Interfaces
 
         Task<bool> RemoveUserComapre(long userId, long productId);
 
+        Task<UserComparesViewModel> UserCompares(UserComparesViewModel userCompares);
+
+        Task<UserFavoritsViewModel> UserFavorits(UserFavoritsViewModel userFavorits);
+
         #endregion
 
         #region admin

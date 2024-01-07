@@ -1,4 +1,5 @@
 ﻿using Shop.Domain.Models.Account;
+using Shop.Domain.ViewModels.Account;
 using Shop.Domain.ViewModels.Admin.Account;
 
 namespace Shop.Domain.Interfaces
@@ -38,6 +39,10 @@ namespace Shop.Domain.Interfaces
         void UpdateUserComapre(UserCompare userCompare);
 
         Task<UserCompare> GetUserCompare(long userId, long productId);
+
+        Task<UserComparesViewModel> UserCompares(UserComparesViewModel userCompares);
+
+        Task<UserFavoritsViewModel> UserFavorits(UserFavoritsViewModel userFavorits);
 
         #endregion
 

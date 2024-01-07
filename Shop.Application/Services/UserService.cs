@@ -270,6 +270,16 @@ namespace Shop.Application.Services
             return false;
         }
 
+        public async Task<UserComparesViewModel> UserCompares(UserComparesViewModel userCompares)
+        {
+            return await _userRepository.UserCompares(userCompares);
+        }
+
+        public async Task<UserFavoritsViewModel> UserFavorits(UserFavoritsViewModel userFavorits)
+        {
+            return await _userRepository.UserFavorits(userFavorits);
+        }
+
         #endregion
 
         #region admin

@@ -438,6 +438,7 @@ namespace Shop.Web.Areas.User.Controllers
             return RedirectToAction("UserCompares");
 
         }
+
         #endregion
     }
 }

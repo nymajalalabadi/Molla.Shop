@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Domain.Interfaces;
 using Shop.Domain.Models.Account;
+using Shop.Domain.ViewModels.Account;
 using Shop.Domain.ViewModels.Admin.Account;
 using Shop.Domain.ViewModels.Pigging;
 using Shop.Infra.Data.Context;
@@ -133,6 +134,36 @@ namespace Shop.Infra.Data.Repositories
                 .Where(c => c.UserId == userId && c.ProductId == productId).FirstOrDefaultAsync();
         }
 
+        public async Task<UserComparesViewModel> UserCompares(UserComparesViewModel userCompares)
+        {
+            var query = _context.UserCompares.Include(c => c.Product).ThenInclude(p => p.ProductFeatures).AsQueryable();
+
+            #region paging
+
+            var pager = Pager.Build(userCompares.PageId, await query.CountAsync(), userCompares.TakeEntity, userCompares.CountForShowAfterAndBefore);
+
+            var allData = await query.Paging(pager).ToListAsync();
+
+            #endregion
+
+            return userCompares.SetPaging(pager).SetCompares(allData);
+        }
+
+        public async Task<UserFavoritsViewModel> UserFavorits(UserFavoritsViewModel userFavorits)
+        {
+            var query = _context.UserFavorites.Include(f => f.Product).AsQueryable();
+
+            #region paging
+
+            var pager = Pager.Build(userFavorits.PageId, await query.CountAsync(), userFavorits.TakeEntity, userFavorits.CountForShowAfterAndBefore);
+
+            var allData = await query.Paging(pager).ToListAsync();
+
+            #endregion
+
+            return userFavorits.SetPaging(pager).SetFavorites(allData);
+        }
+
         #endregion
 
         #region admin
@@ -154,11 +185,11 @@ namespace Shop.Infra.Data.Repositories
 
             var pager = Pager.Build(filterUser.PageId, await _context.Users.CountAsync(), filterUser.TakeEntity, filterUser.CountForShowAfterAndBefore);
 
-            var AllData = await query.Paging(pager).ToListAsync();
+            var allData = await query.Paging(pager).ToListAsync();
 
             #endregion
 
-            return filterUser.SetPaging(pager).SetUsers(AllData);
+            return filterUser.SetPaging(pager).SetUsers(allData);
         }
 
         public async Task AddRoleToUser(List<long> selectedRole, long userId)
