@@ -97,8 +97,8 @@ namespace Shop.Infra.Data.Repositories
         public async Task<bool> IsExistProductCompare(long productId, long userId)
         {
             return await _context.UserCompares.AsQueryable()
-                .Where(c => !c.IsDelete)
-                .AnyAsync(c => c.ProductId == productId && c.UserId == userId); 
+                .Where(c => !c.IsDelete && c.ProductId == productId && c.UserId == userId)
+                .AnyAsync(); 
         }
 
         public async Task AddUserComapre(UserCompare userCompare)
