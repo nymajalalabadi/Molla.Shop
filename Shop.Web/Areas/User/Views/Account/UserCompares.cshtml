@@ -33,6 +33,7 @@
                                             <td>قیمت محصول</td>
                                             <td>ویژگی محصول</td>
                                             <td>مقدار محصول</td>
+                                            <td>حذف محصول</td>
                                         </tr>
                                         @foreach (var userCompare in Model.UserCompares)
                                         {
@@ -49,6 +50,9 @@
                                                         @feature.FeatureValue
                                                     </td>
                                                     }
+                                                <td>
+                                                    <a class="btn btn-warning btn-sm" asp-area="user" asp-controller="Account" asp-action="RemoveUserCompare" asp-route-productId="@userCompare.Product.Id">حذف</a>
+                                                </td>
                                             </tr>
                                             index++;
                                         }
