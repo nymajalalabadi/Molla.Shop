@@ -128,6 +128,37 @@ namespace Shop.Infra.Data.Repositories
             _context.UserCompares.Update(userCompare);
         }
 
+        public async Task RemoveAllRangeUserCompare(long userId)
+        {
+            var data = await _context.UserCompares.Where(c => c.UserId == userId).ToListAsync();
+
+            if (data != null && data.Any())
+            {
+                _context.UserCompares.RemoveRange(data);
+            }
+        }
+
+        public async Task RemoveRangeUserCompare(long userId, long productId)
+        {
+            var data = await _context.UserCompares.FirstOrDefaultAsync(c => c.UserId == userId && c.ProductId == productId);
+
+            if (data != null)
+            {
+                _context.UserCompares.Remove(data);
+            }
+        }
+
+        public async Task RemoveUserFavorit(long userId, long productId)
+        {
+            var data = await _context.UserFavorites.FirstOrDefaultAsync(c => c.UserId == userId && c.ProductId == productId);
+
+            if (data != null)
+            {
+                _context.UserFavorites.Remove(data);
+            }
+        }
+
+
         public async Task<UserCompare> GetUserCompare(long userId, long productId)
         {
             return await _context.UserCompares.AsQueryable()

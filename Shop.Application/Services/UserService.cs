@@ -233,41 +233,26 @@ namespace Shop.Application.Services
             return await _userRepository.GetUserFavorite(userId);
         }
 
+        public async Task<bool> RemoveUserFavorit(long userId, long productId)
+        {
+            await _userRepository.RemoveUserFavorit(userId, productId);
+            await _userRepository.SaveChanges();
+            return true;
+        }
+
         public async Task<bool> RemoveAllUserComapre(long userId)
         {
-            var allUserCompare = await _userRepository.GetUserCompares(userId);
-
-            if (allUserCompare != null && allUserCompare.Any())
-            {
-                foreach (var item in allUserCompare)
-                {
-                    item.IsDelete = true;
-
-                    _userRepository.UpdateUserComapre(item);
-                }
-
-                await _userRepository.SaveChanges();
-
-                return true;
-            }
-            return false;
+            await _userRepository.RemoveAllRangeUserCompare(userId);
+            await _userRepository.SaveChanges();
+            return true;
         }
 
 
         public async Task<bool> RemoveUserComapre(long userId, long productId)
         {
-            var userCompare = await _userRepository.GetUserCompare(userId, productId);
-
-            if (userCompare != null)
-            {
-                userCompare.IsDelete = true;
-
-                _userRepository.UpdateUserComapre(userCompare);
-                await _userRepository.SaveChanges();
-
-                return true;
-            }
-            return false;
+            await _userRepository.RemoveRangeUserCompare(userId, productId);
+            await _userRepository.SaveChanges();
+            return true;
         }
 
         public async Task<UserComparesViewModel> UserCompares(UserComparesViewModel userCompares)

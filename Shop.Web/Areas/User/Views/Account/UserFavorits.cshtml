@@ -30,12 +30,16 @@
                                         <tr class="active">
                                             <td>#</td>
                                             <td>نام محصول</td>
+                                            <td>حذف محصول</td>
                                         </tr>
                                         @foreach (var userFavorit in Model.UserFavorites)
                                         {
                                             <tr>
                                                 <td>@index</td>
                                                 <td>@userFavorit.Product.Name</td>
+                                                <td>
+                                                    <a class="btn btn-warning btn-sm" asp-area="user" asp-controller="Account" asp-action="RemoveUserFavorit" asp-route-productId="@userFavorit.Product.Id">حذف</a>
+                                                </td>
                                             </tr>
                                             index++;
                                         }

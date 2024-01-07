@@ -401,6 +401,26 @@ namespace Shop.Web.Areas.User.Controllers
 
         #endregion
 
+        #region remove-user-favorit
+
+        [HttpGet("removeuserfavorit/{productId}")]
+        public async Task<IActionResult> RemoveUserFavorit(long productId)
+        {
+            var result = await _userService.RemoveUserFavorit(User.GetUserId(), productId);
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "محصول مورد نظر که در لیست علاقه مندی ها بود حذف شده";
+                return RedirectToAction("UserFavorits");
+            }
+
+            TempData[WarningMessage] = "همچین محصولی در لیست علاقه مندی ها شما وجود ندارد";
+            return RedirectToAction("UserFavorits");
+
+        }
+
+        #endregion
+
         #region all-remove-usercompare
 
         [HttpGet("removeAllUserCompare")]

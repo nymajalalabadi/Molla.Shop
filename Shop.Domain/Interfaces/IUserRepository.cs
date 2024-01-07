@@ -38,6 +38,12 @@ namespace Shop.Domain.Interfaces
 
         void UpdateUserComapre(UserCompare userCompare);
 
+        Task RemoveAllRangeUserCompare(long userId);
+
+        Task RemoveRangeUserCompare(long userId, long productId);
+
+        Task RemoveUserFavorit(long userId, long productId);
+
         Task<UserCompare> GetUserCompare(long userId, long productId);
 
         Task<UserComparesViewModel> UserCompares(UserComparesViewModel userCompares);

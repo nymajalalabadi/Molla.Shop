@@ -42,6 +42,8 @@ namespace Shop.Application.Interfaces
 
         Task<List<UserFavorite>> GetUserFavorite(long userId);
 
+        Task<bool> RemoveUserFavorit(long userId, long productId);
+
         Task<bool> RemoveAllUserComapre(long userId);
 
         Task<bool> RemoveUserComapre(long userId, long productId);
