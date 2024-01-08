@@ -13,10 +13,8 @@
         <div class="container">
             <div class="header-left">
                 <a href="tel_3A.html#"><i class="icon-phone"></i>تلفن تماس : 09333447320</a>
-            </div><!-- End .header-left -->
-
+            </div>
             <div class="header-right">
-
                 <ul class="top-menu">
                     <li>
                         <ul>
@@ -30,15 +28,12 @@
                                 <li><a asp-controller="Account" asp-action="Login">ورود</a></li>
                                 <li><a asp-controller="Account" asp-action="Register">ثبت نام</a></li>
                             }
-
                         </ul>
                     </li>
-                </ul><!-- End .top-menu -->
-            </div><!-- End .header-right -->
-
-        </div><!-- End .container -->
-    </div><!-- End .header-top -->
-
+                </ul>
+            </div>
+        </div>
+    </div>
     <div class="header-middle">
         <div class="container">
             <div class="header-left">
@@ -46,12 +41,10 @@
                     <span class="sr-only">فهرست</span>
                     <i class="icon-bars"></i>
                 </button>
-
                 <a href="/" class="logo">
                     <img src="/images/demos/demo-4/logo.png" alt="Molla Logo" width="105" height="25">
                 </a>
-            </div><!-- End .header-left -->
-
+            </div>
             <div class="header-center">
                 <div class="header-search header-search-extended header-search-visible d-none d-lg-block">
                     <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
@@ -61,11 +54,10 @@
                             <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
                             <input type="search" class="form-control" name="ProductName" id="q"
                                    placeholder="جستجوی محصول ..." required>
-                        </div><!-- End .header-search-wrapper -->
+                        </div>
                     </form>
-                </div><!-- End .header-search -->
+                </div>
             </div>
-
             @if (User.Identity.IsAuthenticated)
             {
 
@@ -200,9 +192,9 @@
                             <a asp-area="" asp-controller="Product" asp-action="Products">محصولات</a>
 
                         </li>
-                    </ul><!-- End .menu -->
-                </nav><!-- End .main-nav -->
-            </div><!-- End .header-center -->
-        </div><!-- End .container -->
-    </div><!-- End .header-bottom -->
-</header><!-- End .header -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>

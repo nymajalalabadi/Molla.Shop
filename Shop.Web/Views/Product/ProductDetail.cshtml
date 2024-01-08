@@ -37,7 +37,7 @@
                                 <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                     <i class="icon-arrows"></i>
                                 </a>
-                            </figure><!-- End .product-main-image -->
+                            </figure>
                             @if (Model.ProductImages != null && Model.ProductImages.Any())
                             {
                                 <div id="product-zoom-gallery" class="product-image-gallery">
@@ -48,43 +48,35 @@
                                         </a>
                                     }
                                 </div>
-                                <!-- End .product-image-gallery -->
                             }
-                        </div><!-- End .row -->
-                    </div><!-- End .product-gallery -->
-                </div><!-- End .col-md-6 -->
-
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <div class="product-details">
                         <h1 class="product-title">@Model.Name</h1>
-                        <!-- End .product-title -->
-
                         <div class="ratings-container">
                             <div class="ratings">
-                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                            </div><!-- End .ratings -->
+                                <div class="ratings-val" style="width: 80%;"></div>
+                            </div>
                             <a class="ratings-text" href="#product-review-link" id="review-link">
                                 @Model.ProductComment
                             </a>
-                        </div><!-- End .rating-container -->
-
+                        </div>
                         <div class="product-price">
                             @Model.Price.ToString("#,0تومان")
-                        </div><!-- End .product-price -->
-
+                        </div>
                         <div class="product-content">
                             <p>
                                 @Model.ShortDescription
                             </p>
-                        </div><!-- End .product-content -->
-
+                        </div>
                         <div class="details-filter-row details-row-size">
                             <label for="qty">تعداد : </label>
                             <div class="product-details-quantity">
                                 <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required="" style="display: none;"><div class="input-group  input-spinner"><div class="input-group-prepend"><button style="min-width: 26px" class="btn btn-decrement btn-spinner" type="button"><i class="icon-minus"></i></button></div><input type="text" style="text-align: center" class="form-control " required="" placeholder=""><div class="input-group-append"><button style="min-width: 26px" class="btn btn-increment btn-spinner" type="button"><i class="icon-plus"></i></button></div></div>
-                            </div><!-- End .product-details-quantity -->
-                        </div><!-- End .details-filter-row -->
-
+                            </div>
+                        </div>
                         <div class="product-details-action">
                             <a asp-area="" asp-controller="Product" asp-action="BuyProduct" asp-route-productId="@Model.ProductId" class="btn-product btn-cart"><span>افزودن به سبد خرید</span></a>
 
@@ -102,15 +94,13 @@
                                         لیست مقایسه
                                     </span>
                                 </a>
-                            </div><!-- End .details-action-wrapper -->
-                        </div><!-- End .product-details-action -->
-
+                            </div>
+                        </div>
                         <div class="product-details-footer">
                             <div class="product-cat text-center">
                                 <span>دسته بندی : </span>
                                 <a asp-area="" asp-controller="Product" asp-action="Products" asp-route-FilterByCategory="@Model.ProductCategory.UrlName">@Model.ProductCategory.Title </a>
-                            </div><!-- End .product-cat -->
-
+                            </div>
                             <div class="social-icons social-icons-sm">
                                 <span class="social-label">اشتراک گذاری : </span>
                                 <a href="#" class="social-icon" title="فیسبوک" target="_blank"><i class="icon-facebook-f"></i></a>
@@ -118,12 +108,11 @@
                                 <a href="#" class="social-icon" title="اینستاگرام" target="_blank"><i class="icon-instagram"></i></a>
                                 <a href="#" class="social-icon" title="پینترست" target="_blank"><i class="icon-pinterest"></i></a>
                             </div>
-                        </div><!-- End .product-details-footer -->
-                    </div><!-- End .product-details -->
-                </div><!-- End .col-md-6 -->
-            </div><!-- End .row -->
-        </div><!-- End .product-details-top -->
-
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="product-details-tab">
             <ul class="nav nav-pills justify-content-center" role="tablist">
                 <li class="nav-item">
@@ -143,8 +132,8 @@
                         <p>
                             @Model.Description
                         </p>
-                    </div><!-- End .product-desc-content -->
-                </div><!-- .End .tab-pane -->
+                    </div>
+                </div>
                 <div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
                     <div class="product-desc-content">
                         @if (Model.ProductFeatures != null && Model.ProductFeatures.Any())
@@ -228,7 +217,6 @@
                         }">
             <div class="owl-stage-outer">
                 <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1485px;">
-
                     @if (relatedProduct != null && relatedProduct.Any())
                     {
                         @foreach (var product in relatedProduct)
@@ -240,7 +228,6 @@
                                         <a asp-area="" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.ProductId">
                                             <img src="@(PathExtensions.ProductOrgin + product.ProductImageName)" alt="@product.ProductName" class="product-image">
                                         </a>
-
                                         <div class="product-action-vertical">
                                             <a asp-area="User" asp-controller="Account" asp-action="AddUserFavorite" asp-route-productId="@product.ProductId" class="btn-product-icon btn-wishlist btn-expandable">
                                                 <span>
@@ -260,7 +247,6 @@
                                             <a asp-area="" asp-controller="Product" asp-action="BuyProduct" asp-route-productId="@product.ProductId" class="btn-product btn-cart"><span>افزودن به سبد خرید</span></a>
                                         </div>
                                     </figure>
-
                                     <div class="product-body">
                                         <div class="product-cat text-center">
                                             <a asp-area="" asp-controller="Product" asp-action="Products" asp-route-FilterByCategory="@product.ProductCategory.UrlName">@product.ProductCategory.Title</a>
@@ -276,13 +262,11 @@
                                             </div>
                                             <span class="ratings-text">( @product.CommentCount دیدگاه )</span>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         }
                     }
-
                 </div>
             </div>
             <div class="owl-nav">
